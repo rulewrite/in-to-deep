@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Canvas, { CanvasProps } from './components/Canvas';
+import Canvas, { CanvasProps } from '@components/Canvas';
 
 const App = () => {
   let y = 30;
