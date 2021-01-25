@@ -1,3 +1,4 @@
+import Floor from './Floor';
 import Mover from './Mover';
 
 class Gravity {
@@ -18,8 +19,17 @@ class Gravity {
     });
   }
 
-  operate() {
+  operate(floors: Floor[]) {
     this.gravitableMovers.forEach((gravitableMover) => {
+      const hitFloor = floors.find((floor) =>
+        floor.isHitTopBy(gravitableMover.mover)
+      );
+      if (hitFloor) {
+        gravitableMover.speed = Gravity.INITIAL_SPEED;
+        gravitableMover.mover.y = hitFloor.getGapWith(gravitableMover.mover);
+        return;
+      }
+
       gravitableMover.speed += this.force;
       gravitableMover.mover.y += gravitableMover.speed;
     });
