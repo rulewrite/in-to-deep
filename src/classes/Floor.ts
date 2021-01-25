@@ -22,15 +22,15 @@ class Floor {
     const moverTop = mover.y;
     const moverBottom = mover.y + mover.height;
 
-    if (left > moverRight) {
+    if (left >= moverRight) {
       return false;
     }
 
-    if (right < moverLeft) {
+    if (right <= moverLeft) {
       return false;
     }
 
-    if (top < moverTop) {
+    if (top <= moverTop) {
       return false;
     }
 
