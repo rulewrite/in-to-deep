@@ -12,7 +12,7 @@ const App = () => {
   gravity.registerMover(mover);
 
   const draw: CanvasProps['draw'] = (context) => {
-    const floors = [new Floor(0, 300, 40), new Floor(40, 460, 80)];
+    const floors = [new Floor(0, 300, 40), new Floor(40, 460, 8000)];
     mover.update(context);
     floors.forEach((floor) => floor.update(context));
 
