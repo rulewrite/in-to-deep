@@ -1,15 +1,12 @@
 import Mover from './Mover';
+import CanvasComponent from './CanvasComponent';
 
-class Floor {
+class Floor extends CanvasComponent {
   private static readonly INITIAL_HEIGHT = 20;
   private static readonly INITIAL_COLOR = 'black';
 
-  private height = Floor.INITIAL_HEIGHT;
-  constructor(private x: number, private y: number, private width: number) {}
-
-  update(context: CanvasRenderingContext2D) {
-    context.fillStyle = Floor.INITIAL_COLOR;
-    context.fillRect(this.x, this.y, this.width, this.height);
+  constructor(x: number, y: number, width: number) {
+    super(x, y, width, Floor.INITIAL_HEIGHT, Floor.INITIAL_COLOR);
   }
 
   isHitTopBy(mover: Mover) {

@@ -1,17 +1,16 @@
-class Mover {
+import CanvasComponent from './CanvasComponent';
+
+class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
 
   constructor(
-    public x: number,
-    public y: number,
-    public width: number,
-    public height: number,
-    private color = Mover.INITIAL_COLOR
-  ) {}
-
-  update(context: CanvasRenderingContext2D) {
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    color = Mover.INITIAL_COLOR
+  ) {
+    super(x, y, width, height, color);
   }
 }
 
