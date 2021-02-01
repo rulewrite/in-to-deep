@@ -17,18 +17,24 @@ class Floor extends CanvasComponent {
       bottom: otherBottom,
     } = otherComponent;
 
-    if (left >= otherRight) {
-      return false;
-    }
-
+    // [this][other]
     if (right <= otherLeft) {
       return false;
     }
 
-    if (top <= otherTop) {
+    // [other][this]
+    if (otherRight <= left) {
       return false;
     }
 
+    // [this]
+    // [other]
+    if (top < otherTop) {
+      return false;
+    }
+
+    // [other]
+    // [this]
     return top <= otherBottom;
   }
 
