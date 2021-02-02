@@ -17,7 +17,7 @@ class Mover extends CanvasComponent {
   private get speed() {
     return this._speed;
   }
-  private isDirectionsRight = true;
+  private directions: 'LEFT' | 'RIGHT' = 'RIGHT';
 
   constructor(
     x: number,
@@ -29,27 +29,37 @@ class Mover extends CanvasComponent {
     super(x, y, width, height, color);
   }
 
-  inertia() {
-    const { isPressedRight } = Mover.KEYBOARD;
+  private inertia() {
+    const {
+      isPressedRight,
+      isPressedLeft,
+      isPressedMovingKey,
+    } = Mover.KEYBOARD;
+    const { directions } = this;
 
     if (
-      this.isDirectionsRight !== isPressedRight ||
-      !Mover.KEYBOARD.isPressedMovingKey
+      !isPressedMovingKey ||
+      (isPressedLeft && directions === 'RIGHT') ||
+      (isPressedRight && directions === 'LEFT')
     ) {
       this.speed = 0;
+      return;
     }
 
-    this.isDirectionsRight = isPressedRight;
     this.speed += Mover.ACCELERATION;
   }
 
   private moveSide() {
-    if (Mover.KEYBOARD.isPressedLeft) {
-      this.x -= this.speed;
+    const { isPressedRight, isPressedLeft } = Mover.KEYBOARD;
+
+    if (isPressedRight && !isPressedLeft) {
+      this.directions = 'RIGHT';
+      this.x += this.speed;
     }
 
-    if (Mover.KEYBOARD.isPressedRight) {
-      this.x += this.speed;
+    if (isPressedLeft && !isPressedRight) {
+      this.directions = 'LEFT';
+      this.x -= this.speed;
     }
   }
 
