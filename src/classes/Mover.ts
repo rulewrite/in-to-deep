@@ -78,7 +78,7 @@ class Mover extends CanvasComponent {
     }
   }
 
-  update(context: CanvasRenderingContext2D) {
+  renderCanvas(context: CanvasRenderingContext2D) {
     this.updateSpeed();
     this.moveSide();
 

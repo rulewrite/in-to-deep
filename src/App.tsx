@@ -19,8 +19,8 @@ class App extends Component {
 
   private draw(context: CanvasRenderingContext2D) {
     const floors = [new Floor(0, 300, 40), new Floor(40, 460, 8000)];
-    this.MOVER.update(context);
-    floors.forEach((floor) => floor.update(context));
+    this.MOVER.renderCanvas(context);
+    floors.forEach((floor) => floor.renderCanvas(context));
 
     this.GRAVITY.operate(floors);
   }
