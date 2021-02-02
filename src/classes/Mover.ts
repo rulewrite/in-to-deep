@@ -6,9 +6,25 @@ class Mover extends CanvasComponent {
   private static readonly KEYBOARD = new Keyboard();
   private static readonly ACCELERATION = 0.09;
   private static readonly MAXIMUM_SPEED = 5;
+  private static readonly HEAD_WIDTH = 10;
 
+  private readonly MIDDLE: number;
   private speed = 0;
   private directions: 'LEFT' | 'RIGHT' = 'RIGHT';
+  private get headToX() {
+    return this.directions === 'LEFT' ? this.x : this.right;
+  }
+  private get headToY() {
+    return this.y + this.MIDDLE;
+  }
+  private get bodyX() {
+    return this.directions === 'LEFT'
+      ? this.x + Mover.HEAD_WIDTH
+      : this.right - Mover.HEAD_WIDTH;
+  }
+  private get tailX() {
+    return this.directions === 'LEFT' ? this.right : this.x;
+  }
 
   constructor(
     x: number,
@@ -18,6 +34,8 @@ class Mover extends CanvasComponent {
     color = Mover.INITIAL_COLOR
   ) {
     super(x, y, width, height, color);
+
+    this.MIDDLE = this.height / 2;
   }
 
   private updateSpeed() {
@@ -64,7 +82,14 @@ class Mover extends CanvasComponent {
     this.updateSpeed();
     this.moveSide();
 
-    super.update(context);
+    context.fillStyle = this.color;
+    context.beginPath();
+    context.moveTo(this.headToX, this.headToY);
+    context.lineTo(this.bodyX, this.top);
+    context.lineTo(this.tailX, this.top);
+    context.lineTo(this.tailX, this.bottom);
+    context.lineTo(this.bodyX, this.bottom);
+    context.fill();
   }
 }
 
