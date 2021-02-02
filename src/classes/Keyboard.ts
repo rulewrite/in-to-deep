@@ -1,4 +1,4 @@
-class Controller {
+class Keyboard {
   static readonly SET_LEFT_KEY = new Set(['Left', 'ArrowLeft']);
   static readonly SET_RIGHT_KEY = new Set(['Right', 'ArrowRight']);
 
@@ -12,12 +12,12 @@ class Controller {
     document.addEventListener(
       'keydown',
       ({ key }) => {
-        if (Controller.SET_LEFT_KEY.has(key)) {
+        if (Keyboard.SET_LEFT_KEY.has(key)) {
           this.isPressedLeft = true;
           return;
         }
 
-        if (Controller.SET_RIGHT_KEY.has(key)) {
+        if (Keyboard.SET_RIGHT_KEY.has(key)) {
           this.isPressedRight = true;
           return;
         }
@@ -28,12 +28,12 @@ class Controller {
     document.addEventListener(
       'keyup',
       ({ key }) => {
-        if (Controller.SET_LEFT_KEY.has(key)) {
+        if (Keyboard.SET_LEFT_KEY.has(key)) {
           this.isPressedLeft = false;
           return;
         }
 
-        if (Controller.SET_RIGHT_KEY.has(key)) {
+        if (Keyboard.SET_RIGHT_KEY.has(key)) {
           this.isPressedRight = false;
           return;
         }
@@ -43,4 +43,4 @@ class Controller {
   }
 }
 
-export default Controller;
+export default Keyboard;

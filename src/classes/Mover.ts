@@ -1,9 +1,9 @@
 import CanvasComponent from './CanvasComponent';
-import Controller from '@classes/Contorller';
+import Keyboard from '@classes/Keyboard';
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
-  private static readonly CONTROLLER = new Controller();
+  private static readonly KEYBOARD = new Keyboard();
   private static readonly ACCELERATION = 0.09;
   private static readonly MAXIMUM_SPEED = 5;
 
@@ -30,11 +30,11 @@ class Mover extends CanvasComponent {
   }
 
   inertia() {
-    const { isPressedRight } = Mover.CONTROLLER;
+    const { isPressedRight } = Mover.KEYBOARD;
 
     if (
       this.isDirectionsRight !== isPressedRight ||
-      !Mover.CONTROLLER.isPressedMovingKey
+      !Mover.KEYBOARD.isPressedMovingKey
     ) {
       this.speed = 0;
     }
@@ -44,11 +44,11 @@ class Mover extends CanvasComponent {
   }
 
   private moveSide() {
-    if (Mover.CONTROLLER.isPressedLeft) {
+    if (Mover.KEYBOARD.isPressedLeft) {
       this.x -= this.speed;
     }
 
-    if (Mover.CONTROLLER.isPressedRight) {
+    if (Mover.KEYBOARD.isPressedRight) {
       this.x += this.speed;
     }
   }
