@@ -8,8 +8,8 @@ class Floor extends CanvasComponent {
     super(x, y, width, Floor.INITIAL_HEIGHT, Floor.INITIAL_COLOR);
   }
 
-  isHitTopBy(otherComponent: CanvasComponent) {
-    const { left, right, top } = this;
+  isHitBy(otherComponent: CanvasComponent) {
+    const { left, right, top, bottom } = this;
     const {
       left: otherLeft,
       right: otherRight,
@@ -17,25 +17,15 @@ class Floor extends CanvasComponent {
       bottom: otherBottom,
     } = otherComponent;
 
-    // [this][other]
-    if (right <= otherLeft) {
+    if (
+      bottom < otherTop ||
+      top > otherBottom ||
+      right < otherLeft ||
+      left > otherRight
+    ) {
       return false;
     }
-
-    // [other][this]
-    if (otherRight <= left) {
-      return false;
-    }
-
-    // [this]
-    // [other]
-    if (top <= otherTop) {
-      return false;
-    }
-
-    // [other]
-    // [this]
-    return top <= otherBottom;
+    return true;
   }
 
   getGapWith(otherComponent: CanvasComponent) {
