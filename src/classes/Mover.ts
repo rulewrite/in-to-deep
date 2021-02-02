@@ -20,7 +20,7 @@ class Mover extends CanvasComponent {
     super(x, y, width, height, color);
   }
 
-  private inertia() {
+  private updateSpeed() {
     const {
       isPressedRight,
       isPressedLeft,
@@ -61,7 +61,7 @@ class Mover extends CanvasComponent {
   }
 
   update(context: CanvasRenderingContext2D) {
-    this.inertia();
+    this.updateSpeed();
     this.moveSide();
 
     super.update(context);
