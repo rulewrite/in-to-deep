@@ -29,7 +29,7 @@ class Floor extends CanvasComponent {
 
     // [this]
     // [other]
-    if (top < otherTop) {
+    if (top <= otherTop) {
       return false;
     }
 
