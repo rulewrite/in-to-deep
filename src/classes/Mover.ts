@@ -7,16 +7,7 @@ class Mover extends CanvasComponent {
   private static readonly ACCELERATION = 0.09;
   private static readonly MAXIMUM_SPEED = 5;
 
-  private _speed = 0;
-  private set speed(_speed: number) {
-    if (_speed >= Mover.MAXIMUM_SPEED) {
-      _speed = Mover.MAXIMUM_SPEED;
-    }
-    this._speed = _speed;
-  }
-  private get speed() {
-    return this._speed;
-  }
+  private speed = 0;
   private directions: 'LEFT' | 'RIGHT' = 'RIGHT';
 
   constructor(
@@ -46,7 +37,13 @@ class Mover extends CanvasComponent {
       return;
     }
 
-    this.speed += Mover.ACCELERATION;
+    const nextSpeed = this.speed + Mover.ACCELERATION;
+    if (nextSpeed > Mover.MAXIMUM_SPEED) {
+      this.speed = Mover.MAXIMUM_SPEED;
+      return;
+    }
+
+    this.speed = nextSpeed;
   }
 
   private moveSide() {
