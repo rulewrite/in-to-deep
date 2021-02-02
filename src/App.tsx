@@ -1,29 +1,39 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import Canvas, { CanvasProps } from '@components/Canvas';
+import Canvas from '@components/Canvas';
 import Mover from '@classes/Mover';
 import Gravity from '@classes/Gravity';
 import Floor from '@classes/Floor';
 
-const App = () => {
-  const mover = new Mover(60, 30, 30, 30);
+class App extends Component {
+  private readonly MOVER = new Mover(60, 30, 30, 30);
+  private readonly GRAVITY = new Gravity();
 
-  const gravity = new Gravity();
-  gravity.registerMover(mover);
+  constructor(props: any) {
+    super(props);
 
-  const draw: CanvasProps['draw'] = (context) => {
+    this.GRAVITY.registerMover(this.MOVER);
+
+    this.draw = this.draw.bind(this);
+  }
+
+  private draw(context: CanvasRenderingContext2D) {
     const floors = [new Floor(0, 300, 40), new Floor(40, 460, 8000)];
-    mover.update(context);
+    this.MOVER.update(context);
     floors.forEach((floor) => floor.update(context));
 
-    gravity.operate(floors);
-  };
+    this.GRAVITY.operate(floors);
+  }
 
-  return (
-    <div className="App">
-      <Canvas draw={draw} width={800} height={600} isClearEachFrame={true} />
-    </div>
-  );
-};
+  render() {
+    const { draw } = this;
+
+    return (
+      <div className="App">
+        <Canvas draw={draw} width={800} height={600} isClearEachFrame={true} />
+      </div>
+    );
+  }
+}
 
 export default App;
