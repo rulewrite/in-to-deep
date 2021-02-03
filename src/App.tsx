@@ -38,13 +38,24 @@ class App extends Component {
     }
   }
 
-  private moving() {
+  private moving(floors: Floor[]) {
     const directions = this.getDirections();
 
     this.MOVER.accumulateSpeed(directions);
 
     if (directions) {
       this.MOVER.moveSide(directions);
+    }
+
+    const hitFloor = floors.find((floor) => {
+      if (floor.isHitTopBy(this.MOVER)) {
+        return false;
+      }
+      return floor.isHitSideBy(this.MOVER);
+    });
+
+    if (hitFloor) {
+      this.MOVER.x = hitFloor.getGapSideWith(this.MOVER);
     }
   }
 
@@ -56,7 +67,7 @@ class App extends Component {
       new Floor(120, 360, 8000, 'green'),
     ];
 
-    this.moving();
+    this.moving(floors);
     this.GRAVITY.operate(floors);
 
     this.MOVER.renderCanvas(context);

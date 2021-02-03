@@ -7,9 +7,10 @@ class Mover extends CanvasComponent {
   private static readonly MAXIMUM_SPEED = 5;
   private static readonly HEAD_WIDTH = 10;
 
+  directions: Directions = 'RIGHT';
+
   private readonly MIDDLE: number;
   private speed = 0;
-  private directions: Directions = 'RIGHT';
   private get headToX() {
     return this.directions === 'LEFT' ? this.x : this.right;
   }
