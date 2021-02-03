@@ -9,6 +9,7 @@ class Mover extends CanvasComponent {
   private static readonly HEAD_WIDTH = 10;
 
   directions: Directions = 'RIGHT';
+  gravitationalForce = 0;
 
   private readonly MIDDLE: number;
   private speed = 0;

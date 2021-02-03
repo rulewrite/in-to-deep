@@ -5,34 +5,18 @@ class Gravity {
   private static readonly INITIAL_SPEED = 0;
   private static readonly INITIAL_FORCE = 0.05;
 
-  private gravitableMovers: {
-    mover: Mover;
-    speed: number;
-  }[] = [];
-
-  constructor(private force = Gravity.INITIAL_FORCE) {}
-
-  registerMover(mover: Mover) {
-    this.gravitableMovers.push({
-      mover,
-      speed: Gravity.INITIAL_SPEED,
-    });
-  }
+  constructor(private mover: Mover, private force = Gravity.INITIAL_FORCE) {}
 
   realize(floors: Floor[]) {
-    this.gravitableMovers.forEach((gravitableMover) => {
-      gravitableMover.speed += this.force;
-      gravitableMover.mover.y += gravitableMover.speed;
+    this.mover.gravitationalForce += this.force;
+    this.mover.y += this.mover.gravitationalForce;
 
-      const hitFloor = floors.find((floor) =>
-        floor.isHitTopBy(gravitableMover.mover)
-      );
-      if (hitFloor) {
-        gravitableMover.speed = Gravity.INITIAL_SPEED;
-        gravitableMover.mover.y = hitFloor.getGapWith(gravitableMover.mover);
-        return;
-      }
-    });
+    const hitFloor = floors.find((floor) => floor.isHitTopBy(this.mover));
+    if (hitFloor) {
+      this.mover.gravitationalForce = Gravity.INITIAL_SPEED;
+      this.mover.y = hitFloor.getGapWith(this.mover);
+      return;
+    }
   }
 }
 

@@ -12,12 +12,10 @@ class App extends Component {
   private static readonly KEYBOARD = new Keyboard();
 
   private readonly MOVER = new Mover(60, 30, 30, 30);
-  private readonly GRAVITY = new Gravity();
+  private readonly GRAVITY = new Gravity(this.MOVER);
 
   constructor(props: any) {
     super(props);
-
-    this.GRAVITY.registerMover(this.MOVER);
 
     this.draw = this.draw.bind(this);
   }
