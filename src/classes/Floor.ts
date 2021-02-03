@@ -53,16 +53,6 @@ class Floor extends CanvasComponent {
       return false;
     }
 
-    const moverIsLeftSide = left > moverRight;
-    if (moverIsLeftSide) {
-      return false;
-    }
-
-    const moverIsRightSide = right < moverLeft;
-    if (moverIsRightSide) {
-      return false;
-    }
-
     const isHitLeft = left < moverRight;
     const isHitRight = right > moverLeft;
     return isHitLeft && isHitRight;
