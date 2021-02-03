@@ -40,7 +40,7 @@ class Mover extends CanvasComponent {
     this.MIDDLE = this.height / 2;
   }
 
-  accelerate(pressedDirections?: Directions) {
+  private accelerate(pressedDirections?: Directions) {
     if (pressedDirections !== this.directions) {
       this.acceleration = 0;
     }
@@ -52,6 +52,8 @@ class Mover extends CanvasComponent {
   }
 
   moveSide(floors: Floor[], pressedDirections?: Directions) {
+    this.accelerate(pressedDirections);
+
     if (!pressedDirections) {
       return;
     }
