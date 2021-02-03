@@ -41,11 +41,10 @@ class App extends Component {
     const floors = [new Floor(0, 300, 40), new Floor(40, 460, 8000)];
 
     this.moving();
+    this.GRAVITY.operate(floors);
 
     this.MOVER.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
-
-    this.GRAVITY.operate(floors);
   }
 
   render() {
