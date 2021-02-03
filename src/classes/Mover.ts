@@ -38,7 +38,7 @@ class Mover extends CanvasComponent {
     this.MIDDLE = this.height / 2;
   }
 
-  private updateSpeed(pressedDirections?: Directions) {
+  private accumulateSpeed(pressedDirections?: Directions) {
     if (!pressedDirections || pressedDirections !== this.directions) {
       this.speed = 0;
       return;
@@ -48,7 +48,7 @@ class Mover extends CanvasComponent {
   }
 
   moveSide(pressedDirections?: Directions) {
-    this.updateSpeed(pressedDirections);
+    this.accumulateSpeed(pressedDirections);
 
     if (!pressedDirections) {
       return;
