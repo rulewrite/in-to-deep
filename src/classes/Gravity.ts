@@ -19,7 +19,7 @@ class Gravity {
     });
   }
 
-  operate(floors: Floor[]) {
+  realize(floors: Floor[]) {
     this.gravitableMovers.forEach((gravitableMover) => {
       gravitableMover.speed += this.force;
       gravitableMover.mover.y += gravitableMover.speed;

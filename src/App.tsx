@@ -57,7 +57,7 @@ class App extends Component {
     ];
 
     this.moving(floors);
-    this.GRAVITY.operate(floors);
+    this.GRAVITY.realize(floors);
 
     this.MOVER.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
