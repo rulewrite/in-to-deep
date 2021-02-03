@@ -23,10 +23,10 @@ class Floor extends CanvasComponent {
     } = otherComponent;
 
     if (
-      bottom < otherTop ||
-      top > otherBottom ||
-      right < otherLeft ||
-      left > otherRight
+      bottom <= otherTop ||
+      top >= otherBottom ||
+      right <= otherLeft ||
+      left >= otherRight
     ) {
       return false;
     }
