@@ -6,47 +6,47 @@ import Gravity from '@classes/Gravity';
 import Floor from '@classes/Floor';
 import Keyboard from '@classes/Keyboard';
 
+export type Directions = 'LEFT' | 'RIGHT';
+
 class App extends Component {
   private static readonly KEYBOARD = new Keyboard();
 
   private readonly MOVER = new Mover(60, 30, 30, 30);
-  private readonly GRAVITY = new Gravity();
+  private readonly GRAVITY = new Gravity(this.MOVER);
 
   constructor(props: any) {
     super(props);
 
-    this.GRAVITY.registerMover(this.MOVER);
-
     this.draw = this.draw.bind(this);
   }
 
-  private moving() {
+  private getPressedDirections(): Directions | undefined {
     const { isPressedRight, isPressedLeft, isPressedMovingKey } = App.KEYBOARD;
 
     if (!isPressedMovingKey || (isPressedRight && isPressedLeft)) {
-      this.MOVER.moveSide();
       return;
     }
 
     if (isPressedRight && !isPressedLeft) {
-      this.MOVER.moveSide('RIGHT');
+      return 'RIGHT';
     }
 
     if (isPressedLeft && !isPressedRight) {
-      this.MOVER.moveSide('LEFT');
+      return 'LEFT';
     }
   }
 
   private draw(context: CanvasRenderingContext2D) {
+    const pressedDirections = this.getPressedDirections();
     const floors = [
-      new Floor(120, 60, 300, 'red'),
-      new Floor(0, 100, 300, 'blue'),
-      new Floor(350, 100, 300, 'yellow'),
+      new Floor(120, 150, 300, 'red'),
+      new Floor(0, 500, 300, 'blue'),
+      new Floor(380, 101, 300, 'purple'),
       new Floor(120, 360, 8000, 'green'),
     ];
 
-    this.moving();
-    this.GRAVITY.operate(floors);
+    this.GRAVITY.realize(floors);
+    this.MOVER.moveSide(floors, pressedDirections);
 
     this.MOVER.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));

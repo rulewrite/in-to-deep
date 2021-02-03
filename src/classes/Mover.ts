@@ -1,6 +1,6 @@
+import { Directions } from 'App';
 import CanvasComponent from './CanvasComponent';
-
-type Directions = 'LEFT' | 'RIGHT';
+import Floor from './Floor';
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
@@ -8,9 +8,11 @@ class Mover extends CanvasComponent {
   private static readonly MAXIMUM_SPEED = 5;
   private static readonly HEAD_WIDTH = 10;
 
+  directions: Directions = 'RIGHT';
+  gravitationalForce = 0;
+
+  private acceleration = 0;
   private readonly MIDDLE: number;
-  private speed = 0;
-  private directions: Directions = 'RIGHT';
   private get headToX() {
     return this.directions === 'LEFT' ? this.x : this.right;
   }
@@ -38,25 +40,40 @@ class Mover extends CanvasComponent {
     this.MIDDLE = this.height / 2;
   }
 
-  private accumulateSpeed(pressedDirections?: Directions) {
-    if (!pressedDirections || pressedDirections !== this.directions) {
-      this.speed = 0;
+  private accelerate(pressedDirections?: Directions) {
+    if (pressedDirections !== this.directions) {
+      this.acceleration = 0;
       return;
     }
 
-    this.speed = Math.min(this.speed + Mover.ACCELERATION, Mover.MAXIMUM_SPEED);
+    this.acceleration = Math.min(
+      this.acceleration + Mover.ACCELERATION,
+      Mover.MAXIMUM_SPEED
+    );
   }
 
-  moveSide(pressedDirections?: Directions) {
-    this.accumulateSpeed(pressedDirections);
+  moveSide(floors: Floor[], pressedDirections?: Directions) {
+    this.accelerate(pressedDirections);
 
     if (!pressedDirections) {
       return;
     }
 
     this.directions = pressedDirections;
+    switch (this.directions) {
+      case 'RIGHT':
+        this.x += this.acceleration;
+        break;
+      case 'LEFT':
+        this.x -= this.acceleration;
+        break;
+    }
 
-    this.x += this.speed * (pressedDirections === 'RIGHT' ? 1 : -1);
+    const hitFloor = floors.find((floor) => floor.isHitSideBy(this));
+    if (hitFloor) {
+      this.acceleration = 0;
+      this.x = hitFloor.getGapSideWith(this);
+    }
   }
 
   renderCanvas(context: CanvasRenderingContext2D) {

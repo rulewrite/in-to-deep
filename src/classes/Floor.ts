@@ -1,4 +1,5 @@
 import CanvasComponent from './CanvasComponent';
+import Mover from './Mover';
 
 class Floor extends CanvasComponent {
   private static readonly INITIAL_HEIGHT = 20;
@@ -13,7 +14,7 @@ class Floor extends CanvasComponent {
     super(x, y, width, Floor.INITIAL_HEIGHT, color);
   }
 
-  isHitBy(mover: CanvasComponent) {
+  isHitSideBy(mover: Mover) {
     const { left, right, top, bottom } = this;
     const {
       left: moverLeft,
@@ -22,15 +23,34 @@ class Floor extends CanvasComponent {
       bottom: moverBottom,
     } = mover;
 
-    if (
-      bottom <= moverTop ||
-      top >= moverBottom ||
-      right <= moverLeft ||
-      left >= moverRight
-    ) {
+    const moverIsUnder = bottom <= moverTop;
+    if (moverIsUnder) {
       return false;
     }
-    return true;
+
+    const moverIsOver = top >= moverBottom;
+    if (moverIsOver) {
+      return false;
+    }
+
+    const isHitLeft = left < moverRight;
+    const isHitRight = right > moverLeft;
+    return isHitLeft && isHitRight;
+  }
+
+  getGapSideWith(mover: Mover) {
+    const { left, right } = this;
+    const { directions } = mover;
+
+    if (directions === 'RIGHT') {
+      return left - mover.width;
+    }
+
+    if (directions === 'LEFT') {
+      return right;
+    }
+
+    return mover.x;
   }
 
   isHitTopBy(mover: CanvasComponent) {
@@ -60,7 +80,7 @@ class Floor extends CanvasComponent {
     return top <= moverBottom;
   }
 
-  getGapWith(mover: CanvasComponent) {
+  getGapTopWith(mover: CanvasComponent) {
     return this.y - mover.height;
   }
 }
