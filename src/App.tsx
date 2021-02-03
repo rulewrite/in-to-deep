@@ -24,7 +24,7 @@ class App extends Component {
     const { isPressedRight, isPressedLeft, isPressedMovingKey } = App.KEYBOARD;
 
     if (!isPressedMovingKey || (isPressedRight && isPressedLeft)) {
-      return undefined;
+      return;
     }
 
     if (isPressedRight && !isPressedLeft) {
@@ -36,17 +36,8 @@ class App extends Component {
     }
   }
 
-  private moving(floors: Floor[]) {
-    const pressedDirections = this.getPressedDirections();
-
-    this.MOVER.accelerate(pressedDirections);
-
-    if (pressedDirections) {
-      this.MOVER.moveSide(floors);
-    }
-  }
-
   private draw(context: CanvasRenderingContext2D) {
+    const pressedDirections = this.getPressedDirections();
     const floors = [
       new Floor(120, 150, 300, 'red'),
       new Floor(0, 500, 300, 'blue'),
@@ -54,8 +45,9 @@ class App extends Component {
       new Floor(120, 360, 8000, 'green'),
     ];
 
-    this.moving(floors);
     this.GRAVITY.realize(floors);
+    this.MOVER.moveSide(floors, pressedDirections);
+    this.MOVER.accelerate(pressedDirections);
 
     this.MOVER.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));

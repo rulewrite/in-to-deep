@@ -41,14 +41,8 @@ class Mover extends CanvasComponent {
   }
 
   accelerate(pressedDirections?: Directions) {
-    if (!pressedDirections) {
-      this.acceleration = 0;
-      return;
-    }
-
     if (pressedDirections !== this.directions) {
       this.acceleration = 0;
-      this.directions = pressedDirections;
     }
 
     this.acceleration = Math.min(
@@ -57,7 +51,12 @@ class Mover extends CanvasComponent {
     );
   }
 
-  moveSide(floors: Floor[]) {
+  moveSide(floors: Floor[], pressedDirections?: Directions) {
+    if (!pressedDirections) {
+      return;
+    }
+
+    this.directions = pressedDirections;
     switch (this.directions) {
       case 'RIGHT':
         this.x += this.acceleration;
