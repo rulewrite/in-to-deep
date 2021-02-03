@@ -15,7 +15,6 @@ class Gravity {
     if (hitFloor) {
       this.mover.gravitationalForce = Gravity.INITIAL_SPEED;
       this.mover.y = hitFloor.getGapTopWith(this.mover);
-      return;
     }
   }
 }
