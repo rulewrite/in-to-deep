@@ -44,12 +44,7 @@ class App extends Component {
     this.MOVER.accumulateSpeed(directions);
 
     if (directions) {
-      this.MOVER.moveSide(directions);
-    }
-
-    const hitFloor = floors.find((floor) => floor.isHitSideBy(this.MOVER));
-    if (hitFloor) {
-      this.MOVER.x = hitFloor.getGapSideWith(this.MOVER);
+      this.MOVER.moveSide(floors);
     }
   }
 

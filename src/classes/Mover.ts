@@ -1,5 +1,6 @@
 import { Directions } from 'App';
 import CanvasComponent from './CanvasComponent';
+import Floor from './Floor';
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
@@ -52,14 +53,19 @@ class Mover extends CanvasComponent {
     this.speed = Math.min(this.speed + Mover.ACCELERATION, Mover.MAXIMUM_SPEED);
   }
 
-  moveSide(pressedDirections: Directions) {
-    switch (pressedDirections) {
+  moveSide(floors: Floor[]) {
+    switch (this.directions) {
       case 'RIGHT':
         this.x += this.speed;
-        return;
+        break;
       case 'LEFT':
         this.x -= this.speed;
-        return;
+        break;
+    }
+
+    const hitFloor = floors.find((floor) => floor.isHitSideBy(this));
+    if (hitFloor) {
+      this.x = hitFloor.getGapSideWith(this);
     }
   }
 
