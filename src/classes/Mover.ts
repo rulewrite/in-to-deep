@@ -1,16 +1,16 @@
 import CanvasComponent from './CanvasComponent';
-import Keyboard from '@classes/Keyboard';
+
+type Directions = 'LEFT' | 'RIGHT';
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
-  private static readonly KEYBOARD = new Keyboard();
   private static readonly ACCELERATION = 0.09;
   private static readonly MAXIMUM_SPEED = 5;
   private static readonly HEAD_WIDTH = 10;
 
   private readonly MIDDLE: number;
   private speed = 0;
-  private directions: 'LEFT' | 'RIGHT' = 'RIGHT';
+  private directions: Directions = 'RIGHT';
   private get headToX() {
     return this.directions === 'LEFT' ? this.x : this.right;
   }
@@ -38,19 +38,8 @@ class Mover extends CanvasComponent {
     this.MIDDLE = this.height / 2;
   }
 
-  private updateSpeed() {
-    const {
-      isPressedRight,
-      isPressedLeft,
-      isPressedMovingKey,
-    } = Mover.KEYBOARD;
-    const { directions } = this;
-
-    if (
-      !isPressedMovingKey ||
-      (isPressedLeft && directions === 'RIGHT') ||
-      (isPressedRight && directions === 'LEFT')
-    ) {
+  private updateSpeed(pressedDirections?: Directions) {
+    if (!pressedDirections || pressedDirections !== this.directions) {
       this.speed = 0;
       return;
     }
@@ -64,24 +53,23 @@ class Mover extends CanvasComponent {
     this.speed = nextSpeed;
   }
 
-  private moveSide() {
-    const { isPressedRight, isPressedLeft } = Mover.KEYBOARD;
+  moveSide(pressedDirections?: Directions) {
+    this.updateSpeed(pressedDirections);
 
-    if (isPressedRight && !isPressedLeft) {
-      this.directions = 'RIGHT';
+    if (pressedDirections) {
+      this.directions = pressedDirections;
+    }
+
+    if (pressedDirections === 'RIGHT') {
       this.x += this.speed;
     }
 
-    if (isPressedLeft && !isPressedRight) {
-      this.directions = 'LEFT';
+    if (pressedDirections === 'LEFT') {
       this.x -= this.speed;
     }
   }
 
   renderCanvas(context: CanvasRenderingContext2D) {
-    this.updateSpeed();
-    this.moveSide();
-
     context.fillStyle = this.color;
     context.beginPath();
     context.moveTo(this.headToX, this.headToY);
