@@ -20,7 +20,7 @@ class App extends Component {
     this.draw = this.draw.bind(this);
   }
 
-  private getDirections(): Directions | undefined {
+  private getPressedDirections(): Directions | undefined {
     const { isPressedRight, isPressedLeft, isPressedMovingKey } = App.KEYBOARD;
 
     if (!isPressedMovingKey || (isPressedRight && isPressedLeft)) {
@@ -37,11 +37,11 @@ class App extends Component {
   }
 
   private moving(floors: Floor[]) {
-    const directions = this.getDirections();
+    const pressedDirections = this.getPressedDirections();
 
-    this.MOVER.accelerate(directions);
+    this.MOVER.accelerate(pressedDirections);
 
-    if (directions) {
+    if (pressedDirections) {
       this.MOVER.moveSide(floors);
     }
   }
