@@ -44,29 +44,19 @@ class Mover extends CanvasComponent {
       return;
     }
 
-    const nextSpeed = this.speed + Mover.ACCELERATION;
-    if (nextSpeed > Mover.MAXIMUM_SPEED) {
-      this.speed = Mover.MAXIMUM_SPEED;
-      return;
-    }
-
-    this.speed = nextSpeed;
+    this.speed = Math.min(this.speed + Mover.ACCELERATION, Mover.MAXIMUM_SPEED);
   }
 
   moveSide(pressedDirections?: Directions) {
     this.updateSpeed(pressedDirections);
 
-    if (pressedDirections) {
-      this.directions = pressedDirections;
+    if (!pressedDirections) {
+      return;
     }
 
-    if (pressedDirections === 'RIGHT') {
-      this.x += this.speed;
-    }
+    this.directions = pressedDirections;
 
-    if (pressedDirections === 'LEFT') {
-      this.x -= this.speed;
-    }
+    this.x += this.speed * (pressedDirections === 'RIGHT' ? 1 : -1);
   }
 
   renderCanvas(context: CanvasRenderingContext2D) {
