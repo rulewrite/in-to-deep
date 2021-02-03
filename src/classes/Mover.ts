@@ -43,6 +43,7 @@ class Mover extends CanvasComponent {
   private accelerate(pressedDirections?: Directions) {
     if (pressedDirections !== this.directions) {
       this.acceleration = 0;
+      return;
     }
 
     this.acceleration = Math.min(
