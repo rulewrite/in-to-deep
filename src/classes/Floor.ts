@@ -13,55 +13,55 @@ class Floor extends CanvasComponent {
     super(x, y, width, Floor.INITIAL_HEIGHT, color);
   }
 
-  isHitBy(otherComponent: CanvasComponent) {
+  isHitBy(mover: CanvasComponent) {
     const { left, right, top, bottom } = this;
     const {
-      left: otherLeft,
-      right: otherRight,
-      top: otherTop,
-      bottom: otherBottom,
-    } = otherComponent;
+      left: moverLeft,
+      right: moverRight,
+      top: moverTop,
+      bottom: moverBottom,
+    } = mover;
 
     if (
-      bottom <= otherTop ||
-      top >= otherBottom ||
-      right <= otherLeft ||
-      left >= otherRight
+      bottom <= moverTop ||
+      top >= moverBottom ||
+      right <= moverLeft ||
+      left >= moverRight
     ) {
       return false;
     }
     return true;
   }
 
-  isHitTopBy(otherComponent: CanvasComponent) {
+  isHitTopBy(mover: CanvasComponent) {
     const { left, right, top } = this;
     const {
-      left: otherLeft,
-      right: otherRight,
-      top: otherTop,
-      bottom: otherBottom,
-    } = otherComponent;
+      left: moverLeft,
+      right: moverRight,
+      top: moverTop,
+      bottom: moverBottom,
+    } = mover;
 
-    const otherIsUnder = top <= otherTop;
-    if (otherIsUnder) {
+    const moverIsUnder = top <= moverTop;
+    if (moverIsUnder) {
       return false;
     }
 
-    const otherIsLeftSide = left >= otherRight;
-    if (otherIsLeftSide) {
+    const moverIsLeftSide = left >= moverRight;
+    if (moverIsLeftSide) {
       return false;
     }
 
-    const otherIsRightSide = right <= otherLeft;
-    if (otherIsRightSide) {
+    const moverIsRightSide = right <= moverLeft;
+    if (moverIsRightSide) {
       return false;
     }
 
-    return top <= otherBottom;
+    return top <= moverBottom;
   }
 
-  getGapWith(otherComponent: CanvasComponent) {
-    return this.y - otherComponent.height;
+  getGapWith(mover: CanvasComponent) {
+    return this.y - mover.height;
   }
 }
 
