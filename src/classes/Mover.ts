@@ -71,6 +71,7 @@ class Mover extends CanvasComponent {
 
     const hitFloor = floors.find((floor) => floor.isHitSideBy(this));
     if (hitFloor) {
+      this.acceleration = 0;
       this.x = hitFloor.getGapSideWith(this);
     }
   }
