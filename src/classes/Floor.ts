@@ -14,26 +14,6 @@ class Floor extends CanvasComponent {
     super(x, y, width, Floor.INITIAL_HEIGHT, color);
   }
 
-  isHitBy(mover: CanvasComponent) {
-    const { left, right, top, bottom } = this;
-    const {
-      left: moverLeft,
-      right: moverRight,
-      top: moverTop,
-      bottom: moverBottom,
-    } = mover;
-
-    if (
-      bottom <= moverTop ||
-      top >= moverBottom ||
-      right <= moverLeft ||
-      left >= moverRight
-    ) {
-      return false;
-    }
-    return true;
-  }
-
   isHitSideBy(mover: Mover) {
     const { left, right, top, bottom } = this;
     const {
