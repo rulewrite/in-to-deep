@@ -47,13 +47,7 @@ class App extends Component {
       this.MOVER.moveSide(directions);
     }
 
-    const hitFloor = floors.find((floor) => {
-      if (floor.isHitTopBy(this.MOVER)) {
-        return false;
-      }
-      return floor.isHitSideBy(this.MOVER);
-    });
-
+    const hitFloor = floors.find((floor) => floor.isHitSideBy(this.MOVER));
     if (hitFloor) {
       this.MOVER.x = hitFloor.getGapSideWith(this.MOVER);
     }
@@ -61,9 +55,9 @@ class App extends Component {
 
   private draw(context: CanvasRenderingContext2D) {
     const floors = [
-      new Floor(120, 60, 300, 'red'),
-      new Floor(0, 100, 300, 'blue'),
-      new Floor(350, 100, 300, 'yellow'),
+      new Floor(120, 150, 300, 'red'),
+      new Floor(0, 500, 300, 'blue'),
+      new Floor(380, 101, 300, 'purple'),
       new Floor(120, 360, 8000, 'green'),
     ];
 

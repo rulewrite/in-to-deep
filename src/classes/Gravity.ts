@@ -21,6 +21,9 @@ class Gravity {
 
   operate(floors: Floor[]) {
     this.gravitableMovers.forEach((gravitableMover) => {
+      gravitableMover.speed += this.force;
+      gravitableMover.mover.y += gravitableMover.speed;
+
       const hitFloor = floors.find((floor) =>
         floor.isHitTopBy(gravitableMover.mover)
       );
@@ -29,9 +32,6 @@ class Gravity {
         gravitableMover.mover.y = hitFloor.getGapWith(gravitableMover.mover);
         return;
       }
-
-      gravitableMover.speed += this.force;
-      gravitableMover.mover.y += gravitableMover.speed;
     });
   }
 }
