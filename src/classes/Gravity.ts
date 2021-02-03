@@ -22,7 +22,7 @@ class Gravity {
   operate(floors: Floor[]) {
     this.gravitableMovers.forEach((gravitableMover) => {
       const hitFloor = floors.find((floor) =>
-        floor.isHitBy(gravitableMover.mover)
+        floor.isHitTopBy(gravitableMover.mover)
       );
       if (hitFloor) {
         gravitableMover.speed = Gravity.INITIAL_SPEED;

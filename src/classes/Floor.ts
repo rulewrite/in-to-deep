@@ -33,6 +33,33 @@ class Floor extends CanvasComponent {
     return true;
   }
 
+  isHitTopBy(otherComponent: CanvasComponent) {
+    const { left, right, top } = this;
+    const {
+      left: otherLeft,
+      right: otherRight,
+      top: otherTop,
+      bottom: otherBottom,
+    } = otherComponent;
+
+    const otherIsUnder = top <= otherTop;
+    if (otherIsUnder) {
+      return false;
+    }
+
+    const otherIsLeftSide = left >= otherRight;
+    if (otherIsLeftSide) {
+      return false;
+    }
+
+    const otherIsRightSide = right <= otherLeft;
+    if (otherIsRightSide) {
+      return false;
+    }
+
+    return top <= otherBottom;
+  }
+
   getGapWith(otherComponent: CanvasComponent) {
     return this.y - otherComponent.height;
   }
