@@ -1,6 +1,5 @@
+import { Directions } from 'App';
 import CanvasComponent from './CanvasComponent';
-
-type Directions = 'LEFT' | 'RIGHT';
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
@@ -38,25 +37,29 @@ class Mover extends CanvasComponent {
     this.MIDDLE = this.height / 2;
   }
 
-  private accumulateSpeed(pressedDirections?: Directions) {
-    if (!pressedDirections || pressedDirections !== this.directions) {
+  accumulateSpeed(pressedDirections?: Directions) {
+    if (!pressedDirections) {
       this.speed = 0;
       return;
+    }
+
+    if (pressedDirections !== this.directions) {
+      this.speed = 0;
+      this.directions = pressedDirections;
     }
 
     this.speed = Math.min(this.speed + Mover.ACCELERATION, Mover.MAXIMUM_SPEED);
   }
 
-  moveSide(pressedDirections?: Directions) {
-    this.accumulateSpeed(pressedDirections);
-
-    if (!pressedDirections) {
-      return;
+  moveSide(pressedDirections: Directions) {
+    switch (pressedDirections) {
+      case 'RIGHT':
+        this.x += this.speed;
+        return;
+      case 'LEFT':
+        this.x -= this.speed;
+        return;
     }
-
-    this.directions = pressedDirections;
-
-    this.x += this.speed * (pressedDirections === 'RIGHT' ? 1 : -1);
   }
 
   renderCanvas(context: CanvasRenderingContext2D) {

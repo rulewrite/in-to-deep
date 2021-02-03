@@ -6,6 +6,8 @@ import Gravity from '@classes/Gravity';
 import Floor from '@classes/Floor';
 import Keyboard from '@classes/Keyboard';
 
+export type Directions = 'LEFT' | 'RIGHT';
+
 class App extends Component {
   private static readonly KEYBOARD = new Keyboard();
 
@@ -20,20 +22,29 @@ class App extends Component {
     this.draw = this.draw.bind(this);
   }
 
-  private moving() {
+  private getDirections(): Directions | undefined {
     const { isPressedRight, isPressedLeft, isPressedMovingKey } = App.KEYBOARD;
 
     if (!isPressedMovingKey || (isPressedRight && isPressedLeft)) {
-      this.MOVER.moveSide();
-      return;
+      return undefined;
     }
 
     if (isPressedRight && !isPressedLeft) {
-      this.MOVER.moveSide('RIGHT');
+      return 'RIGHT';
     }
 
     if (isPressedLeft && !isPressedRight) {
-      this.MOVER.moveSide('LEFT');
+      return 'LEFT';
+    }
+  }
+
+  private moving() {
+    const directions = this.getDirections();
+
+    this.MOVER.accumulateSpeed(directions);
+
+    if (directions) {
+      this.MOVER.moveSide(directions);
     }
   }
 
