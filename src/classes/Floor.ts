@@ -80,7 +80,7 @@ class Floor extends CanvasComponent {
     return top <= moverBottom;
   }
 
-  getGapWith(mover: CanvasComponent) {
+  getGapTopWith(mover: CanvasComponent) {
     return this.y - mover.height;
   }
 }

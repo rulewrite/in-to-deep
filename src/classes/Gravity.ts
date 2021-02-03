@@ -14,7 +14,7 @@ class Gravity {
     const hitFloor = floors.find((floor) => floor.isHitTopBy(this.mover));
     if (hitFloor) {
       this.mover.gravitationalForce = Gravity.INITIAL_SPEED;
-      this.mover.y = hitFloor.getGapWith(this.mover);
+      this.mover.y = hitFloor.getGapTopWith(this.mover);
       return;
     }
   }
