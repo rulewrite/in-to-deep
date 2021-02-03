@@ -39,7 +39,7 @@ class App extends Component {
   private moving(floors: Floor[]) {
     const directions = this.getDirections();
 
-    this.MOVER.accumulateSpeed(directions);
+    this.MOVER.accelerate(directions);
 
     if (directions) {
       this.MOVER.moveSide(floors);
