@@ -23,7 +23,7 @@ class App extends Component {
   private moving() {
     const { isPressedRight, isPressedLeft, isPressedMovingKey } = App.KEYBOARD;
 
-    if (!isPressedMovingKey) {
+    if (!isPressedMovingKey || (isPressedRight && isPressedLeft)) {
       this.MOVER.moveSide();
       return;
     }
