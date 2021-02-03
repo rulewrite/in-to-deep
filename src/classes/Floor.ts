@@ -4,8 +4,13 @@ class Floor extends CanvasComponent {
   private static readonly INITIAL_HEIGHT = 20;
   private static readonly INITIAL_COLOR = 'black';
 
-  constructor(x: number, y: number, width: number) {
-    super(x, y, width, Floor.INITIAL_HEIGHT, Floor.INITIAL_COLOR);
+  constructor(
+    x: number,
+    y: number,
+    width: number,
+    color = Floor.INITIAL_COLOR
+  ) {
+    super(x, y, width, Floor.INITIAL_HEIGHT, color);
   }
 
   isHitBy(otherComponent: CanvasComponent) {

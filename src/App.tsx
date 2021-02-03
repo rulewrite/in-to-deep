@@ -38,7 +38,12 @@ class App extends Component {
   }
 
   private draw(context: CanvasRenderingContext2D) {
-    const floors = [new Floor(0, 300, 40), new Floor(40, 460, 8000)];
+    const floors = [
+      new Floor(120, 60, 300, 'red'),
+      new Floor(0, 100, 300, 'blue'),
+      new Floor(350, 100, 300, 'yellow'),
+      new Floor(120, 360, 8000, 'green'),
+    ];
 
     this.moving();
     this.GRAVITY.operate(floors);
