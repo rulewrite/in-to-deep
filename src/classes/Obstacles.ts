@@ -2,8 +2,8 @@ import CanvasComponent from './CanvasComponent';
 import Floor from './Floor';
 
 class Obstacles {
-  private static readonly INITIAL_GENERATION_INTERVAL = 150;
-  private static readonly GAP_MARGIN = 30;
+  private static readonly INITIAL_GENERATION_INTERVAL = 180;
+  private static readonly GAP_MARGIN = 100;
   private static getRandomRangeValue(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
