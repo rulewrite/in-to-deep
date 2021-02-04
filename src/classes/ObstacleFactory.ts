@@ -24,7 +24,7 @@ class ObstacleFactory {
   ) {
     const widthWithMargin = ObstacleFactory.GAP_MARGIN + passer.width;
     this.minimumWidth = this.minimumGap = widthWithMargin;
-    this.maximumWidth = canvasWidth - widthWithMargin;
+    this.maximumWidth = canvasWidth - this.minimumWidth - this.minimumGap;
   }
 
   generation() {
