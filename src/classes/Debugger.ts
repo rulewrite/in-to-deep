@@ -1,3 +1,4 @@
+import { GameProps } from '@components/Game';
 import CanvasComponent from './CanvasComponent';
 
 export default class Debugger {
@@ -7,11 +8,11 @@ export default class Debugger {
   static renderPosition(
     context: CanvasRenderingContext2D,
     canvasComponents: CanvasComponent[] = [],
-    canvas: { width: number; height: number }
+    game: GameProps
   ) {
     context.fillStyle = 'red';
 
-    context.fillRect(canvas.width, 0, 1, canvas.height);
+    context.fillRect(game.width, 0, 1, game.height);
 
     canvasComponents.forEach((canvasComponent) => {
       const { x, y } = canvasComponent;

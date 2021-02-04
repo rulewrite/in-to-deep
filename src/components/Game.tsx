@@ -10,18 +10,19 @@ import Debugger from '@classes/Debugger';
 
 export type Directions = 'LEFT' | 'RIGHT';
 
-class Game extends Component {
+export interface GameProps {
+  width: number;
+  height: number;
+}
+
+class Game extends Component<GameProps> {
   private static readonly KEYBOARD = new Keyboard();
 
-  private readonly CANVAS = {
-    width: 800,
-    height: 600,
-  };
   private readonly HERO = new Hero(60, 30, 30, 30);
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly SCROLL = new Scroll();
   private readonly OBSTACLES = new Obstacles(
-    new ObstacleFactory(this.CANVAS.width, this.CANVAS.height, this.HERO)
+    new ObstacleFactory(this.props.width, this.props.height, this.HERO)
   );
 
   constructor(props: any) {
@@ -58,17 +59,20 @@ class Game extends Component {
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
 
-    Debugger.renderPosition(context, [this.HERO, ...floors], this.CANVAS);
+    Debugger.renderPosition(context, [this.HERO, ...floors], this.props);
   }
 
   render() {
-    const { draw } = this;
+    const {
+      draw,
+      props: { width, height },
+    } = this;
 
     return (
       <Canvas
         draw={draw}
-        width={this.CANVAS.width + 100}
-        height={this.CANVAS.height}
+        width={width + 100}
+        height={height}
         isClearEachFrame={true}
       />
     );
