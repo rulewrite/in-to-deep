@@ -13,6 +13,7 @@ class Mover extends CanvasComponent {
   directions: Directions = 'RIGHT';
   gravitationalForce = 0;
   isOnFloor = false;
+
   private _acceleration = Mover.INITIAL_ACCELERATION;
   private get acceleration() {
     if (this.isOnFloor) {
@@ -27,7 +28,6 @@ class Mover extends CanvasComponent {
     }
     return this._maximumSpeed * Mover.ACCELERATION_RATE_IN_AIR;
   }
-
   private speed = 0;
   private readonly MIDDLE: number;
   private get headToX() {
