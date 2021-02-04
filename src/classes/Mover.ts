@@ -3,7 +3,7 @@ import CanvasComponent from './CanvasComponent';
 import Floor from './Floor';
 
 class Mover extends CanvasComponent {
-  private static readonly INITIAL_ACCELERATION = 0.09;
+  private static readonly INITIAL_ACCELERATION = 0.14;
   private static readonly INITIAL_MAXIMUM_SPEED = 5;
   private static readonly DECELERATION_SPEED_IN_AIR = 0.1;
   private static readonly ACCELERATION_RATE_IN_AIR = 0.3;
