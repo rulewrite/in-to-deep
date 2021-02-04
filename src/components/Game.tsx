@@ -7,18 +7,22 @@ import Scroll from '@classes/Scroll';
 import Obstacles from '@classes/Obstacles';
 import ObstacleFactory from '@classes/ObstacleFactory';
 import Debugger from '@classes/Debugger';
+import Area from '@classes/Area';
 
 export type Directions = 'LEFT' | 'RIGHT';
 
-export interface GameProps {
+class Game extends Component<{
   width: number;
   height: number;
-}
-
-class Game extends Component<GameProps> {
+}> {
   private static readonly KEYBOARD = new Keyboard();
 
   private readonly HERO = new Hero(60, 30, 30, 30);
+  private readonly AREA = new Area(
+    this.props.width,
+    this.props.height,
+    this.HERO
+  );
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly SCROLL = new Scroll();
   private readonly OBSTACLES = new Obstacles(
@@ -55,11 +59,12 @@ class Game extends Component<GameProps> {
     this.SCROLL.wind(floors);
     this.GRAVITY.realize(floors);
     this.HERO.moveSide(floors, pressedDirections);
+    this.AREA.detect();
 
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
 
-    Debugger.renderPosition(context, [this.HERO, ...floors], this.props);
+    Debugger.renderPosition(context, [this.HERO, ...floors], this.AREA);
   }
 
   render() {
