@@ -11,18 +11,19 @@ import Area from '@classes/Area';
 
 export type Directions = 'LEFT' | 'RIGHT';
 
-class Game extends Component<{
-  width: number;
-  height: number;
-}> {
+class Game extends Component<
+  {
+    width: number;
+    height: number;
+  },
+  {
+    isRunning: boolean;
+  }
+> {
   private static readonly KEYBOARD = new Keyboard();
 
   private readonly HERO = new Hero(60, 30, 30, 30);
-  private readonly AREA = new Area(
-    this.props.width,
-    this.props.height,
-    this.HERO
-  );
+  private readonly AREA = new Area(this.props.width, this.props.height);
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly SCROLL = new Scroll();
   private readonly OBSTACLES = new Obstacles(
@@ -31,6 +32,10 @@ class Game extends Component<{
 
   constructor(props: any) {
     super(props);
+
+    this.state = {
+      isRunning: true,
+    };
 
     this.draw = this.draw.bind(this);
   }
@@ -51,6 +56,20 @@ class Game extends Component<{
     }
   }
 
+  private isOver() {
+    if (!this.AREA.isHitDeadlineBy(this.HERO)) {
+      return false;
+    }
+
+    this.setState((state) => {
+      return {
+        ...state,
+        isRunning: false,
+      };
+    });
+    return true;
+  }
+
   private draw(context: CanvasRenderingContext2D) {
     const pressedDirections = this.getPressedDirections();
     const { floors } = this.OBSTACLES;
@@ -59,7 +78,10 @@ class Game extends Component<{
     this.SCROLL.wind(floors);
     this.GRAVITY.realize(floors);
     this.HERO.moveSide(floors, pressedDirections);
-    this.AREA.detect();
+    this.AREA.blockSide(this.HERO);
+    if (this.isOver()) {
+      context.fillText('GAME OVER', this.AREA.center, this.AREA.middle);
+    }
 
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
@@ -70,12 +92,14 @@ class Game extends Component<{
   render() {
     const {
       draw,
+      state: { isRunning },
       props: { width, height },
     } = this;
 
     return (
       <Canvas
         draw={draw}
+        isBreak={!isRunning}
         width={width + 100}
         height={height}
         isClearEachFrame={true}

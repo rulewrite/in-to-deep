@@ -1,20 +1,42 @@
-import Mover from './Mover';
+import CanvasComponent from './CanvasComponent';
 
 export default class Area {
-  constructor(
-    public width: number,
-    public height: number,
-    private mover: Mover
-  ) {}
+  center: number;
+  middle: number;
 
-  detect() {
-    const { left, right } = this.mover;
+  constructor(public width: number, public height: number) {
+    this.center = width / 2;
+    this.middle = height / 2;
+  }
+
+  blockSide(otherComponent: CanvasComponent) {
+    const { width } = this;
+    const { left, right } = otherComponent;
+
     if (left < 0) {
-      this.mover.x = 0;
+      otherComponent.x = 0;
     }
 
-    if (right > this.width) {
-      this.mover.x = this.width - this.mover.width;
+    if (right > width) {
+      otherComponent.x = width - otherComponent.width;
     }
+  }
+
+  isHitDeadlineBy(otherComponent: CanvasComponent): boolean {
+    const { height } = this;
+    const { top, bottom } = otherComponent;
+
+    return top < 0 || bottom > height;
+  }
+
+  isHitEdgeBy(otherComponent: CanvasComponent): boolean {
+    if (this.isHitDeadlineBy(otherComponent)) {
+      return true;
+    }
+
+    const { width } = this;
+    const { left, right } = otherComponent;
+
+    return left < 0 || right > width;
   }
 }

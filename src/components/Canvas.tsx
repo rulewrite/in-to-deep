@@ -1,17 +1,23 @@
 import React, { useEffect, useRef } from 'react';
 
-export type CanvasProps = JSX.IntrinsicElements['canvas'] & {
+type CanvasProps = JSX.IntrinsicElements['canvas'] & {
   draw: (context: CanvasRenderingContext2D) => void;
   isClearEachFrame?: boolean;
+  isBreak: boolean;
 };
 
-const Canvas = ({ draw, isClearEachFrame = false, ...props }: CanvasProps) => {
+const Canvas = ({
+  draw,
+  isClearEachFrame = false,
+  isBreak = false,
+  ...props
+}: CanvasProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     const context = canvasRef.current?.getContext('2d');
 
-    if (context) {
+    if (context && !isBreak) {
       let animationFrameId: number;
 
       const render = () => {
@@ -28,7 +34,7 @@ const Canvas = ({ draw, isClearEachFrame = false, ...props }: CanvasProps) => {
         window.cancelAnimationFrame(animationFrameId);
       };
     }
-  }, [draw, isClearEachFrame]);
+  }, [draw, isClearEachFrame, isBreak]);
 
   return <canvas ref={canvasRef} {...props} />;
 };
