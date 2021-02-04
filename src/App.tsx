@@ -69,7 +69,7 @@ class App extends Component {
       <div className="App">
         <Canvas
           draw={draw}
-          width={this.CANVAS.width + 1000}
+          width={this.CANVAS.width + 100}
           height={this.CANVAS.height}
           isClearEachFrame={true}
         />
