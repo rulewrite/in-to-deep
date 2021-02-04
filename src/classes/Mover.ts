@@ -1,4 +1,4 @@
-import { Directions } from 'App';
+import { Directions } from '@components/Game';
 import CanvasComponent from './CanvasComponent';
 import Floor from './Floor';
 
