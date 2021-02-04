@@ -16,7 +16,7 @@ const GameBoard = ({ width, height }: { width: number; height: number }) => {
 
   return (
     <>
-      <ScoreBoard />
+      <ScoreBoard isBreak={!isRunning} />
       <Canvas
         draw={draw}
         isBreak={!isRunning}
