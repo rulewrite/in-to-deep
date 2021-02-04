@@ -7,6 +7,7 @@ import Hero from '@classes/Hero';
 import Scroll from '@classes/Scroll';
 import Obstacles from '@classes/Obstacles';
 import ObstacleFactory from '@classes/ObstacleFactory';
+import Debugger from '@classes/Debugger';
 
 export type Directions = 'LEFT' | 'RIGHT';
 
@@ -55,6 +56,8 @@ class App extends Component {
 
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
+
+    Debugger.renderPosition([this.HERO, ...floors], context);
   }
 
   render() {
