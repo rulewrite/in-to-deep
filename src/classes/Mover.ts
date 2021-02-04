@@ -5,11 +5,13 @@ import Floor from './Floor';
 class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly ACCELERATION = 0.09;
+  private static readonly SLOWDONW_RATE_IN_THE_AIR = 0.3;
   private static readonly MAXIMUM_SPEED = 5;
   private static readonly HEAD_WIDTH = 10;
 
   directions: Directions = 'RIGHT';
   gravitationalForce = 0;
+  isOnFloor = false;
 
   private speed = 0;
   private readonly MIDDLE: number;
@@ -46,7 +48,19 @@ class Mover extends CanvasComponent {
       return;
     }
 
-    this.speed = Math.min(this.speed + Mover.ACCELERATION, Mover.MAXIMUM_SPEED);
+    const maximumSpeed = this.isOnFloor
+      ? Mover.MAXIMUM_SPEED
+      : Mover.MAXIMUM_SPEED * Mover.SLOWDONW_RATE_IN_THE_AIR;
+    const acceleration = this.isOnFloor
+      ? Mover.ACCELERATION
+      : Mover.ACCELERATION * Mover.SLOWDONW_RATE_IN_THE_AIR;
+
+    if (this.speed > maximumSpeed) {
+      this.speed -= Mover.ACCELERATION;
+      return;
+    }
+
+    this.speed = Math.min(this.speed + acceleration, maximumSpeed);
   }
 
   moveSide(floors: Floor[], pressedDirections?: Directions) {

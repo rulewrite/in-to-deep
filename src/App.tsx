@@ -39,10 +39,10 @@ class App extends Component {
   private draw(context: CanvasRenderingContext2D) {
     const pressedDirections = this.getPressedDirections();
     const floors = [
-      new Floor(120, 150, 300, 'red'),
-      new Floor(0, 500, 300, 'blue'),
-      new Floor(380, 101, 300, 'purple'),
-      new Floor(120, 360, 8000, 'green'),
+      // new Floor(0, 100, 100, 'red'),
+      // new Floor(0, 200, 300, 'purple'),
+      new Floor(0, 300, 400, 'green'),
+      new Floor(0, 500, 600, 'blue'),
     ];
 
     this.GRAVITY.realize(floors);
