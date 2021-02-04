@@ -6,6 +6,7 @@ import Keyboard from '@classes/Keyboard';
 import Hero from '@classes/Hero';
 import Scroll from '@classes/Scroll';
 import Obstacles from '@classes/Obstacles';
+import ObstacleFactory from '@classes/ObstacleFactory';
 
 export type Directions = 'LEFT' | 'RIGHT';
 
@@ -18,9 +19,7 @@ class App extends Component {
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly SCROLL = new Scroll();
   private readonly OBSTACLES = new Obstacles(
-    this.CANVAS_WIDTH,
-    this.CANVAS_HEIGHT,
-    this.HERO
+    new ObstacleFactory(this.CANVAS_WIDTH, this.CANVAS_HEIGHT, this.HERO)
   );
 
   constructor(props: any) {
