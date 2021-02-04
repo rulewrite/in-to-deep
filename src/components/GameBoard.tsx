@@ -1,11 +1,12 @@
 import React from 'react';
 import Canvas from '@components/Canvas';
 import Game from '@classes/Game';
+import ScoreBoard from './ScoreBoard';
 
 const GameBoard = ({ width, height }: { width: number; height: number }) => {
   const [isRunning, setIsRunning] = React.useState(true);
-  const GAME = new Game(width, height);
 
+  const GAME = new Game(width, height);
   const draw = (context: CanvasRenderingContext2D) => {
     GAME.run(context);
     if (GAME.isOver()) {
@@ -14,13 +15,16 @@ const GameBoard = ({ width, height }: { width: number; height: number }) => {
   };
 
   return (
-    <Canvas
-      draw={draw}
-      isBreak={!isRunning}
-      width={width + 100}
-      height={height}
-      isClearEachFrame={true}
-    />
+    <>
+      <ScoreBoard />
+      <Canvas
+        draw={draw}
+        isBreak={!isRunning}
+        width={width + 100}
+        height={height}
+        isClearEachFrame={true}
+      />
+    </>
   );
 };
 
