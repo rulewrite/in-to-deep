@@ -22,7 +22,6 @@ const GameBoard = ({ width, height }: { width: number; height: number }) => {
         isBreak={!isRunning}
         width={width + 100}
         height={height}
-        isClearEachFrame={true}
       />
     </>
   );

@@ -8,7 +8,7 @@ type CanvasProps = JSX.IntrinsicElements['canvas'] & {
 
 const Canvas = ({
   draw,
-  isClearEachFrame = false,
+  isClearEachFrame = true,
   isBreak = false,
   ...props
 }: CanvasProps) => {
