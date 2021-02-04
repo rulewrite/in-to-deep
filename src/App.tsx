@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
 import Canvas from '@components/Canvas';
-import Mover from '@classes/Mover';
 import Gravity from '@classes/Gravity';
 import Floor from '@classes/Floor';
 import Keyboard from '@classes/Keyboard';
+import Hero from '@classes/Hero';
 
 export type Directions = 'LEFT' | 'RIGHT';
 
 class App extends Component {
   private static readonly KEYBOARD = new Keyboard();
 
-  private readonly MOVER = new Mover(60, 30, 30, 30);
-  private readonly GRAVITY = new Gravity(this.MOVER);
+  private readonly HERO = new Hero(60, 30, 30, 30);
+  private readonly GRAVITY = new Gravity(this.HERO);
 
   constructor(props: any) {
     super(props);
@@ -46,9 +46,9 @@ class App extends Component {
     ];
 
     this.GRAVITY.realize(floors);
-    this.MOVER.moveSide(floors, pressedDirections);
+    this.HERO.moveSide(floors, pressedDirections);
 
-    this.MOVER.renderCanvas(context);
+    this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
   }
 
