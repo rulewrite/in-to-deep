@@ -14,13 +14,15 @@ export type Directions = 'LEFT' | 'RIGHT';
 class App extends Component {
   private static readonly KEYBOARD = new Keyboard();
 
-  private readonly CANVAS_WIDTH = 800;
-  private readonly CANVAS_HEIGHT = 600;
+  private readonly CANVAS = {
+    width: 800,
+    height: 600,
+  };
   private readonly HERO = new Hero(60, 30, 30, 30);
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly SCROLL = new Scroll();
   private readonly OBSTACLES = new Obstacles(
-    new ObstacleFactory(this.CANVAS_WIDTH, this.CANVAS_HEIGHT, this.HERO)
+    new ObstacleFactory(this.CANVAS.width, this.CANVAS.height, this.HERO)
   );
 
   constructor(props: any) {
@@ -57,7 +59,7 @@ class App extends Component {
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
 
-    Debugger.renderPosition([this.HERO, ...floors], context);
+    Debugger.renderPosition(context, [this.HERO, ...floors], this.CANVAS);
   }
 
   render() {
@@ -67,8 +69,8 @@ class App extends Component {
       <div className="App">
         <Canvas
           draw={draw}
-          width={this.CANVAS_WIDTH}
-          height={this.CANVAS_HEIGHT}
+          width={this.CANVAS.width + 1000}
+          height={this.CANVAS.height}
           isClearEachFrame={true}
         />
       </div>

@@ -5,13 +5,17 @@ export default class Debugger {
     return Math.floor(number);
   }
   static renderPosition(
-    canvasComponents: CanvasComponent[],
-    context: CanvasRenderingContext2D
+    context: CanvasRenderingContext2D,
+    canvasComponents: CanvasComponent[] = [],
+    canvas: { width: number; height: number }
   ) {
+    context.fillStyle = 'red';
+
+    context.fillRect(canvas.width, 0, 1, canvas.height);
+
     canvasComponents.forEach((canvasComponent) => {
       const { x, y } = canvasComponent;
       context.font = '20px san-serif';
-      context.fillStyle = 'red';
 
       const cleanX = this.cleaning(x);
       const cleanY = this.cleaning(y);
