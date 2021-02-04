@@ -4,14 +4,29 @@ import Floor from './Floor';
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_COLOR = '#d40000';
-  private static readonly ACCELERATION = 0.09;
-  private static readonly SLOWDONW_RATE_IN_THE_AIR = 0.3;
-  private static readonly MAXIMUM_SPEED = 5;
+  private static readonly INITIAL_ACCELERATION = 0.09;
+  private static readonly INITIAL_MAXIMUM_SPEED = 5;
+  private static readonly DECELERATION_SPEED_IN_AIR = 0.1;
+  private static readonly ACCELERATION_RATE_IN_AIR = 0.3;
   private static readonly HEAD_WIDTH = 10;
 
   directions: Directions = 'RIGHT';
   gravitationalForce = 0;
   isOnFloor = false;
+  private _acceleration = Mover.INITIAL_ACCELERATION;
+  private get acceleration() {
+    if (this.isOnFloor) {
+      return this._acceleration;
+    }
+    return this._acceleration * Mover.ACCELERATION_RATE_IN_AIR;
+  }
+  private _maximumSpeed = Mover.INITIAL_MAXIMUM_SPEED;
+  private get maximumSpeed() {
+    if (this.isOnFloor) {
+      return this._maximumSpeed;
+    }
+    return this._maximumSpeed * Mover.ACCELERATION_RATE_IN_AIR;
+  }
 
   private speed = 0;
   private readonly MIDDLE: number;
@@ -48,15 +63,10 @@ class Mover extends CanvasComponent {
       return;
     }
 
-    const maximumSpeed = this.isOnFloor
-      ? Mover.MAXIMUM_SPEED
-      : Mover.MAXIMUM_SPEED * Mover.SLOWDONW_RATE_IN_THE_AIR;
-    const acceleration = this.isOnFloor
-      ? Mover.ACCELERATION
-      : Mover.ACCELERATION * Mover.SLOWDONW_RATE_IN_THE_AIR;
+    const { maximumSpeed, acceleration } = this;
 
     if (this.speed > maximumSpeed) {
-      this.speed -= Mover.ACCELERATION;
+      this.speed -= Mover.DECELERATION_SPEED_IN_AIR;
       return;
     }
 
@@ -88,6 +98,7 @@ class Mover extends CanvasComponent {
   }
 
   renderCanvas(context: CanvasRenderingContext2D) {
+    context.fillText(`${this.isOnFloor}: ${this.speed}`, 10, 10);
     context.fillStyle = this.color;
     context.beginPath();
     context.moveTo(this.headToX, this.headToY);
