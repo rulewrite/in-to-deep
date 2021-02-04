@@ -11,7 +11,7 @@ class Mover extends CanvasComponent {
   directions: Directions = 'RIGHT';
   gravitationalForce = 0;
 
-  private acceleration = 0;
+  private speed = 0;
   private readonly MIDDLE: number;
   private get headToX() {
     return this.directions === 'LEFT' ? this.x : this.right;
@@ -42,14 +42,11 @@ class Mover extends CanvasComponent {
 
   private accelerate(pressedDirections?: Directions) {
     if (pressedDirections !== this.directions) {
-      this.acceleration = 0;
+      this.speed = 0;
       return;
     }
 
-    this.acceleration = Math.min(
-      this.acceleration + Mover.ACCELERATION,
-      Mover.MAXIMUM_SPEED
-    );
+    this.speed = Math.min(this.speed + Mover.ACCELERATION, Mover.MAXIMUM_SPEED);
   }
 
   moveSide(floors: Floor[], pressedDirections?: Directions) {
@@ -62,16 +59,16 @@ class Mover extends CanvasComponent {
     this.directions = pressedDirections;
     switch (this.directions) {
       case 'RIGHT':
-        this.x += this.acceleration;
+        this.x += this.speed;
         break;
       case 'LEFT':
-        this.x -= this.acceleration;
+        this.x -= this.speed;
         break;
     }
 
     const hitFloor = floors.find((floor) => floor.isHitSideBy(this));
     if (hitFloor) {
-      this.acceleration = 0;
+      this.speed = 0;
       this.x = hitFloor.getGapSideWith(this);
     }
   }
