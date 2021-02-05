@@ -1,10 +1,12 @@
 import CanvasComponent from './CanvasComponent';
 import Mover from './Mover';
+import { v4 as uuidv4 } from 'uuid';
 
 class Floor extends CanvasComponent {
   private static readonly INITIAL_HEIGHT = 20;
   private static readonly INITIAL_COLOR = 'black';
 
+  id = uuidv4();
   constructor(
     x: number,
     y: number,
@@ -14,7 +16,7 @@ class Floor extends CanvasComponent {
     super(x, y, width, Floor.INITIAL_HEIGHT, color);
   }
 
-  isHitSideBy(mover: Mover) {
+  private isHitSideBy(mover: Mover) {
     const { left, right, top, bottom } = this;
     const {
       left: moverLeft,
@@ -43,7 +45,7 @@ class Floor extends CanvasComponent {
     return isHitLeft && isHitRight;
   }
 
-  getGapSideWith(mover: Mover) {
+  private getGapSideWith(mover: Mover) {
     const { left, right } = this;
     const { directions } = mover;
 
@@ -58,7 +60,7 @@ class Floor extends CanvasComponent {
     return mover.x;
   }
 
-  isHitTopBy(mover: Mover) {
+  private isHitTopBy(mover: Mover) {
     const { left, right, top } = this;
     const {
       left: moverLeft,
@@ -90,8 +92,23 @@ class Floor extends CanvasComponent {
     return top <= moverBottom;
   }
 
-  getGapTopWith(mover: CanvasComponent) {
+  private getGapTopWith(mover: Mover) {
     return this.y - mover.height;
+  }
+
+  repel(mover: Mover) {
+    const isHitTop = this.isHitTopBy(mover);
+    isHitTop ? mover.onFloors.add(this.id) : mover.onFloors.delete(this.id);
+    if (isHitTop) {
+      mover.gravitationalForce = 0;
+      mover.y = this.getGapTopWith(mover);
+    }
+
+    const isHitSide = this.isHitSideBy(mover);
+    if (isHitSide) {
+      mover.speed = 0;
+      mover.x = this.getGapSideWith(mover);
+    }
   }
 }
 

@@ -1,5 +1,4 @@
 import CanvasComponent from './CanvasComponent';
-import Floor from './Floor';
 import Keyboard from './Keyboard';
 
 type Directions = 'LEFT' | 'RIGHT';
@@ -12,7 +11,10 @@ class Mover extends CanvasComponent {
 
   directions: Directions = 'RIGHT';
   gravitationalForce = 0;
-  isOnFloor = false;
+  onFloors = new Set<string>();
+  get isOnFloor() {
+    return Boolean(this.onFloors.size);
+  }
   isJumping = false;
   speed = 0;
 
@@ -81,7 +83,7 @@ class Mover extends CanvasComponent {
     this.gravitationalForce -= 5;
   }
 
-  private moveSide(floors: Floor[], pressedDirections?: Directions) {
+  private moveSide(pressedDirections?: Directions) {
     this.accelerate(pressedDirections);
 
     if (!pressedDirections) {
@@ -97,19 +99,13 @@ class Mover extends CanvasComponent {
         this.x -= this.speed;
         break;
     }
-
-    const hitFloor = floors.find((floor) => floor.isHitSideBy(this));
-    if (hitFloor) {
-      this.speed = 0;
-      this.x = hitFloor.getGapSideWith(this);
-    }
   }
 
-  move(keyboard: Keyboard, floors: Floor[]) {
+  move(keyboard: Keyboard) {
     const pressedDirections = this.getPressedDirections(keyboard);
     const { isPressedUp } = keyboard;
 
-    this.moveSide(floors, pressedDirections);
+    this.moveSide(pressedDirections);
     this.moveUp(isPressedUp);
   }
 }

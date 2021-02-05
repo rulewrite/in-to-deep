@@ -33,8 +33,9 @@ export default class Game {
 
     this.OBSTACLES.update();
     this.SCROLL.wind(floors);
-    this.GRAVITY.realize(floors);
-    this.HERO.move(Game.KEYBOARD, floors);
+    this.GRAVITY.realize();
+    this.HERO.move(Game.KEYBOARD);
+    floors.forEach((floors) => floors.repel(this.HERO));
     this.AREA.blockSide(this.HERO);
 
     this.HERO.renderCanvas(context);
