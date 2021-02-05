@@ -1,6 +1,7 @@
 class Keyboard {
-  static readonly SET_LEFT_KEY = new Set(['Left', 'ArrowLeft']);
-  static readonly SET_RIGHT_KEY = new Set(['Right', 'ArrowRight']);
+  private static readonly KEYDOWN_EVENT_TYPE = 'keydown';
+  private static readonly SET_LEFT_KEY = new Set(['Left', 'ArrowLeft']);
+  private static readonly SET_RIGHT_KEY = new Set(['Right', 'ArrowRight']);
 
   isPressedLeft = false;
   isPressedRight = false;
@@ -9,37 +10,24 @@ class Keyboard {
   }
 
   constructor() {
-    document.addEventListener(
-      'keydown',
-      ({ key }) => {
-        if (Keyboard.SET_LEFT_KEY.has(key)) {
-          this.isPressedLeft = true;
-          return;
-        }
+    this.keyListener = this.keyListener.bind(this);
+    document.addEventListener('keydown', this.keyListener, false);
+    document.addEventListener('keyup', this.keyListener, false);
+  }
 
-        if (Keyboard.SET_RIGHT_KEY.has(key)) {
-          this.isPressedRight = true;
-          return;
-        }
-      },
-      false
-    );
+  private keyListener(event: KeyboardEvent) {
+    const { key, type } = event;
+    const isPressed = type === Keyboard.KEYDOWN_EVENT_TYPE;
 
-    document.addEventListener(
-      'keyup',
-      ({ key }) => {
-        if (Keyboard.SET_LEFT_KEY.has(key)) {
-          this.isPressedLeft = false;
-          return;
-        }
+    if (Keyboard.SET_LEFT_KEY.has(key)) {
+      this.isPressedLeft = isPressed;
+      return;
+    }
 
-        if (Keyboard.SET_RIGHT_KEY.has(key)) {
-          this.isPressedRight = false;
-          return;
-        }
-      },
-      false
-    );
+    if (Keyboard.SET_RIGHT_KEY.has(key)) {
+      this.isPressedRight = isPressed;
+      return;
+    }
   }
 }
 
