@@ -21,6 +21,7 @@ class Floor extends CanvasComponent {
       right: moverRight,
       top: moverTop,
       bottom: moverBottom,
+      isJumping,
     } = mover;
 
     const moverIsUnder = bottom <= moverTop;
@@ -30,6 +31,10 @@ class Floor extends CanvasComponent {
 
     const moverIsOver = top >= moverBottom;
     if (moverIsOver) {
+      return false;
+    }
+
+    if (isJumping) {
       return false;
     }
 
@@ -53,13 +58,14 @@ class Floor extends CanvasComponent {
     return mover.x;
   }
 
-  isHitTopBy(mover: CanvasComponent) {
+  isHitTopBy(mover: Mover) {
     const { left, right, top } = this;
     const {
       left: moverLeft,
       right: moverRight,
       top: moverTop,
       bottom: moverBottom,
+      isJumping,
     } = mover;
 
     const moverIsUnder = top <= moverTop;
@@ -74,6 +80,10 @@ class Floor extends CanvasComponent {
 
     const moverIsRightSide = right <= moverLeft;
     if (moverIsRightSide) {
+      return false;
+    }
+
+    if (isJumping) {
       return false;
     }
 

@@ -45,8 +45,22 @@ class Mover extends CanvasComponent {
     this.speed = Math.min(this.speed + acceleration, maximumSpeed);
   }
 
+  private setIsJumping(isPressedUp: boolean) {
+    if (!isPressedUp) {
+      this.isJumping = false;
+      return;
+    }
+
+    this.isJumping = this.isOnFloor;
+  }
+
   moveUp(isPressedUp: boolean) {
-    this.isJumping = this.isOnFloor && isPressedUp;
+    this.setIsJumping(isPressedUp);
+
+    if (!this.isJumping) {
+      return;
+    }
+    this.gravitationalForce -= 5;
   }
 
   moveSide(floors: Floor[], pressedDirections?: Directions) {
