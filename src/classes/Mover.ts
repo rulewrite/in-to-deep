@@ -11,6 +11,7 @@ class Mover extends CanvasComponent {
   directions: Directions = 'RIGHT';
   gravitationalForce = 0;
   isOnFloor = false;
+  isJumping = false;
 
   private _acceleration = Mover.INITIAL_ACCELERATION;
   private get acceleration() {
@@ -42,6 +43,10 @@ class Mover extends CanvasComponent {
     }
 
     this.speed = Math.min(this.speed + acceleration, maximumSpeed);
+  }
+
+  moveUp(isPressedUp: boolean) {
+    this.isJumping = this.isOnFloor && isPressedUp;
   }
 
   moveSide(floors: Floor[], pressedDirections?: Directions) {

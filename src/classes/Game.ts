@@ -48,16 +48,23 @@ export default class Game {
   run(context: CanvasRenderingContext2D) {
     const pressedDirections = this.getPressedDirections();
     const { floors } = this.OBSTACLES;
+    const { isPressedUp } = Game.KEYBOARD;
 
     this.OBSTACLES.update();
     this.SCROLL.wind(floors);
     this.GRAVITY.realize(floors);
     this.HERO.moveSide(floors, pressedDirections);
+    this.HERO.moveUp(isPressedUp);
     this.AREA.blockSide(this.HERO);
 
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
 
-    Debugger.renderPosition(context, [this.HERO, ...floors], this.AREA);
+    Debugger.renderPosition(
+      context,
+      [this.HERO, ...floors],
+      this.AREA,
+      this.HERO
+    );
   }
 }

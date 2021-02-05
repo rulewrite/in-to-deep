@@ -1,5 +1,6 @@
 import Area from './Area';
 import CanvasComponent from './CanvasComponent';
+import Hero from './Hero';
 
 export default class Debugger {
   private static cleaning(number: number) {
@@ -8,11 +9,18 @@ export default class Debugger {
   static renderPosition(
     context: CanvasRenderingContext2D,
     canvasComponents: CanvasComponent[] = [],
-    area: Area
+    area: Area,
+    hero: Hero
   ) {
     context.fillStyle = 'red';
 
     context.fillRect(area.width, 0, 1, area.height);
+
+    context.fillText(
+      `isOnFloor: ${hero.isOnFloor} isJumping: ${hero.isJumping}`,
+      20,
+      20
+    );
 
     canvasComponents.forEach((canvasComponent) => {
       const { x, y } = canvasComponent;
