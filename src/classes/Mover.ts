@@ -113,7 +113,7 @@ class Mover extends CanvasComponent {
       this.directions = pressedDirections;
       this.accelerate(pressedDirections);
     }
-    if (Math.sign(this.directions) !== Math.sign(this.xVelocity)) {
+    if (Math.sign(pressedDirections) !== Math.sign(this.xVelocity)) {
       this.decelerate();
     }
     this.moveSide();
