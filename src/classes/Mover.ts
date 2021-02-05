@@ -12,6 +12,7 @@ class Mover extends CanvasComponent {
   gravitationalForce = 0;
   isOnFloor = false;
   isJumping = false;
+  speed = 0;
 
   private _acceleration = Mover.INITIAL_ACCELERATION;
   private get acceleration() {
@@ -27,7 +28,6 @@ class Mover extends CanvasComponent {
     }
     return this._maximumSpeed * Mover.ACCELERATION_RATE_IN_AIR;
   }
-  private speed = 0;
 
   private accelerate(pressedDirections?: Directions) {
     if (pressedDirections !== this.directions) {

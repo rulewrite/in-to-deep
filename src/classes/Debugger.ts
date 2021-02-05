@@ -17,10 +17,11 @@ export default class Debugger {
     context.fillRect(area.width, 0, 1, area.height);
 
     context.fillText(
-      `isOnFloor: ${hero.isOnFloor} isJumping: ${hero.isJumping}`,
-      20,
+      `isOnFloor: ${hero.isOnFloor}, isJumping: ${hero.isJumping}`,
+      10,
       20
     );
+    context.fillText(`spped: ${hero.speed}`, 10, 40);
 
     canvasComponents.forEach((canvasComponent) => {
       const { x, y } = canvasComponent;
