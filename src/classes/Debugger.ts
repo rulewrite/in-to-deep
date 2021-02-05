@@ -22,6 +22,7 @@ export default class Debugger {
       20
     );
     context.fillText(`xVelocity: ${hero.xVelocity}`, 10, 40);
+    context.fillText(`yVelocity: ${hero.yVelocity}`, 10, 60);
 
     canvasComponents.forEach((canvasComponent) => {
       const { x, y } = canvasComponent;

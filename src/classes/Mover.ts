@@ -10,6 +10,7 @@ class Mover extends CanvasComponent {
   private static readonly INITIAL_ACCELERATION = 0.14;
   private static readonly INITIAL_DECELERATION = 0.5;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
+  private static readonly INITIAL_MAXIMUM_Y_VELOCITY = 5;
   private static readonly AIR_RESISTANCE = 0.3;
 
   directions: Directions = Directions.RIGHT;
@@ -33,6 +34,7 @@ class Mover extends CanvasComponent {
   private get maximumXVelocity() {
     return this.getWithAirResistance(this._maximumXVelocity);
   }
+  private maximumYVelocity = Mover.INITIAL_MAXIMUM_Y_VELOCITY;
 
   private getWithAirResistance(force: number) {
     if (this.isOnFloor) {
@@ -82,22 +84,8 @@ class Mover extends CanvasComponent {
     this.xVelocity = nextXVelocity;
   }
 
-  private setIsJumping(isPressedUp: boolean) {
-    if (!isPressedUp) {
-      this.isJumping = false;
-      return;
-    }
-
-    this.isJumping = this.isOnFloor;
-  }
-
-  private moveUp(isPressedUp: boolean) {
-    this.setIsJumping(isPressedUp);
-
-    if (!this.isJumping) {
-      return;
-    }
-    this.yVelocity -= 5;
+  private moveUp() {
+    this.yVelocity -= this.maximumYVelocity;
   }
 
   private moveSide() {
@@ -115,11 +103,10 @@ class Mover extends CanvasComponent {
     }
     this.moveSide();
 
-    // FIXME: 점프
-    // const { isPressedUp } = keyboard;
-
-    // this.moveSide(pressedDirections);
-    // this.moveUp(isPressedUp);
+    this.isJumping = keyboard.isPressedUp && this.isOnFloor;
+    if (this.isJumping) {
+      this.moveUp();
+    }
   }
 }
 
