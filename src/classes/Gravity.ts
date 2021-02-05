@@ -6,8 +6,8 @@ class Gravity {
   constructor(private mover: Mover, private force = Gravity.INITIAL_FORCE) {}
 
   realize() {
-    this.mover.gravitationalForce += this.force;
-    this.mover.y += this.mover.gravitationalForce;
+    this.mover.yVelocity += this.force;
+    this.mover.y += this.mover.yVelocity;
   }
 }
 

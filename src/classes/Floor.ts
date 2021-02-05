@@ -100,7 +100,7 @@ class Floor extends CanvasComponent {
     const isHitTop = this.isHitTopBy(mover);
     isHitTop ? mover.onFloors.add(this.id) : mover.onFloors.delete(this.id);
     if (isHitTop) {
-      mover.gravitationalForce = 0;
+      mover.yVelocity = 0;
       mover.y = this.getGapTopWith(mover);
     }
 

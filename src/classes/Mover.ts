@@ -9,39 +9,36 @@ export enum Directions {
 class Mover extends CanvasComponent {
   private static readonly INITIAL_ACCELERATION = 0.14;
   private static readonly INITIAL_DECELERATION = 0.5;
-  private static readonly INITIAL_MAXIMUM_SPEED = 5;
-  private static readonly DECELERATION_SPEED_IN_AIR = 0.1;
-  private static readonly ACCELERATION_RATE_IN_AIR = 0.3;
+  private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
+  private static readonly AIR_RESISTANCE = 0.3;
 
   directions: Directions = Directions.RIGHT;
-  gravitationalForce = 0;
+  xVelocity = 0;
+  yVelocity = 0;
+  isJumping = false;
   onFloors = new Set<string>();
   get isOnFloor() {
     return Boolean(this.onFloors.size);
   }
-  isJumping = false;
-  xVelocity = 0;
 
   private _acceleration = Mover.INITIAL_ACCELERATION;
-  private get acceleration() {
-    if (this.isOnFloor) {
-      return this._acceleration;
-    }
-    return this._acceleration * Mover.ACCELERATION_RATE_IN_AIR;
-  }
   private _deceleration = Mover.INITIAL_DECELERATION;
-  private get deceleration() {
-    if (this.isOnFloor) {
-      return this._deceleration;
-    }
-    return this._deceleration * Mover.ACCELERATION_RATE_IN_AIR;
+  private _maximumXVelocity = Mover.INITIAL_MAXIMUM_X_VELOCITY;
+  private get acceleration() {
+    return this.getWithAirResistance(this._acceleration);
   }
-  private _maximumSpeed = Mover.INITIAL_MAXIMUM_SPEED;
-  private get maximumSpeed() {
+  private get deceleration() {
+    return this.getWithAirResistance(this._deceleration);
+  }
+  private get maximumXVelocity() {
+    return this.getWithAirResistance(this._maximumXVelocity);
+  }
+
+  private getWithAirResistance(force: number) {
     if (this.isOnFloor) {
-      return this._maximumSpeed;
+      return force;
     }
-    return this._maximumSpeed * Mover.ACCELERATION_RATE_IN_AIR;
+    return force * Mover.AIR_RESISTANCE;
   }
 
   private getPressedDirections(keyboard: Keyboard): Directions | 0 {
@@ -74,11 +71,11 @@ class Mover extends CanvasComponent {
   }
 
   private accelerate(pressedDirections: Directions) {
-    const { maximumSpeed, acceleration } = this;
+    const { maximumXVelocity, acceleration } = this;
 
     const nextXVelocity = this.xVelocity + acceleration * pressedDirections;
-    if (Math.abs(nextXVelocity) >= maximumSpeed) {
-      this.xVelocity = maximumSpeed * pressedDirections;
+    if (Math.abs(nextXVelocity) >= maximumXVelocity) {
+      this.xVelocity = maximumXVelocity * pressedDirections;
       return;
     }
 
@@ -100,7 +97,7 @@ class Mover extends CanvasComponent {
     if (!this.isJumping) {
       return;
     }
-    this.gravitationalForce -= 5;
+    this.yVelocity -= 5;
   }
 
   private moveSide() {
