@@ -8,8 +8,6 @@ import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
 import Environment from './Environment';
 
-export type Directions = 'LEFT' | 'RIGHT';
-
 export default class Game {
   private static readonly KEYBOARD = new Keyboard();
 
@@ -26,36 +24,17 @@ export default class Game {
     );
   }
 
-  private getPressedDirections(): Directions | undefined {
-    const { isPressedRight, isPressedLeft, isPressedMovingKey } = Game.KEYBOARD;
-
-    if (!isPressedMovingKey || (isPressedRight && isPressedLeft)) {
-      return;
-    }
-
-    if (isPressedRight && !isPressedLeft) {
-      return 'RIGHT';
-    }
-
-    if (isPressedLeft && !isPressedRight) {
-      return 'LEFT';
-    }
-  }
-
   isOver(): boolean {
     return this.AREA.isHitDeadlineBy(this.HERO);
   }
 
   run(context: CanvasRenderingContext2D) {
-    const pressedDirections = this.getPressedDirections();
     const { floors } = this.OBSTACLES;
-    const { isPressedUp } = Game.KEYBOARD;
 
     this.OBSTACLES.update();
     this.SCROLL.wind(floors);
     this.GRAVITY.realize(floors);
-    this.HERO.moveSide(floors, pressedDirections);
-    this.HERO.moveUp(isPressedUp);
+    this.HERO.move(Game.KEYBOARD, floors);
     this.AREA.blockSide(this.HERO);
 
     this.HERO.renderCanvas(context);
