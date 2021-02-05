@@ -8,7 +8,7 @@ type CanvasProps = JSX.IntrinsicElements['canvas'] & {
 
 const Canvas = ({
   draw,
-  isClearEachFrame = false,
+  isClearEachFrame = true,
   isBreak = false,
   ...props
 }: CanvasProps) => {
@@ -16,24 +16,24 @@ const Canvas = ({
 
   useEffect(() => {
     const context = canvasRef.current?.getContext('2d');
-
-    if (context && !isBreak) {
-      let animationFrameId: number;
-
-      const render = () => {
-        if (isClearEachFrame) {
-          context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-        }
-
-        draw(context);
-        animationFrameId = window.requestAnimationFrame(render);
-      };
-      render();
-
-      return () => {
-        window.cancelAnimationFrame(animationFrameId);
-      };
+    if (!context || isBreak) {
+      return () => {};
     }
+
+    let animationFrameId: number;
+    const render = () => {
+      if (isClearEachFrame) {
+        context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+      }
+
+      draw(context);
+      animationFrameId = window.requestAnimationFrame(render);
+    };
+    render();
+
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
   }, [draw, isClearEachFrame, isBreak]);
 
   return <canvas ref={canvasRef} {...props} />;

@@ -1,6 +1,6 @@
-import { Directions } from '@components/Game';
 import CanvasComponent from './CanvasComponent';
 import Floor from './Floor';
+import { Directions } from './Game';
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_ACCELERATION = 0.14;
