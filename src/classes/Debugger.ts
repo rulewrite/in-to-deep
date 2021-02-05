@@ -21,7 +21,7 @@ export default class Debugger {
       10,
       20
     );
-    context.fillText(`spped: ${hero.speed}`, 10, 40);
+    context.fillText(`xVelocity: ${hero.xVelocity}`, 10, 40);
 
     canvasComponents.forEach((canvasComponent) => {
       const { x, y } = canvasComponent;

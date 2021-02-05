@@ -49,11 +49,11 @@ class Floor extends CanvasComponent {
     const { left, right } = this;
     const { directions } = mover;
 
-    if (directions === 'RIGHT') {
+    if (directions === 1) {
       return left - mover.width;
     }
 
-    if (directions === 'LEFT') {
+    if (directions === -1) {
       return right;
     }
 
@@ -106,7 +106,7 @@ class Floor extends CanvasComponent {
 
     const isHitSide = this.isHitSideBy(mover);
     if (isHitSide) {
-      mover.speed = 0;
+      mover.xVelocity = 0;
       mover.x = this.getGapSideWith(mover);
     }
   }
