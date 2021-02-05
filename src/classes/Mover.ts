@@ -85,7 +85,7 @@ class Mover extends CanvasComponent {
   }
 
   private moveUp() {
-    this.yVelocity -= this.maximumYVelocity;
+    this.yVelocity = this.maximumYVelocity * -1;
   }
 
   private moveSide() {
