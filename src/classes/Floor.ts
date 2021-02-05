@@ -1,5 +1,5 @@
 import CanvasComponent from './CanvasComponent';
-import Mover from './Mover';
+import Mover, { Directions } from './Mover';
 import { v4 as uuidv4 } from 'uuid';
 
 class Floor extends CanvasComponent {
@@ -49,11 +49,11 @@ class Floor extends CanvasComponent {
     const { left, right } = this;
     const { directions } = mover;
 
-    if (directions === 1) {
+    if (directions === Directions.RIGHT) {
       return left - mover.width;
     }
 
-    if (directions === -1) {
+    if (directions === Directions.LEFT) {
       return right;
     }
 

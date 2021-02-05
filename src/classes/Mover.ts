@@ -1,6 +1,11 @@
 import CanvasComponent from './CanvasComponent';
 import Keyboard from './Keyboard';
 
+export enum Directions {
+  RIGHT = 1,
+  LEFT = -1,
+}
+
 class Mover extends CanvasComponent {
   private static readonly INITIAL_ACCELERATION = 0.14;
   private static readonly INITIAL_DECELERATION = 0.5;
@@ -8,7 +13,7 @@ class Mover extends CanvasComponent {
   private static readonly DECELERATION_SPEED_IN_AIR = 0.1;
   private static readonly ACCELERATION_RATE_IN_AIR = 0.3;
 
-  directions = 1;
+  directions: Directions = Directions.RIGHT;
   gravitationalForce = 0;
   onFloors = new Set<string>();
   get isOnFloor() {
@@ -39,15 +44,15 @@ class Mover extends CanvasComponent {
     return this._maximumSpeed * Mover.ACCELERATION_RATE_IN_AIR;
   }
 
-  private getPressedDirections(keyboard: Keyboard) {
+  private getPressedDirections(keyboard: Keyboard): Directions | 0 {
     const { isPressedRight, isPressedLeft } = keyboard;
 
     if (isPressedRight && !isPressedLeft) {
-      return 1;
+      return Directions.RIGHT;
     }
 
     if (isPressedLeft && !isPressedRight) {
-      return -1;
+      return Directions.LEFT;
     }
 
     return 0;
@@ -68,7 +73,7 @@ class Mover extends CanvasComponent {
     this.xVelocity = Math.max(nextVelocity, 0);
   }
 
-  private accelerate(pressedDirections: number) {
+  private accelerate(pressedDirections: Directions) {
     const { maximumSpeed, acceleration } = this;
 
     const nextXVelocity = this.xVelocity + acceleration * pressedDirections;
