@@ -6,6 +6,7 @@ import Obstacles from '@classes/Obstacles';
 import ObstacleFactory from '@classes/ObstacleFactory';
 import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
+import Environment from './Environment';
 
 export type Directions = 'LEFT' | 'RIGHT';
 
@@ -60,11 +61,13 @@ export default class Game {
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
 
-    Debugger.renderPosition(
-      context,
-      [this.HERO, ...floors],
-      this.AREA,
-      this.HERO
-    );
+    if (Environment.isDevelopment) {
+      Debugger.renderPosition(
+        context,
+        [this.HERO, ...floors],
+        this.AREA,
+        this.HERO
+      );
+    }
   }
 }
