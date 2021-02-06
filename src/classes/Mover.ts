@@ -60,14 +60,12 @@ class Mover extends CanvasComponent {
   private decelerate() {
     const { xVelocity, deceleration } = this;
 
-    if (xVelocity < 0) {
-      const nextVelocity = xVelocity + deceleration;
-      this.xVelocity = Math.min(nextVelocity, 0);
+    const nextXVelocity = xVelocity + -Math.sign(xVelocity) * deceleration;
+    if (xVelocity > 0) {
+      this.xVelocity = Math.max(nextXVelocity, 0);
       return;
     }
-
-    const nextVelocity = xVelocity - deceleration;
-    this.xVelocity = Math.max(nextVelocity, 0);
+    this.xVelocity = Math.min(nextXVelocity, 0);
   }
 
   private accelerate() {
