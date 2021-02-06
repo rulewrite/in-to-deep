@@ -73,15 +73,14 @@ class Mover extends CanvasComponent {
   }
 
   private accelerate() {
-    const { maximumXVelocity, acceleration } = this;
+    const { maximumXVelocity, acceleration, directions } = this;
 
-    const nextXVelocity = this.xVelocity + acceleration * this.directions;
-    if (Math.abs(nextXVelocity) >= maximumXVelocity) {
-      this.xVelocity = maximumXVelocity * this.directions;
+    const nextXVelocity = this.xVelocity + acceleration * directions;
+    if (Math.abs(nextXVelocity) < maximumXVelocity) {
+      this.xVelocity = nextXVelocity;
       return;
     }
-
-    this.xVelocity = nextXVelocity;
+    this.xVelocity = maximumXVelocity * directions;
   }
 
   private moveUp() {
