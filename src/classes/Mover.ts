@@ -72,12 +72,12 @@ class Mover extends CanvasComponent {
     this.xVelocity = Math.max(nextVelocity, 0);
   }
 
-  private accelerate(pressedDirections: Directions) {
+  private accelerate() {
     const { maximumXVelocity, acceleration } = this;
 
-    const nextXVelocity = this.xVelocity + acceleration * pressedDirections;
+    const nextXVelocity = this.xVelocity + acceleration * this.directions;
     if (Math.abs(nextXVelocity) >= maximumXVelocity) {
-      this.xVelocity = maximumXVelocity * pressedDirections;
+      this.xVelocity = maximumXVelocity * this.directions;
       return;
     }
 
@@ -85,7 +85,7 @@ class Mover extends CanvasComponent {
   }
 
   private moveUp() {
-    this.yVelocity = this.maximumYVelocity * -1;
+    this.yVelocity = -this.maximumYVelocity;
   }
 
   private moveSide() {
@@ -96,7 +96,7 @@ class Mover extends CanvasComponent {
     const pressedDirections = this.getPressedDirections(keyboard);
     if (pressedDirections) {
       this.directions = pressedDirections;
-      this.accelerate(pressedDirections);
+      this.accelerate();
     }
     if (Math.sign(pressedDirections) !== Math.sign(this.xVelocity)) {
       this.decelerate();
