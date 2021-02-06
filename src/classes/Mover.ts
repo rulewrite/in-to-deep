@@ -58,24 +58,22 @@ class Mover extends CanvasComponent {
   }
 
   private decelerate() {
-    if (this.xVelocity === 0) {
-      return;
-    }
+    const { xVelocity, deceleration } = this;
 
-    if (this.xVelocity < 0) {
-      const nextVelocity = this.xVelocity + this.deceleration;
+    if (xVelocity < 0) {
+      const nextVelocity = xVelocity + deceleration;
       this.xVelocity = Math.min(nextVelocity, 0);
       return;
     }
 
-    const nextVelocity = this.xVelocity - this.deceleration;
+    const nextVelocity = xVelocity - deceleration;
     this.xVelocity = Math.max(nextVelocity, 0);
   }
 
   private accelerate() {
-    const { maximumXVelocity, acceleration, directions } = this;
+    const { xVelocity, maximumXVelocity, acceleration, directions } = this;
 
-    const nextXVelocity = this.xVelocity + acceleration * directions;
+    const nextXVelocity = xVelocity + acceleration * directions;
     if (Math.abs(nextXVelocity) < maximumXVelocity) {
       this.xVelocity = nextXVelocity;
       return;
@@ -97,7 +95,10 @@ class Mover extends CanvasComponent {
       this.directions = pressedDirections;
       this.accelerate();
     }
-    if (Math.sign(pressedDirections) !== Math.sign(this.xVelocity)) {
+    if (
+      Math.sign(pressedDirections) !== Math.sign(this.xVelocity) &&
+      this.xVelocity
+    ) {
       this.decelerate();
     }
     this.moveSide();
