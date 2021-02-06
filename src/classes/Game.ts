@@ -36,7 +36,7 @@ export default class Game {
     this.GRAVITY.realize();
     this.HERO.move(Game.KEYBOARD);
     floors.forEach((floors) => floors.repel(this.HERO));
-    this.AREA.blockSide(this.HERO);
+    this.AREA.block(this.HERO);
 
     this.HERO.renderCanvas(context);
     floors.forEach((floor) => floor.renderCanvas(context));
