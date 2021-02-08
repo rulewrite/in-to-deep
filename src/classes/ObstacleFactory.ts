@@ -29,7 +29,7 @@ class ObstacleFactory {
 
   generation() {
     const { width } = this;
-    const leftFloor = new Platform(0, this.canvasHeight, width);
+    const leftPlatform = new Platform(0, this.canvasHeight, width);
 
     const maximumGap = this.canvasWidth - width - this.minimumWidth;
     const gap = ObstacleFactory.getRandomRangeValue(
@@ -37,15 +37,15 @@ class ObstacleFactory {
       maximumGap
     );
 
-    const rightFloorX = width + gap;
-    const rightFloorWidth = this.canvasWidth - rightFloorX;
-    const rightFloor = new Platform(
-      rightFloorX,
+    const rightPlatformX = width + gap;
+    const rightPlatformWidth = this.canvasWidth - rightPlatformX;
+    const rightPlatform = new Platform(
+      rightPlatformX,
       this.canvasHeight,
-      rightFloorWidth
+      rightPlatformWidth
     );
 
-    return [leftFloor, rightFloor];
+    return [leftPlatform, rightPlatform];
   }
 }
 

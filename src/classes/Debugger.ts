@@ -17,7 +17,7 @@ export default class Debugger {
     context.fillRect(area.width, 0, 1, area.height);
 
     context.fillText(
-      `isOnFloor: ${hero.isOnFloor}, isJumping: ${hero.isJumping}`,
+      `isGrounded: ${hero.isGrounded}, isJumping: ${hero.isJumping}`,
       10,
       20
     );

@@ -17,10 +17,7 @@ class Mover extends CanvasComponent {
   xVelocity = 0;
   yVelocity = 0;
   isJumping = false;
-  onFloors = new Set<string>();
-  get isOnFloor() {
-    return Boolean(this.onFloors.size);
-  }
+  isGrounded = false;
 
   private _acceleration = Mover.INITIAL_ACCELERATION;
   private _deceleration = Mover.INITIAL_DECELERATION;
@@ -37,7 +34,7 @@ class Mover extends CanvasComponent {
   private maximumYVelocity = Mover.INITIAL_MAXIMUM_Y_VELOCITY;
 
   private getWithAirResistance(force: number) {
-    if (this.isOnFloor) {
+    if (this.isGrounded) {
       return force;
     }
     return force * Mover.AIR_RESISTANCE;
@@ -101,7 +98,7 @@ class Mover extends CanvasComponent {
     }
     this.moveSide();
 
-    this.isJumping = keyboard.isPressedUp && this.isOnFloor;
+    this.isJumping = keyboard.isPressedUp && this.isGrounded;
     if (this.isJumping) {
       this.moveUp();
     }
