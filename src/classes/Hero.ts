@@ -1,4 +1,4 @@
-import Mover, { Directions } from './Mover';
+import Mover, { SideDirections } from './Mover';
 
 class Hero extends Mover {
   private static readonly INITIAL_COLOR = '#d40000';
@@ -6,18 +6,18 @@ class Hero extends Mover {
 
   private readonly MIDDLE: number;
   private get headToX() {
-    return this.directions === Directions.LEFT ? this.x : this.right;
+    return this.sideDirection === SideDirections.LEFT ? this.x : this.right;
   }
   private get headToY() {
     return this.y + this.MIDDLE;
   }
   private get bodyX() {
-    return this.directions === Directions.LEFT
+    return this.sideDirection === SideDirections.LEFT
       ? this.x + Hero.HEAD_WIDTH
       : this.right - Hero.HEAD_WIDTH;
   }
   private get tailX() {
-    return this.directions === Directions.LEFT ? this.right : this.x;
+    return this.sideDirection === SideDirections.LEFT ? this.right : this.x;
   }
 
   constructor(

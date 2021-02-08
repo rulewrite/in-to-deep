@@ -1,7 +1,7 @@
 import CanvasComponent from './CanvasComponent';
 import Keyboard from './Keyboard';
 
-export enum Directions {
+export enum SideDirections {
   RIGHT = 1,
   LEFT = -1,
 }
@@ -13,7 +13,7 @@ class Mover extends CanvasComponent {
   private static readonly INITIAL_MAXIMUM_Y_VELOCITY = 5;
   private static readonly AIR_RESISTANCE = 0.3;
 
-  directions: Directions = Directions.RIGHT;
+  sideDirection: SideDirections = SideDirections.RIGHT;
   xVelocity = 0;
   yVelocity = 0;
   isJumping = false;
@@ -40,21 +40,21 @@ class Mover extends CanvasComponent {
     return force * Mover.AIR_RESISTANCE;
   }
 
-  private getPressedDirections(keyboard: Keyboard): Directions | 0 {
+  private getPressedSideDirection(keyboard: Keyboard): SideDirections | 0 {
     const { isPressedRight, isPressedLeft } = keyboard;
 
     if (isPressedRight && !isPressedLeft) {
-      return Directions.RIGHT;
+      return SideDirections.RIGHT;
     }
 
     if (isPressedLeft && !isPressedRight) {
-      return Directions.LEFT;
+      return SideDirections.LEFT;
     }
 
     return 0;
   }
 
-  private decelerate() {
+  private sideDecelerate() {
     const { xVelocity, deceleration } = this;
 
     const nextXVelocity = xVelocity + -Math.sign(xVelocity) * deceleration;
@@ -65,15 +65,15 @@ class Mover extends CanvasComponent {
     this.xVelocity = Math.min(nextXVelocity, 0);
   }
 
-  private accelerate() {
-    const { xVelocity, maximumXVelocity, acceleration, directions } = this;
+  private sideAccelerate() {
+    const { xVelocity, maximumXVelocity, acceleration, sideDirection } = this;
 
-    const nextXVelocity = xVelocity + acceleration * directions;
+    const nextXVelocity = xVelocity + acceleration * sideDirection;
     if (Math.abs(nextXVelocity) < maximumXVelocity) {
       this.xVelocity = nextXVelocity;
       return;
     }
-    this.xVelocity = maximumXVelocity * directions;
+    this.xVelocity = maximumXVelocity * sideDirection;
   }
 
   private moveUp() {
@@ -85,16 +85,16 @@ class Mover extends CanvasComponent {
   }
 
   move(keyboard: Keyboard) {
-    const pressedDirections = this.getPressedDirections(keyboard);
-    if (pressedDirections) {
-      this.directions = pressedDirections;
-      this.accelerate();
+    const pressedSideDirection = this.getPressedSideDirection(keyboard);
+    if (pressedSideDirection) {
+      this.sideDirection = pressedSideDirection;
+      this.sideAccelerate();
     }
     if (
-      Math.sign(pressedDirections) !== Math.sign(this.xVelocity) &&
+      Math.sign(pressedSideDirection) !== Math.sign(this.xVelocity) &&
       this.xVelocity
     ) {
-      this.decelerate();
+      this.sideDecelerate();
     }
     this.moveSide();
 
