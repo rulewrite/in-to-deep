@@ -28,7 +28,7 @@ export default class Game {
     return this.AREA.isHitDeadlineBy(this.HERO);
   }
 
-  run(context: CanvasRenderingContext2D) {
+  update(context: CanvasRenderingContext2D) {
     const { floors } = this.OBSTACLES;
 
     this.OBSTACLES.update();
@@ -38,8 +38,8 @@ export default class Game {
     floors.forEach((floors) => floors.repel(this.HERO));
     this.AREA.block(this.HERO);
 
-    this.HERO.renderCanvas(context);
-    floors.forEach((floor) => floor.renderCanvas(context));
+    this.HERO.draw(context);
+    floors.forEach((floor) => floor.draw(context));
 
     if (Environment.isDevelopment) {
       Debugger.renderPosition(

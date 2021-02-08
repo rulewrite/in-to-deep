@@ -32,7 +32,7 @@ class Hero extends Mover {
     this.MIDDLE = this.height / 2;
   }
 
-  renderCanvas(context: CanvasRenderingContext2D) {
+  draw(context: CanvasRenderingContext2D) {
     context.fillStyle = this.color;
     context.beginPath();
     context.moveTo(this.headToX, this.headToY);

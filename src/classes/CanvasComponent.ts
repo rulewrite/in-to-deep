@@ -20,7 +20,7 @@ abstract class CanvasComponent {
     public color: string
   ) {}
 
-  renderCanvas(context: CanvasRenderingContext2D) {
+  draw(context: CanvasRenderingContext2D) {
     context.fillStyle = this.color;
     context.fillRect(this.x, this.y, this.width, this.height);
   }
