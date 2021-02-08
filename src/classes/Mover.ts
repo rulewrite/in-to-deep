@@ -98,8 +98,8 @@ class Mover extends CanvasComponent {
     }
     this.moveSide();
 
-    this.isJumping = keyboard.isPressedUp && this.isGrounded;
-    if (this.isJumping) {
+    if (keyboard.isPressedUp && this.isGrounded && !this.isJumping) {
+      this.isJumping = true;
       this.moveUp();
     }
   }

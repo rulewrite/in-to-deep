@@ -5,6 +5,26 @@ import { v4 as uuidv4 } from 'uuid';
 class Platform extends CanvasComponent {
   private static readonly INITIAL_HEIGHT = 20;
   private static readonly INITIAL_COLOR = 'black';
+  private static getCollisionDirection(
+    outX: number,
+    outY: number,
+    vectorX: number,
+    vectorY: number
+  ) {
+    if (outX >= outY) {
+      if (vectorY > 0) {
+        return 'TOP';
+      }
+
+      return 'BOTTOM';
+    }
+
+    if (vectorX > 0) {
+      return 'LEFT';
+    }
+
+    return 'RIGHT';
+  }
 
   id = uuidv4();
   constructor(
@@ -39,23 +59,41 @@ class Platform extends CanvasComponent {
     const outX = halfWidths - absoluteVectorX;
     const outY = halfHeights - absoluteVectorY;
 
-    if (outX >= outY) {
-      if (vectorY > 0) {
+    const collisionDirection = Platform.getCollisionDirection(
+      outX,
+      outY,
+      vectorX,
+      vectorY
+    );
+
+    switch (collisionDirection) {
+      case 'TOP':
         mover.y += outY;
-        mover.yVelocity *= -1;
-      } else {
+
+        mover.yVelocity *= -1; // 탄성 1
+        break;
+      case 'BOTTOM':
         mover.y -= outY;
+
         mover.yVelocity = 0;
-      }
-      return;
+        mover.isGrounded = true;
+        mover.isJumping = false;
+        break;
+      case 'LEFT':
+        mover.x += outX;
+
+        mover.xVelocity = 0;
+        mover.isJumping = false;
+        break;
+      case 'RIGHT':
+        mover.x -= outX;
+
+        mover.xVelocity = 0;
+        mover.isJumping = false;
+        break;
     }
 
-    if (vectorX > 0) {
-      mover.x += outX;
-    } else {
-      mover.x -= outX;
-    }
-    mover.xVelocity = 0;
+    return collisionDirection;
   }
 }
 

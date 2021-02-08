@@ -34,8 +34,10 @@ export default class Game {
     this.OBSTACLES.update();
     this.SCROLL.wind(platforms);
     this.GRAVITY.realize();
-    this.HERO.move(Game.KEYBOARD);
+    this.HERO.isGrounded = false;
     platforms.forEach((platforms) => platforms.repel(this.HERO));
+
+    this.HERO.move(Game.KEYBOARD);
     this.AREA.block(this.HERO);
 
     this.HERO.draw(context);
