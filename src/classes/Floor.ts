@@ -1,5 +1,5 @@
 import CanvasComponent from './CanvasComponent';
-import Mover, { Directions } from './Mover';
+import Mover from './Mover';
 import { v4 as uuidv4 } from 'uuid';
 
 class Floor extends CanvasComponent {
