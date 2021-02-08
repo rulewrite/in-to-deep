@@ -7,9 +7,6 @@ class Keyboard {
   isPressedLeft = false;
   isPressedRight = false;
   isPressedUp = false;
-  get isPressedMovingKey() {
-    return this.isPressedLeft || this.isPressedRight;
-  }
 
   constructor() {
     this.keyListener = this.keyListener.bind(this);
