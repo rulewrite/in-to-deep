@@ -1,4 +1,4 @@
-import Floor from './Floor';
+import Platform from './Platform';
 import ObstacleFactory from './ObstacleFactory';
 
 class Obstacles {
@@ -12,7 +12,7 @@ class Obstacles {
     return !((this.frameNo / this.generationInterval) % 1);
   }
 
-  floors: Floor[] = [];
+  platforms: Platform[] = [];
 
   constructor(
     private readonly obstacleFactory: ObstacleFactory,
@@ -22,12 +22,12 @@ class Obstacles {
   update() {
     this.frameNo += 1;
 
-    this.floors = this.floors.filter((floor) => {
-      return floor.bottom > 0;
+    this.platforms = this.platforms.filter((platform) => {
+      return platform.bottom > 0;
     });
 
     if (this.isGenerationTime) {
-      this.floors = this.floors.concat(this.obstacleFactory.generation());
+      this.platforms = this.platforms.concat(this.obstacleFactory.generation());
     }
   }
 }

@@ -2,7 +2,7 @@ import CanvasComponent from './CanvasComponent';
 import Mover from './Mover';
 import { v4 as uuidv4 } from 'uuid';
 
-class Floor extends CanvasComponent {
+class Platform extends CanvasComponent {
   private static readonly INITIAL_HEIGHT = 20;
   private static readonly INITIAL_COLOR = 'black';
 
@@ -11,9 +11,9 @@ class Floor extends CanvasComponent {
     x: number,
     y: number,
     width: number,
-    color = Floor.INITIAL_COLOR
+    color = Platform.INITIAL_COLOR
   ) {
-    super(x, y, width, Floor.INITIAL_HEIGHT, color);
+    super(x, y, width, Platform.INITIAL_HEIGHT, color);
   }
 
   repel(mover: Mover) {
@@ -59,4 +59,4 @@ class Floor extends CanvasComponent {
   }
 }
 
-export default Floor;
+export default Platform;

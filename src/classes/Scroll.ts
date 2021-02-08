@@ -1,9 +1,9 @@
-import Floor from './Floor';
+import Platform from './Platform';
 
 class Scroll {
-  wind(floors: Floor[]) {
-    floors.forEach((floor) => {
-      floor.y = floor.y - 1;
+  wind(platforms: Platform[]) {
+    platforms.forEach((platform) => {
+      platform.y = platform.y - 1;
     });
   }
 }

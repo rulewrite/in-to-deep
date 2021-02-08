@@ -29,22 +29,22 @@ export default class Game {
   }
 
   update(context: CanvasRenderingContext2D) {
-    const { floors } = this.OBSTACLES;
+    const { platforms } = this.OBSTACLES;
 
     this.OBSTACLES.update();
-    this.SCROLL.wind(floors);
+    this.SCROLL.wind(platforms);
     this.GRAVITY.realize();
     this.HERO.move(Game.KEYBOARD);
-    floors.forEach((floors) => floors.repel(this.HERO));
+    platforms.forEach((platforms) => platforms.repel(this.HERO));
     this.AREA.block(this.HERO);
 
     this.HERO.draw(context);
-    floors.forEach((floor) => floor.draw(context));
+    platforms.forEach((platform) => platform.draw(context));
 
     if (Environment.isDevelopment) {
       Debugger.renderPosition(
         context,
-        [this.HERO, ...floors],
+        [this.HERO, ...platforms],
         this.AREA,
         this.HERO
       );
