@@ -16,99 +16,46 @@ class Floor extends CanvasComponent {
     super(x, y, width, Floor.INITIAL_HEIGHT, color);
   }
 
-  private isHitSideBy(mover: Mover) {
-    const { left, right, top, bottom } = this;
-    const {
-      left: moverLeft,
-      right: moverRight,
-      top: moverTop,
-      bottom: moverBottom,
-      isJumping,
-    } = mover;
-
-    const moverIsUnder = bottom <= moverTop;
-    if (moverIsUnder) {
-      return false;
-    }
-
-    const moverIsOver = top >= moverBottom;
-    if (moverIsOver) {
-      return false;
-    }
-
-    if (isJumping) {
-      return false;
-    }
-
-    const isHitLeft = left < moverRight;
-    const isHitRight = right > moverLeft;
-    return isHitLeft && isHitRight;
-  }
-
-  private getGapSideWith(mover: Mover) {
-    const { left, right } = this;
-    const { directions } = mover;
-
-    if (directions === Directions.RIGHT) {
-      return left - mover.width;
-    }
-
-    if (directions === Directions.LEFT) {
-      return right;
-    }
-
-    return mover.x;
-  }
-
-  private isHitTopBy(mover: Mover) {
-    const { left, right, top } = this;
-    const {
-      left: moverLeft,
-      right: moverRight,
-      top: moverTop,
-      bottom: moverBottom,
-      isJumping,
-    } = mover;
-
-    const moverIsUnder = top <= moverTop;
-    if (moverIsUnder) {
-      return false;
-    }
-
-    const moverIsLeftSide = left >= moverRight;
-    if (moverIsLeftSide) {
-      return false;
-    }
-
-    const moverIsRightSide = right <= moverLeft;
-    if (moverIsRightSide) {
-      return false;
-    }
-
-    if (isJumping) {
-      return false;
-    }
-
-    return top <= moverBottom;
-  }
-
-  private getGapTopWith(mover: Mover) {
-    return this.y - mover.height;
-  }
-
   repel(mover: Mover) {
-    const isHitTop = this.isHitTopBy(mover);
-    isHitTop ? mover.onFloors.add(this.id) : mover.onFloors.delete(this.id);
-    if (isHitTop) {
-      mover.yVelocity = 0;
-      mover.y = this.getGapTopWith(mover);
+    const { top, left, halfWidth, halfHeight } = this;
+    const {
+      left: moverLeft,
+      top: moverTop,
+      halfWidth: moverHalfWidth,
+      halfHeight: moverHalfHeight,
+    } = mover;
+
+    const vectorX = moverLeft + moverHalfWidth - left - halfWidth;
+    const vectorY = moverTop + moverHalfHeight - top - halfHeight;
+    const halfWidths = moverHalfWidth + halfWidth;
+    const halfHeights = moverHalfHeight + halfHeight;
+
+    const absoluteVectorX = Math.abs(vectorX);
+    const absoluteVectorY = Math.abs(vectorY);
+    if (absoluteVectorX >= halfWidths || absoluteVectorY >= halfHeights) {
+      return;
     }
 
-    const isHitSide = this.isHitSideBy(mover);
-    if (isHitSide) {
-      mover.xVelocity = 0;
-      mover.x = this.getGapSideWith(mover);
+    const outX = halfWidths - absoluteVectorX;
+    const outY = halfHeights - absoluteVectorY;
+
+    if (outX >= outY) {
+      if (vectorY > 0) {
+        mover.y += outY;
+        mover.yVelocity *= -1;
+      } else {
+        mover.y -= outY;
+        mover.yVelocity = 0;
+      }
+      return;
     }
+
+    if (vectorX > 0) {
+      mover.x += outX;
+    } else {
+      mover.x -= outX;
+    }
+    mover.xVelocity = 0;
   }
 }
 
