@@ -10,19 +10,15 @@ export default class Controller {
     const { isPressedRight, isPressedLeft, isPressedUp } = Controller.KEYBOARD;
 
     if (isPressedRight && !isPressedLeft) {
-      this.MOVER.updateXVelocity(SideDirections.RIGHT);
+      this.MOVER.go(SideDirections.RIGHT);
     }
 
     if (isPressedLeft && !isPressedRight) {
-      this.MOVER.updateXVelocity(SideDirections.LEFT);
-    }
-
-    if (!isPressedRight && !isPressedLeft) {
-      this.MOVER.updateXVelocity(0);
+      this.MOVER.go(SideDirections.LEFT);
     }
 
     if (isPressedUp) {
-      this.MOVER.updateYVelocity();
+      this.MOVER.jump();
     }
   }
 }

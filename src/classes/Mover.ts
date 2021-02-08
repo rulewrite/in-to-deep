@@ -1,5 +1,4 @@
 import CanvasComponent from './CanvasComponent';
-import Keyboard from './Keyboard';
 
 export enum SideDirections {
   RIGHT = 1,
@@ -7,86 +6,42 @@ export enum SideDirections {
 }
 
 class Mover extends CanvasComponent {
-  private static readonly INITIAL_ACCELERATION = 0.14;
-  private static readonly INITIAL_DECELERATION = 0.5;
+  private static readonly INITIAL_ACCELERATION = 1;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
-  private static readonly INITIAL_MAXIMUM_Y_VELOCITY = 5;
-  private static readonly AIR_RESISTANCE = 0.3;
+  private static readonly INITIAL_JUMP_POWER = 4;
 
   sideDirection: SideDirections = SideDirections.RIGHT;
   xVelocity = 0;
   yVelocity = 0;
   isJumping = false;
   isGrounded = false;
+  private acceleration = Mover.INITIAL_ACCELERATION;
+  private maximumXVelocity = Mover.INITIAL_MAXIMUM_X_VELOCITY;
+  private jumpPower = Mover.INITIAL_JUMP_POWER;
 
-  private _acceleration = Mover.INITIAL_ACCELERATION;
-  private _deceleration = Mover.INITIAL_DECELERATION;
-  private _maximumXVelocity = Mover.INITIAL_MAXIMUM_X_VELOCITY;
-  private get acceleration() {
-    return this.getWithAirResistance(this._acceleration);
-  }
-  private get deceleration() {
-    return this.getWithAirResistance(this._deceleration);
-  }
-  private get maximumXVelocity() {
-    return this.getWithAirResistance(this._maximumXVelocity);
-  }
-  private maximumYVelocity = Mover.INITIAL_MAXIMUM_Y_VELOCITY;
-
-  private getWithAirResistance(force: number) {
-    if (this.isGrounded) {
-      return force;
-    }
-    return force * Mover.AIR_RESISTANCE;
-  }
-
-  private sideDecelerate() {
-    const { xVelocity, deceleration } = this;
-
-    const nextXVelocity = xVelocity + -Math.sign(xVelocity) * deceleration;
-    if (xVelocity > 0) {
-      this.xVelocity = Math.max(nextXVelocity, 0);
+  go(sideDirection: SideDirections) {
+    this.sideDirection = sideDirection;
+    if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
       return;
     }
-    this.xVelocity = Math.min(nextXVelocity, 0);
+    this.xVelocity += sideDirection * this.acceleration;
   }
 
-  private sideAccelerate() {
-    const { xVelocity, maximumXVelocity, acceleration, sideDirection } = this;
-
-    const nextXVelocity = xVelocity + acceleration * sideDirection;
-    if (Math.abs(nextXVelocity) < maximumXVelocity) {
-      this.xVelocity = nextXVelocity;
-      return;
-    }
-    this.xVelocity = maximumXVelocity * sideDirection;
-  }
-
-  updateXVelocity(sideDirection: SideDirections | 0) {
-    if (sideDirection) {
-      this.sideDirection = sideDirection;
-      this.sideAccelerate();
-    }
-
-    if (
-      Math.sign(sideDirection) !== Math.sign(this.xVelocity) &&
-      this.xVelocity
-    ) {
-      this.sideDecelerate();
-    }
-  }
-
-  updateYVelocity() {
+  jump() {
     if (!this.isGrounded || this.isJumping) {
       return;
     }
 
     this.isJumping = true;
-    this.yVelocity = -this.maximumYVelocity;
+    this.isGrounded = false;
+    this.yVelocity = -this.jumpPower;
   }
 
   move() {
+    this.xVelocity *= 0.8; // 마찰력
+
     this.x += this.xVelocity;
+    this.y += this.yVelocity;
   }
 }
 
