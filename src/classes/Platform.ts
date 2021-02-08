@@ -1,6 +1,5 @@
 import CanvasComponent from './CanvasComponent';
 import Mover from './Mover';
-import { v4 as uuidv4 } from 'uuid';
 
 class Platform extends CanvasComponent {
   private static readonly INITIAL_HEIGHT = 20;
@@ -26,7 +25,6 @@ class Platform extends CanvasComponent {
     return 'RIGHT';
   }
 
-  id = uuidv4();
   constructor(
     x: number,
     y: number,
