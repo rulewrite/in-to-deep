@@ -7,6 +7,7 @@ import ObstacleFactory from '@classes/ObstacleFactory';
 import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
 import Environment from './Environment';
+import Controller from './Controller';
 
 export default class Game {
   private static readonly KEYBOARD = new Keyboard();
@@ -16,6 +17,7 @@ export default class Game {
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly SCROLL = new Scroll();
   private readonly OBSTACLES;
+  private readonly CONTROLLER = new Controller(this.HERO);
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height);
@@ -31,13 +33,15 @@ export default class Game {
   update(context: CanvasRenderingContext2D) {
     const { platforms } = this.OBSTACLES;
 
+    this.CONTROLLER.interact();
+
     this.OBSTACLES.update();
     this.SCROLL.wind(platforms);
     this.GRAVITY.realize();
     this.HERO.isGrounded = false;
     platforms.forEach((platforms) => platforms.repel(this.HERO));
 
-    this.HERO.move(Game.KEYBOARD);
+    this.HERO.move();
     this.AREA.block(this.HERO);
 
     this.HERO.draw(context);

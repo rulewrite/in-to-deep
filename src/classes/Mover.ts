@@ -40,20 +40,6 @@ class Mover extends CanvasComponent {
     return force * Mover.AIR_RESISTANCE;
   }
 
-  private getPressedSideDirection(keyboard: Keyboard): SideDirections | 0 {
-    const { isPressedRight, isPressedLeft } = keyboard;
-
-    if (isPressedRight && !isPressedLeft) {
-      return SideDirections.RIGHT;
-    }
-
-    if (isPressedLeft && !isPressedRight) {
-      return SideDirections.LEFT;
-    }
-
-    return 0;
-  }
-
   private sideDecelerate() {
     const { xVelocity, deceleration } = this;
 
@@ -76,32 +62,31 @@ class Mover extends CanvasComponent {
     this.xVelocity = maximumXVelocity * sideDirection;
   }
 
-  private moveUp() {
-    this.yVelocity = -this.maximumYVelocity;
-  }
-
-  private moveSide() {
-    this.x += this.xVelocity;
-  }
-
-  move(keyboard: Keyboard) {
-    const pressedSideDirection = this.getPressedSideDirection(keyboard);
-    if (pressedSideDirection) {
-      this.sideDirection = pressedSideDirection;
+  updateXVelocity(sideDirection: SideDirections | 0) {
+    if (sideDirection) {
+      this.sideDirection = sideDirection;
       this.sideAccelerate();
     }
+
     if (
-      Math.sign(pressedSideDirection) !== Math.sign(this.xVelocity) &&
+      Math.sign(sideDirection) !== Math.sign(this.xVelocity) &&
       this.xVelocity
     ) {
       this.sideDecelerate();
     }
-    this.moveSide();
+  }
 
-    if (keyboard.isPressedUp && this.isGrounded && !this.isJumping) {
-      this.isJumping = true;
-      this.moveUp();
+  updateYVelocity() {
+    if (!this.isGrounded || this.isJumping) {
+      return;
     }
+
+    this.isJumping = true;
+    this.yVelocity = -this.maximumYVelocity;
+  }
+
+  move() {
+    this.x += this.xVelocity;
   }
 }
 
