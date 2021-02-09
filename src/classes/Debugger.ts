@@ -4,9 +4,7 @@ export default class Debugger {
   }
   static draw(
     context: CanvasRenderingContext2D,
-    canvasComponents: any[],
-    area: any,
-    hero: any
+    { obstacles, area, hero }: any
   ) {
     // base
     context.fillStyle = 'red';
@@ -25,8 +23,8 @@ export default class Debugger {
     context.fillText(`yVelocity: ${hero.yVelocity}`, 10, 60);
 
     // platform
-    canvasComponents.forEach((canvasComponent) => {
-      const { x, y } = canvasComponent;
+    obstacles.platforms.forEach((platform: any) => {
+      const { x, y } = platform;
 
       const cleanX = this.cleaning(x);
       const cleanY = this.cleaning(y);
