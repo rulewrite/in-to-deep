@@ -29,8 +29,8 @@ export default class Area {
 
   isHitDeadlineBy(otherComponent: CanvasComponent): boolean {
     const { HEIGHT } = this;
-    const { top, bottom } = otherComponent;
+    const { bottom } = otherComponent;
 
-    return top <= 0 || bottom >= HEIGHT;
+    return bottom >= HEIGHT;
   }
 }
