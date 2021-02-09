@@ -1,6 +1,6 @@
 import Platform from './Platform';
 
-class Scroll {
+export default class Scroll {
   private static readonly INITIAL_SPEED = 1;
 
   constructor(private speed: number = Scroll.INITIAL_SPEED) {}
@@ -11,5 +11,3 @@ class Scroll {
     });
   }
 }
-
-export default Scroll;

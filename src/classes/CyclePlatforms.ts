@@ -3,7 +3,7 @@ import PlatformFactory from './PlatformFactory';
 import Mover from './Mover';
 import Scroll from './Scroll';
 
-class CyclePlatforms {
+export default class CyclePlatforms {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;
 
   private frameNo = 0;
@@ -46,5 +46,3 @@ class CyclePlatforms {
     this.platforms.forEach((platforms) => platforms.repel(mover));
   }
 }
-
-export default CyclePlatforms;

@@ -7,7 +7,7 @@ enum SideDirections {
 
 type SideDirectionStrings = keyof typeof SideDirections;
 
-class Mover extends CanvasComponent {
+export default class Mover extends CanvasComponent {
   private static readonly INITIAL_ACCELERATION = 1;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
   private static readonly INITIAL_JUMP_POWER = 4;
@@ -49,5 +49,3 @@ class Mover extends CanvasComponent {
     this.y += this.yVelocity;
   }
 }
-
-export default Mover;

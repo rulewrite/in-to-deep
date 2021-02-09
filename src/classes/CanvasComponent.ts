@@ -1,4 +1,4 @@
-abstract class CanvasComponent {
+export default abstract class CanvasComponent {
   get left() {
     return this.x;
   }
@@ -55,5 +55,3 @@ abstract class CanvasComponent {
     context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
-
-export default CanvasComponent;

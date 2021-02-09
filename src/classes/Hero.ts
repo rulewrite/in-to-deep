@@ -1,6 +1,6 @@
 import Mover from './Mover';
 
-class Hero extends Mover {
+export default class Hero extends Mover {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 
@@ -42,5 +42,3 @@ class Hero extends Mover {
     context.fill();
   }
 }
-
-export default Hero;

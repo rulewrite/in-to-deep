@@ -1,7 +1,7 @@
 import CanvasComponent from './CanvasComponent';
 import Platform from './Platform';
 
-class PlatformFactory {
+export default class PlatformFactory {
   private static readonly GAP_MARGIN = 100;
   private static getRandomRangeValue(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -48,5 +48,3 @@ class PlatformFactory {
     return [leftPlatform, rightPlatform];
   }
 }
-
-export default PlatformFactory;
