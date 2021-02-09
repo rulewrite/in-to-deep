@@ -11,7 +11,7 @@ const GameBoard = ({ width, height }: { width: number; height: number }) => {
   const draw = (context: CanvasRenderingContext2D) => {
     GAME.update(context);
 
-    if (GAME.isOver() && !Environment.isDevelopment) {
+    if (GAME.isOver() && !Environment.IS_DEVELOPMENT) {
       setIsRunning(false);
     }
   };

@@ -47,7 +47,7 @@ export default class Game {
     this.HERO.draw(context);
     platforms.forEach((platform) => platform.draw(context));
 
-    if (Environment.isDevelopment) {
+    if (Environment.IS_DEVELOPMENT) {
       Debugger.renderPosition(
         context,
         [this.HERO, ...platforms],
