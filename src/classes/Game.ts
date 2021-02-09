@@ -30,21 +30,24 @@ export default class Game {
   update(context: CanvasRenderingContext2D) {
     const { platforms } = this.OBSTACLES;
 
-    this.CONTROLLER.interact();
-
+    // update object
     this.OBSTACLES.update();
     this.SCROLL.wind(platforms);
-    this.GRAVITY.realize();
-    this.HERO.isGrounded = false;
-    platforms.forEach((platforms) => platforms.repel(this.HERO));
 
+    // update hero
+    this.GRAVITY.realize();
+    platforms.forEach((platforms) => platforms.repel(this.HERO));
+    this.CONTROLLER.interact();
+    this.HERO.isGrounded = false;
     this.HERO.move();
     this.AREA.block();
 
+    // draw
     this.HERO.draw(context);
     platforms.forEach((platform) => platform.draw(context));
     this.AREA.drawOverflowGuide(context);
 
+    // debug
     if (Environment.IS_DEVELOPMENT) {
       Debugger.renderPosition(
         context,
