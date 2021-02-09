@@ -1,16 +1,21 @@
 import CanvasComponent from './CanvasComponent';
 
-export enum SideDirections {
+enum SideDirections {
   RIGHT = 1,
   LEFT = -1,
 }
+
+type SideDirectionStrings = keyof typeof SideDirections;
 
 class Mover extends CanvasComponent {
   private static readonly INITIAL_ACCELERATION = 1;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
   private static readonly INITIAL_JUMP_POWER = 4;
 
-  sideDirection: SideDirections = SideDirections.RIGHT;
+  private _sideDirection: SideDirections = SideDirections.RIGHT;
+  get sideDirection() {
+    return SideDirections[this._sideDirection] as SideDirectionStrings;
+  }
   xVelocity = 0;
   yVelocity = 0;
   isJumping = false;
@@ -19,12 +24,12 @@ class Mover extends CanvasComponent {
   private maximumXVelocity = Mover.INITIAL_MAXIMUM_X_VELOCITY;
   private jumpPower = Mover.INITIAL_JUMP_POWER;
 
-  go(sideDirection: SideDirections) {
-    this.sideDirection = sideDirection;
+  go(sideDirection: SideDirectionStrings) {
+    this._sideDirection = SideDirections[sideDirection];
     if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
       return;
     }
-    this.xVelocity += sideDirection * this.acceleration;
+    this.xVelocity += this._sideDirection * this.acceleration;
   }
 
   jump() {

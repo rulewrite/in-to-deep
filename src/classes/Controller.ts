@@ -1,5 +1,5 @@
 import Keyboard from './Keyboard';
-import Mover, { SideDirections } from './Mover';
+import Mover from './Mover';
 
 export default class Controller {
   private static readonly KEYBOARD = new Keyboard();
@@ -10,11 +10,11 @@ export default class Controller {
     const { isPressedRight, isPressedLeft, isPressedUp } = Controller.KEYBOARD;
 
     if (isPressedRight && !isPressedLeft) {
-      this.MOVER.go(SideDirections.RIGHT);
+      this.MOVER.go('RIGHT');
     }
 
     if (isPressedLeft && !isPressedRight) {
-      this.MOVER.go(SideDirections.LEFT);
+      this.MOVER.go('LEFT');
     }
 
     if (isPressedUp) {
