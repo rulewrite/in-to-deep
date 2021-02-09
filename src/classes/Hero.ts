@@ -4,17 +4,19 @@ class Hero extends Mover {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 
-  private get headToX() {
+  private get headX() {
     return this.sideDirection === 'LEFT' ? this.x : this.right;
   }
-  private get headToY() {
+  private get headY() {
     return this.y + this.halfHeight;
   }
+
   private get bodyX() {
     return this.sideDirection === 'LEFT'
       ? this.x + Hero.HEAD_WIDTH
       : this.right - Hero.HEAD_WIDTH;
   }
+
   private get tailX() {
     return this.sideDirection === 'LEFT' ? this.right : this.x;
   }
@@ -32,7 +34,7 @@ class Hero extends Mover {
   draw(context: CanvasRenderingContext2D) {
     context.fillStyle = this.color;
     context.beginPath();
-    context.moveTo(this.headToX, this.headToY);
+    context.moveTo(this.headX, this.headY);
     context.lineTo(this.bodyX, this.top);
     context.lineTo(this.tailX, this.top);
     context.lineTo(this.tailX, this.bottom);
