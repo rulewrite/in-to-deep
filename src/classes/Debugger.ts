@@ -2,18 +2,16 @@ export default class Debugger {
   private static cleaning(number: number) {
     return Math.floor(number);
   }
-  static renderPosition(
+  static draw(
     context: CanvasRenderingContext2D,
-    canvasComponents: any[],
-    area: any,
-    hero: any
+    { cyclePlatforms, area, hero }: any
   ) {
     // base
     context.fillStyle = 'red';
     context.font = '20px san-serif';
 
     // outline
-    context.fillRect(area.width, 0, 1, area.height);
+    context.fillRect(area.WIDTH, 0, 1, area.HEIGHT);
 
     // hero
     context.fillText(
@@ -25,8 +23,8 @@ export default class Debugger {
     context.fillText(`yVelocity: ${hero.yVelocity}`, 10, 60);
 
     // platform
-    canvasComponents.forEach((canvasComponent) => {
-      const { x, y } = canvasComponent;
+    cyclePlatforms.platforms.forEach((platform: any) => {
+      const { x, y } = platform;
 
       const cleanX = this.cleaning(x);
       const cleanY = this.cleaning(y);

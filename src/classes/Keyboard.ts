@@ -1,4 +1,4 @@
-class Keyboard {
+export default class Keyboard {
   private static readonly KEYDOWN_EVENT_TYPE = 'keydown';
   private static readonly SET_LEFT_KEY = new Set(['Left', 'ArrowLeft']);
   private static readonly SET_RIGHT_KEY = new Set(['Right', 'ArrowRight']);
@@ -31,5 +31,3 @@ class Keyboard {
     }
   }
 }
-
-export default Keyboard;

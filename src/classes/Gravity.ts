@@ -1,6 +1,6 @@
 import Mover from './Mover';
 
-class Gravity {
+export default class Gravity {
   private static readonly INITIAL_FORCE = 0.1;
 
   constructor(
@@ -13,5 +13,3 @@ class Gravity {
     this.MOVER.y += this.MOVER.yVelocity;
   }
 }
-
-export default Gravity;

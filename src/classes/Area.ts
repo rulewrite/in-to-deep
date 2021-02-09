@@ -1,36 +1,46 @@
-import CanvasComponent from './CanvasComponent';
+import Mover from './Mover';
 
 export default class Area {
+  private static readonly OVERFLOW_GUIDE_HEIGHT = 10;
+
   constructor(
     private readonly WIDTH: number,
-    private readonly HEIGHT: number
+    private readonly HEIGHT: number,
+    private readonly MOVER: Mover
   ) {}
 
-  block(otherComponent: CanvasComponent) {
+  block() {
     const { WIDTH, HEIGHT } = this;
-    const { left, right, top, bottom } = otherComponent;
+    const { left, right, bottom } = this.MOVER;
 
     if (left < 0) {
-      otherComponent.x = 0;
+      this.MOVER.x = 0;
     }
 
     if (right > WIDTH) {
-      otherComponent.x = WIDTH - otherComponent.width;
-    }
-
-    if (top < 0) {
-      otherComponent.y = 0;
+      this.MOVER.x = WIDTH - this.MOVER.width;
     }
 
     if (bottom > HEIGHT) {
-      otherComponent.y = HEIGHT - otherComponent.height;
+      this.MOVER.y = HEIGHT - this.MOVER.height;
     }
   }
 
-  isHitDeadlineBy(otherComponent: CanvasComponent): boolean {
-    const { HEIGHT } = this;
-    const { top, bottom } = otherComponent;
+  drawOverflowGuide(context: CanvasRenderingContext2D) {
+    if (this.MOVER.bottom >= 0) {
+      return;
+    }
 
-    return top <= 0 || bottom >= HEIGHT;
+    const { color, center, left, right } = this.MOVER;
+    context.fillStyle = color;
+    context.beginPath();
+    context.moveTo(center, 0);
+    context.lineTo(left, Area.OVERFLOW_GUIDE_HEIGHT);
+    context.lineTo(right, Area.OVERFLOW_GUIDE_HEIGHT);
+    context.fill();
+  }
+
+  isHitDeadlineBy(): boolean {
+    return this.MOVER.bottom >= this.HEIGHT;
   }
 }

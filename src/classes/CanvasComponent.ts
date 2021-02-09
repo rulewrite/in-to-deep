@@ -1,4 +1,4 @@
-abstract class CanvasComponent {
+export default abstract class CanvasComponent {
   get left() {
     return this.x;
   }
@@ -10,6 +10,13 @@ abstract class CanvasComponent {
   }
   get bottom() {
     return this.y + this.height;
+  }
+
+  get center() {
+    return this.x + this.halfWidth;
+  }
+  get middle() {
+    return this.y + this.halfHeight;
   }
 
   private _width = 0;
@@ -48,5 +55,3 @@ abstract class CanvasComponent {
     context.fillRect(this.x, this.y, this.width, this.height);
   }
 }
-
-export default CanvasComponent;

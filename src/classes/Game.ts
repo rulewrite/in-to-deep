@@ -1,59 +1,55 @@
 import Gravity from '@classes/Gravity';
-import Keyboard from '@classes/Keyboard';
 import Hero from '@classes/Hero';
 import Scroll from '@classes/Scroll';
-import Obstacles from '@classes/Obstacles';
-import ObstacleFactory from '@classes/ObstacleFactory';
+import CyclePlatforms from '@classes/CyclePlatforms';
+import PlatformFactory from '@classes/PlatformFactory';
 import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
 import Environment from './Environment';
 import Controller from './Controller';
 
 export default class Game {
-  private static readonly KEYBOARD = new Keyboard();
-
   private readonly HERO = new Hero(60, 30, 30, 30);
   private readonly AREA;
   private readonly GRAVITY = new Gravity(this.HERO);
-  private readonly SCROLL = new Scroll();
-  private readonly OBSTACLES;
+  private readonly CYCLE_PLATFORMS;
   private readonly CONTROLLER = new Controller(this.HERO);
 
   constructor(width: number, height: number) {
-    this.AREA = new Area(width, height);
-    this.OBSTACLES = new Obstacles(
-      new ObstacleFactory(width, height, this.HERO)
+    this.AREA = new Area(width, height, this.HERO);
+    this.CYCLE_PLATFORMS = new CyclePlatforms(
+      new PlatformFactory(width, height, this.HERO),
+      new Scroll()
     );
   }
 
   isOver(): boolean {
-    return this.AREA.isHitDeadlineBy(this.HERO);
+    return this.AREA.isHitDeadlineBy();
   }
 
   update(context: CanvasRenderingContext2D) {
-    const { platforms } = this.OBSTACLES;
+    // update object
+    this.CYCLE_PLATFORMS.update();
 
-    this.CONTROLLER.interact();
-
-    this.OBSTACLES.update();
-    this.SCROLL.wind(platforms);
+    // update hero
     this.GRAVITY.realize();
-    this.HERO.isGrounded = false;
-    platforms.forEach((platforms) => platforms.repel(this.HERO));
+    this.CYCLE_PLATFORMS.collision(this.HERO);
+    this.CONTROLLER.interact();
+    this.AREA.block();
+    this.HERO.update();
 
-    this.HERO.move();
-    this.AREA.block(this.HERO);
-
+    // draw
     this.HERO.draw(context);
-    platforms.forEach((platform) => platform.draw(context));
+    this.CYCLE_PLATFORMS.draw(context);
+    this.AREA.drawOverflowGuide(context);
 
+    // debug
     if (Environment.IS_DEVELOPMENT) {
-      Debugger.renderPosition(
-        context,
-        [this.HERO, ...platforms],
-        this.AREA,
-        this.HERO
-      );
+      Debugger.draw(context, {
+        hero: this.HERO,
+        cyclePlatforms: this.CYCLE_PLATFORMS,
+        area: this.AREA,
+      });
     }
   }
 }
