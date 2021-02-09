@@ -36,7 +36,7 @@ export default class Game {
 
     // update hero
     this.GRAVITY.realize();
-    platforms.forEach((platforms) => platforms.repel(this.HERO));
+    this.OBSTACLES.collision(this.HERO);
     this.CONTROLLER.interact();
     this.HERO.isGrounded = false;
     this.HERO.move();
@@ -44,7 +44,7 @@ export default class Game {
 
     // draw
     this.HERO.draw(context);
-    platforms.forEach((platform) => platform.draw(context));
+    this.OBSTACLES.draw(context);
     this.AREA.drawOverflowGuide(context);
 
     // debug

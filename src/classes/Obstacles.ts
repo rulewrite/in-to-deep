@@ -1,5 +1,6 @@
 import Platform from './Platform';
 import ObstacleFactory from './ObstacleFactory';
+import Mover from './Mover';
 
 class Obstacles {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;
@@ -31,6 +32,14 @@ class Obstacles {
         this.OBSTACLE_FACTORY.generation()
       );
     }
+  }
+
+  draw(context: CanvasRenderingContext2D) {
+    this.platforms.forEach((platform) => platform.draw(context));
+  }
+
+  collision(mover: Mover) {
+    this.platforms.forEach((platforms) => platforms.repel(mover));
   }
 }
 
