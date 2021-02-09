@@ -3,7 +3,7 @@ import ObstacleFactory from './ObstacleFactory';
 import Mover from './Mover';
 import Scroll from './Scroll';
 
-class Obstacles {
+class CyclePlatforms {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;
 
   private frameNo = 0;
@@ -19,7 +19,7 @@ class Obstacles {
   constructor(
     private readonly OBSTACLE_FACTORY: ObstacleFactory,
     private readonly SCROLL: Scroll,
-    private readonly GENERATION_INTERVAL = Obstacles.INITIAL_GENERATION_INTERVAL
+    private readonly GENERATION_INTERVAL = CyclePlatforms.INITIAL_GENERATION_INTERVAL
   ) {}
 
   update() {
@@ -47,4 +47,4 @@ class Obstacles {
   }
 }
 
-export default Obstacles;
+export default CyclePlatforms;

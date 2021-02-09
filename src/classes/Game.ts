@@ -1,7 +1,7 @@
 import Gravity from '@classes/Gravity';
 import Hero from '@classes/Hero';
 import Scroll from '@classes/Scroll';
-import Obstacles from '@classes/Obstacles';
+import CyclePlatforms from '@classes/CyclePlatforms';
 import ObstacleFactory from '@classes/ObstacleFactory';
 import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
@@ -12,12 +12,12 @@ export default class Game {
   private readonly HERO = new Hero(60, 30, 30, 30);
   private readonly AREA;
   private readonly GRAVITY = new Gravity(this.HERO);
-  private readonly OBSTACLES;
+  private readonly CYCLE_PLATFORMS;
   private readonly CONTROLLER = new Controller(this.HERO);
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
-    this.OBSTACLES = new Obstacles(
+    this.CYCLE_PLATFORMS = new CyclePlatforms(
       new ObstacleFactory(width, height, this.HERO),
       new Scroll()
     );
@@ -29,11 +29,11 @@ export default class Game {
 
   update(context: CanvasRenderingContext2D) {
     // update object
-    this.OBSTACLES.update();
+    this.CYCLE_PLATFORMS.update();
 
     // update hero
     this.GRAVITY.realize();
-    this.OBSTACLES.collision(this.HERO);
+    this.CYCLE_PLATFORMS.collision(this.HERO);
     this.CONTROLLER.interact();
     this.HERO.isGrounded = false;
     this.HERO.move();
@@ -41,14 +41,14 @@ export default class Game {
 
     // draw
     this.HERO.draw(context);
-    this.OBSTACLES.draw(context);
+    this.CYCLE_PLATFORMS.draw(context);
     this.AREA.drawOverflowGuide(context);
 
     // debug
     if (Environment.IS_DEVELOPMENT) {
       Debugger.draw(context, {
         hero: this.HERO,
-        obstacles: this.OBSTACLES,
+        cyclePlatforms: this.CYCLE_PLATFORMS,
         area: this.AREA,
       });
     }

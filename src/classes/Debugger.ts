@@ -4,7 +4,7 @@ export default class Debugger {
   }
   static draw(
     context: CanvasRenderingContext2D,
-    { obstacles, area, hero }: any
+    { cyclePlatforms, area, hero }: any
   ) {
     // base
     context.fillStyle = 'red';
@@ -23,7 +23,7 @@ export default class Debugger {
     context.fillText(`yVelocity: ${hero.yVelocity}`, 10, 60);
 
     // platform
-    obstacles.platforms.forEach((platform: any) => {
+    cyclePlatforms.platforms.forEach((platform: any) => {
       const { x, y } = platform;
 
       const cleanX = this.cleaning(x);
