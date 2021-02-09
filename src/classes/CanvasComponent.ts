@@ -12,6 +12,13 @@ abstract class CanvasComponent {
     return this.y + this.height;
   }
 
+  get center() {
+    return this.x + this.halfWidth;
+  }
+  get middle() {
+    return this.y + this.halfHeight;
+  }
+
   private _width = 0;
   halfWidth = 0;
   set width(_width: number) {
