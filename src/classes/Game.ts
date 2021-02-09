@@ -24,7 +24,7 @@ export default class Game {
   }
 
   isOver(): boolean {
-    return this.AREA.isHitDeadlineBy(this.HERO);
+    return this.AREA.isHitDeadlineBy();
   }
 
   update(context: CanvasRenderingContext2D) {
