@@ -17,7 +17,7 @@ export default class Game {
   private readonly CONTROLLER = new Controller(this.HERO);
 
   constructor(width: number, height: number) {
-    this.AREA = new Area(width, height);
+    this.AREA = new Area(width, height, this.HERO);
     this.OBSTACLES = new Obstacles(
       new ObstacleFactory(width, height, this.HERO)
     );
@@ -39,7 +39,7 @@ export default class Game {
     platforms.forEach((platforms) => platforms.repel(this.HERO));
 
     this.HERO.move();
-    this.AREA.block(this.HERO);
+    this.AREA.block();
 
     this.HERO.draw(context);
     platforms.forEach((platform) => platform.draw(context));

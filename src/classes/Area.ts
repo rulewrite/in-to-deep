@@ -3,30 +3,28 @@ import Mover from './Mover';
 export default class Area {
   constructor(
     private readonly WIDTH: number,
-    private readonly HEIGHT: number
+    private readonly HEIGHT: number,
+    private readonly MOVER: Mover
   ) {}
 
-  block(mover: Mover) {
+  block() {
     const { WIDTH, HEIGHT } = this;
-    const { left, right, bottom } = mover;
+    const { left, right, bottom } = this.MOVER;
 
     if (left < 0) {
-      mover.x = 0;
+      this.MOVER.x = 0;
     }
 
     if (right > WIDTH) {
-      mover.x = WIDTH - mover.width;
+      this.MOVER.x = WIDTH - this.MOVER.width;
     }
 
     if (bottom > HEIGHT) {
-      mover.y = HEIGHT - mover.height;
+      this.MOVER.y = HEIGHT - this.MOVER.height;
     }
   }
 
-  isHitDeadlineBy(mover: Mover): boolean {
-    const { HEIGHT } = this;
-    const { bottom } = mover;
-
-    return bottom >= HEIGHT;
+  isHitDeadlineBy(): boolean {
+    return this.MOVER.bottom >= this.HEIGHT;
   }
 }
