@@ -43,6 +43,7 @@ export default class Game {
 
     this.HERO.draw(context);
     platforms.forEach((platform) => platform.draw(context));
+    this.AREA.drawOverflowGuide(context);
 
     if (Environment.IS_DEVELOPMENT) {
       Debugger.renderPosition(
