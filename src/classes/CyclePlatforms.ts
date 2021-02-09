@@ -43,6 +43,26 @@ export default class CyclePlatforms {
   }
 
   collision(mover: Mover) {
-    this.platforms.forEach((platforms) => platforms.repel(mover));
+    this.platforms.forEach((platforms) => {
+      const collisionDirection = platforms.repel(mover);
+      switch (collisionDirection) {
+        case 'TOP':
+          mover.yVelocity *= -1; // 탄성 1
+          break;
+        case 'BOTTOM':
+          mover.yVelocity = 0;
+          mover.isGrounded = true;
+          mover.isJumping = false;
+          break;
+        case 'LEFT':
+          mover.xVelocity = 0;
+          mover.isJumping = false;
+          break;
+        case 'RIGHT':
+          mover.xVelocity = 0;
+          mover.isJumping = false;
+          break;
+      }
+    });
   }
 }

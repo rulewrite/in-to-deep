@@ -67,27 +67,15 @@ export default class Platform extends CanvasComponent {
     switch (collisionDirection) {
       case 'TOP':
         mover.y += outY;
-
-        mover.yVelocity *= -1; // 탄성 1
         break;
       case 'BOTTOM':
         mover.y -= outY;
-
-        mover.yVelocity = 0;
-        mover.isGrounded = true;
-        mover.isJumping = false;
         break;
       case 'LEFT':
         mover.x += outX;
-
-        mover.xVelocity = 0;
-        mover.isJumping = false;
         break;
       case 'RIGHT':
         mover.x -= outX;
-
-        mover.xVelocity = 0;
-        mover.isJumping = false;
         break;
     }
 
