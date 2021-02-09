@@ -1,21 +1,21 @@
-import Area from './Area';
-import CanvasComponent from './CanvasComponent';
-import Hero from './Hero';
-
 export default class Debugger {
   private static cleaning(number: number) {
     return Math.floor(number);
   }
   static renderPosition(
     context: CanvasRenderingContext2D,
-    canvasComponents: CanvasComponent[] = [],
-    area: Area,
-    hero: Hero
+    canvasComponents: any[],
+    area: any,
+    hero: any
   ) {
+    // base
     context.fillStyle = 'red';
+    context.font = '20px san-serif';
 
+    // outline
     context.fillRect(area.width, 0, 1, area.height);
 
+    // hero
     context.fillText(
       `isGrounded: ${hero.isGrounded}, isJumping: ${hero.isJumping}`,
       10,
@@ -24,13 +24,12 @@ export default class Debugger {
     context.fillText(`xVelocity: ${hero.xVelocity}`, 10, 40);
     context.fillText(`yVelocity: ${hero.yVelocity}`, 10, 60);
 
+    // platform
     canvasComponents.forEach((canvasComponent) => {
       const { x, y } = canvasComponent;
-      context.font = '20px san-serif';
 
       const cleanX = this.cleaning(x);
       const cleanY = this.cleaning(y);
-
       context.fillText(`${cleanX}, ${cleanY}`, cleanX, cleanY);
     });
   }

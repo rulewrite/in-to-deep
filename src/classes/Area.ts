@@ -1,7 +1,7 @@
 import CanvasComponent from './CanvasComponent';
 
 export default class Area {
-  constructor(public width: number, public height: number) {}
+  constructor(private width: number, private height: number) {}
 
   block(otherComponent: CanvasComponent) {
     const { width, height } = this;

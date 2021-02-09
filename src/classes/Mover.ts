@@ -13,7 +13,7 @@ class Mover extends CanvasComponent {
   private static readonly INITIAL_JUMP_POWER = 4;
 
   private _sideDirection: SideDirections = SideDirections.RIGHT;
-  get sideDirection() {
+  protected get sideDirection() {
     return SideDirections[this._sideDirection] as SideDirectionStrings;
   }
   xVelocity = 0;
