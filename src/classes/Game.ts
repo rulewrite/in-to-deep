@@ -49,12 +49,7 @@ export default class Game {
 
     // debug
     if (Environment.IS_DEVELOPMENT) {
-      Debugger.renderPosition(
-        context,
-        [this.HERO, ...platforms],
-        this.AREA,
-        this.HERO
-      );
+      Debugger.draw(context, [this.HERO, ...platforms], this.AREA, this.HERO);
     }
   }
 }

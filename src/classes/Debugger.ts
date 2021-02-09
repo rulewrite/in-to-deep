@@ -2,7 +2,7 @@ export default class Debugger {
   private static cleaning(number: number) {
     return Math.floor(number);
   }
-  static renderPosition(
+  static draw(
     context: CanvasRenderingContext2D,
     canvasComponents: any[],
     area: any,
