@@ -1,5 +1,5 @@
 import Platform from './Platform';
-import ObstacleFactory from './ObstacleFactory';
+import PlatformFactory from './PlatformFactory';
 import Mover from './Mover';
 import Scroll from './Scroll';
 
@@ -17,7 +17,7 @@ class CyclePlatforms {
   private platforms: Platform[] = [];
 
   constructor(
-    private readonly OBSTACLE_FACTORY: ObstacleFactory,
+    private readonly PLATFORM_FACTORY: PlatformFactory,
     private readonly SCROLL: Scroll,
     private readonly GENERATION_INTERVAL = CyclePlatforms.INITIAL_GENERATION_INTERVAL
   ) {}
@@ -31,7 +31,7 @@ class CyclePlatforms {
 
     if (this.isGenerationTime) {
       this.platforms = this.platforms.concat(
-        this.OBSTACLE_FACTORY.generation()
+        this.PLATFORM_FACTORY.generation()
       );
     }
 

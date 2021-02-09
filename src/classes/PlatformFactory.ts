@@ -1,7 +1,7 @@
 import CanvasComponent from './CanvasComponent';
 import Platform from './Platform';
 
-class ObstacleFactory {
+class PlatformFactory {
   private static readonly GAP_MARGIN = 100;
   private static getRandomRangeValue(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
@@ -10,7 +10,7 @@ class ObstacleFactory {
   private readonly MINIMUM_WIDTH: number;
   private readonly MAXIMUM_WIDTH: number;
   private get width() {
-    return ObstacleFactory.getRandomRangeValue(
+    return PlatformFactory.getRandomRangeValue(
       this.MINIMUM_WIDTH,
       this.MAXIMUM_WIDTH
     );
@@ -22,7 +22,7 @@ class ObstacleFactory {
     private readonly CANVAS_HEIGHT: number,
     passer: CanvasComponent
   ) {
-    const widthWithMargin = ObstacleFactory.GAP_MARGIN + passer.width;
+    const widthWithMargin = PlatformFactory.GAP_MARGIN + passer.width;
     this.MINIMUM_WIDTH = this.MINIMUM_GAP = widthWithMargin;
     this.MAXIMUM_WIDTH = CANVAS_WIDTH - this.MINIMUM_WIDTH - this.MINIMUM_GAP;
   }
@@ -32,7 +32,7 @@ class ObstacleFactory {
     const leftPlatform = new Platform(0, this.CANVAS_HEIGHT, width);
 
     const maximumGap = this.CANVAS_WIDTH - width - this.MINIMUM_WIDTH;
-    const gap = ObstacleFactory.getRandomRangeValue(
+    const gap = PlatformFactory.getRandomRangeValue(
       this.MINIMUM_GAP,
       maximumGap
     );
@@ -49,4 +49,4 @@ class ObstacleFactory {
   }
 }
 
-export default ObstacleFactory;
+export default PlatformFactory;
