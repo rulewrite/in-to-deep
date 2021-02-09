@@ -1,4 +1,4 @@
-import CanvasComponent from './CanvasComponent';
+import Mover from './Mover';
 
 export default class Area {
   constructor(
@@ -6,26 +6,26 @@ export default class Area {
     private readonly HEIGHT: number
   ) {}
 
-  block(otherComponent: CanvasComponent) {
+  block(mover: Mover) {
     const { WIDTH, HEIGHT } = this;
-    const { left, right, bottom } = otherComponent;
+    const { left, right, bottom } = mover;
 
     if (left < 0) {
-      otherComponent.x = 0;
+      mover.x = 0;
     }
 
     if (right > WIDTH) {
-      otherComponent.x = WIDTH - otherComponent.width;
+      mover.x = WIDTH - mover.width;
     }
 
     if (bottom > HEIGHT) {
-      otherComponent.y = HEIGHT - otherComponent.height;
+      mover.y = HEIGHT - mover.height;
     }
   }
 
-  isHitDeadlineBy(otherComponent: CanvasComponent): boolean {
+  isHitDeadlineBy(mover: Mover): boolean {
     const { HEIGHT } = this;
-    const { bottom } = otherComponent;
+    const { bottom } = mover;
 
     return bottom >= HEIGHT;
   }
