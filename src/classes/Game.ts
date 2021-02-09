@@ -35,9 +35,8 @@ export default class Game {
     this.GRAVITY.realize();
     this.CYCLE_PLATFORMS.collision(this.HERO);
     this.CONTROLLER.interact();
-    this.HERO.isGrounded = false;
-    this.HERO.move();
     this.AREA.block();
+    this.HERO.update();
 
     // draw
     this.HERO.draw(context);
