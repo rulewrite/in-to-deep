@@ -13,7 +13,7 @@ export default class Debugger {
     context.font = '20px san-serif';
 
     // outline
-    context.fillRect(area.width, 0, 1, area.height);
+    context.fillRect(area.WIDTH, 0, 1, area.HEIGHT);
 
     // hero
     context.fillText(
