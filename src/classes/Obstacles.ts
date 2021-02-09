@@ -9,14 +9,14 @@ class Obstacles {
     if (this.frameNo === 1) {
       return true;
     }
-    return !((this.frameNo / this.generationInterval) % 1);
+    return !((this.frameNo / this.GENERATION_INTERVAL) % 1);
   }
 
   platforms: Platform[] = [];
 
   constructor(
-    private readonly obstacleFactory: ObstacleFactory,
-    private readonly generationInterval = Obstacles.INITIAL_GENERATION_INTERVAL
+    private readonly OBSTACLE_FACTORY: ObstacleFactory,
+    private readonly GENERATION_INTERVAL = Obstacles.INITIAL_GENERATION_INTERVAL
   ) {}
 
   update() {
@@ -27,7 +27,9 @@ class Obstacles {
     });
 
     if (this.isGenerationTime) {
-      this.platforms = this.platforms.concat(this.obstacleFactory.generation());
+      this.platforms = this.platforms.concat(
+        this.OBSTACLE_FACTORY.generation()
+      );
     }
   }
 }

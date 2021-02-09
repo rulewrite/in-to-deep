@@ -21,6 +21,7 @@ abstract class CanvasComponent {
   get width() {
     return this._width;
   }
+
   private _height = 0;
   halfHeight = 0;
   set height(_height: number) {

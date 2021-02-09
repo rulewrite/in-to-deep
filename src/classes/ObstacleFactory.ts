@@ -18,30 +18,30 @@ class ObstacleFactory {
   private readonly minimumGap: number;
 
   constructor(
-    private canvasWidth: number,
-    private canvasHeight: number,
+    private readonly CANVAS_WIDTH: number,
+    private readonly CANVAS_HEIGHT: number,
     passer: CanvasComponent
   ) {
     const widthWithMargin = ObstacleFactory.GAP_MARGIN + passer.width;
     this.minimumWidth = this.minimumGap = widthWithMargin;
-    this.maximumWidth = canvasWidth - this.minimumWidth - this.minimumGap;
+    this.maximumWidth = CANVAS_WIDTH - this.minimumWidth - this.minimumGap;
   }
 
   generation() {
     const { width } = this;
-    const leftPlatform = new Platform(0, this.canvasHeight, width);
+    const leftPlatform = new Platform(0, this.CANVAS_HEIGHT, width);
 
-    const maximumGap = this.canvasWidth - width - this.minimumWidth;
+    const maximumGap = this.CANVAS_WIDTH - width - this.minimumWidth;
     const gap = ObstacleFactory.getRandomRangeValue(
       this.minimumGap,
       maximumGap
     );
 
     const rightPlatformX = width + gap;
-    const rightPlatformWidth = this.canvasWidth - rightPlatformX;
+    const rightPlatformWidth = this.CANVAS_WIDTH - rightPlatformX;
     const rightPlatform = new Platform(
       rightPlatformX,
-      this.canvasHeight,
+      this.CANVAS_HEIGHT,
       rightPlatformWidth
     );
 
