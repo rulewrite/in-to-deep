@@ -1,71 +1,52 @@
 import CanvasComponent from './CanvasComponent';
-import Floor from './Floor';
-import { Directions } from './Game';
+
+enum SideDirections {
+  RIGHT = 1,
+  LEFT = -1,
+}
+
+type SideDirectionStrings = keyof typeof SideDirections;
 
 class Mover extends CanvasComponent {
-  private static readonly INITIAL_ACCELERATION = 0.14;
-  private static readonly INITIAL_MAXIMUM_SPEED = 5;
-  private static readonly DECELERATION_SPEED_IN_AIR = 0.1;
-  private static readonly ACCELERATION_RATE_IN_AIR = 0.3;
+  private static readonly INITIAL_ACCELERATION = 1;
+  private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
+  private static readonly INITIAL_JUMP_POWER = 4;
 
-  directions: Directions = 'RIGHT';
-  gravitationalForce = 0;
-  isOnFloor = false;
-
-  private _acceleration = Mover.INITIAL_ACCELERATION;
-  private get acceleration() {
-    if (this.isOnFloor) {
-      return this._acceleration;
-    }
-    return this._acceleration * Mover.ACCELERATION_RATE_IN_AIR;
+  private _sideDirection: SideDirections = SideDirections.RIGHT;
+  get sideDirection() {
+    return SideDirections[this._sideDirection] as SideDirectionStrings;
   }
-  private _maximumSpeed = Mover.INITIAL_MAXIMUM_SPEED;
-  private get maximumSpeed() {
-    if (this.isOnFloor) {
-      return this._maximumSpeed;
-    }
-    return this._maximumSpeed * Mover.ACCELERATION_RATE_IN_AIR;
-  }
-  private speed = 0;
+  xVelocity = 0;
+  yVelocity = 0;
+  isJumping = false;
+  isGrounded = false;
+  private acceleration = Mover.INITIAL_ACCELERATION;
+  private maximumXVelocity = Mover.INITIAL_MAXIMUM_X_VELOCITY;
+  private jumpPower = Mover.INITIAL_JUMP_POWER;
 
-  private accelerate(pressedDirections?: Directions) {
-    if (pressedDirections !== this.directions) {
-      this.speed = 0;
+  go(sideDirection: SideDirectionStrings) {
+    this._sideDirection = SideDirections[sideDirection];
+    if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
+      return;
+    }
+    this.xVelocity += this._sideDirection * this.acceleration;
+  }
+
+  jump() {
+    if (!this.isGrounded || this.isJumping) {
       return;
     }
 
-    const { maximumSpeed, acceleration } = this;
-
-    if (this.speed > maximumSpeed) {
-      this.speed -= Mover.DECELERATION_SPEED_IN_AIR;
-      return;
-    }
-
-    this.speed = Math.min(this.speed + acceleration, maximumSpeed);
+    this.isJumping = true;
+    this.isGrounded = false;
+    this.yVelocity = -this.jumpPower;
   }
 
-  moveSide(floors: Floor[], pressedDirections?: Directions) {
-    this.accelerate(pressedDirections);
+  move() {
+    this.xVelocity *= 0.8; // 마찰력
 
-    if (!pressedDirections) {
-      return;
-    }
-
-    this.directions = pressedDirections;
-    switch (this.directions) {
-      case 'RIGHT':
-        this.x += this.speed;
-        break;
-      case 'LEFT':
-        this.x -= this.speed;
-        break;
-    }
-
-    const hitFloor = floors.find((floor) => floor.isHitSideBy(this));
-    if (hitFloor) {
-      this.speed = 0;
-      this.x = hitFloor.getGapSideWith(this);
-    }
+    this.x += this.xVelocity;
+    this.y += this.yVelocity;
   }
 }
 

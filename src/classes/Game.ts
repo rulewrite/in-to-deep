@@ -6,8 +6,8 @@ import Obstacles from '@classes/Obstacles';
 import ObstacleFactory from '@classes/ObstacleFactory';
 import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
-
-export type Directions = 'LEFT' | 'RIGHT';
+import Environment from './Environment';
+import Controller from './Controller';
 
 export default class Game {
   private static readonly KEYBOARD = new Keyboard();
@@ -17,6 +17,7 @@ export default class Game {
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly SCROLL = new Scroll();
   private readonly OBSTACLES;
+  private readonly CONTROLLER = new Controller(this.HERO);
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height);
@@ -25,39 +26,34 @@ export default class Game {
     );
   }
 
-  private getPressedDirections(): Directions | undefined {
-    const { isPressedRight, isPressedLeft, isPressedMovingKey } = Game.KEYBOARD;
-
-    if (!isPressedMovingKey || (isPressedRight && isPressedLeft)) {
-      return;
-    }
-
-    if (isPressedRight && !isPressedLeft) {
-      return 'RIGHT';
-    }
-
-    if (isPressedLeft && !isPressedRight) {
-      return 'LEFT';
-    }
-  }
-
   isOver(): boolean {
     return this.AREA.isHitDeadlineBy(this.HERO);
   }
 
-  run(context: CanvasRenderingContext2D) {
-    const pressedDirections = this.getPressedDirections();
-    const { floors } = this.OBSTACLES;
+  update(context: CanvasRenderingContext2D) {
+    const { platforms } = this.OBSTACLES;
+
+    this.CONTROLLER.interact();
 
     this.OBSTACLES.update();
-    this.SCROLL.wind(floors);
-    this.GRAVITY.realize(floors);
-    this.HERO.moveSide(floors, pressedDirections);
-    this.AREA.blockSide(this.HERO);
+    this.SCROLL.wind(platforms);
+    this.GRAVITY.realize();
+    this.HERO.isGrounded = false;
+    platforms.forEach((platforms) => platforms.repel(this.HERO));
 
-    this.HERO.renderCanvas(context);
-    floors.forEach((floor) => floor.renderCanvas(context));
+    this.HERO.move();
+    this.AREA.block(this.HERO);
 
-    Debugger.renderPosition(context, [this.HERO, ...floors], this.AREA);
+    this.HERO.draw(context);
+    platforms.forEach((platform) => platform.draw(context));
+
+    if (Environment.isDevelopment) {
+      Debugger.renderPosition(
+        context,
+        [this.HERO, ...platforms],
+        this.AREA,
+        this.HERO
+      );
+    }
   }
 }
