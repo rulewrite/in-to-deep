@@ -8,7 +8,7 @@ export default class Area {
 
   block(otherComponent: CanvasComponent) {
     const { WIDTH, HEIGHT } = this;
-    const { left, right, top, bottom } = otherComponent;
+    const { left, right, bottom } = otherComponent;
 
     if (left < 0) {
       otherComponent.x = 0;
@@ -16,10 +16,6 @@ export default class Area {
 
     if (right > WIDTH) {
       otherComponent.x = WIDTH - otherComponent.width;
-    }
-
-    if (top < 0) {
-      otherComponent.y = 0;
     }
 
     if (bottom > HEIGHT) {
