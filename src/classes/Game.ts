@@ -12,14 +12,14 @@ export default class Game {
   private readonly HERO = new Hero(60, 30, 30, 30);
   private readonly AREA;
   private readonly GRAVITY = new Gravity(this.HERO);
-  private readonly SCROLL = new Scroll();
   private readonly OBSTACLES;
   private readonly CONTROLLER = new Controller(this.HERO);
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
     this.OBSTACLES = new Obstacles(
-      new ObstacleFactory(width, height, this.HERO)
+      new ObstacleFactory(width, height, this.HERO),
+      new Scroll()
     );
   }
 
@@ -28,11 +28,8 @@ export default class Game {
   }
 
   update(context: CanvasRenderingContext2D) {
-    const { platforms } = this.OBSTACLES;
-
     // update object
     this.OBSTACLES.update();
-    this.SCROLL.wind(platforms);
 
     // update hero
     this.GRAVITY.realize();

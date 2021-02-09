@@ -1,6 +1,7 @@
 import Platform from './Platform';
 import ObstacleFactory from './ObstacleFactory';
 import Mover from './Mover';
+import Scroll from './Scroll';
 
 class Obstacles {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;
@@ -13,10 +14,11 @@ class Obstacles {
     return !((this.frameNo / this.GENERATION_INTERVAL) % 1);
   }
 
-  platforms: Platform[] = [];
+  private platforms: Platform[] = [];
 
   constructor(
     private readonly OBSTACLE_FACTORY: ObstacleFactory,
+    private readonly SCROLL: Scroll,
     private readonly GENERATION_INTERVAL = Obstacles.INITIAL_GENERATION_INTERVAL
   ) {}
 
@@ -32,6 +34,8 @@ class Obstacles {
         this.OBSTACLE_FACTORY.generation()
       );
     }
+
+    this.SCROLL.wind(this.platforms);
   }
 
   draw(context: CanvasRenderingContext2D) {
