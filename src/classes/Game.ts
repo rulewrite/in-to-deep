@@ -34,8 +34,8 @@ export default class Game {
     // update hero
     this.GRAVITY.realize();
     this.CONTROLLER.interact();
-    this.AREA.block();
     this.HERO.update();
+    this.AREA.block();
     this.CYCLE_PLATFORMS.collision(this.HERO);
 
     // draw
