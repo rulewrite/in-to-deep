@@ -49,4 +49,25 @@ export default class Mover extends CanvasComponent {
     this.x += this.xVelocity;
     this.y += this.yVelocity;
   }
+
+  collision(direction: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
+    switch (direction) {
+      case 'TOP':
+        this.yVelocity *= -1; // 탄성 1
+        break;
+      case 'BOTTOM':
+        this.yVelocity = 0;
+        this.isGrounded = true;
+        this.isJumping = false;
+        break;
+      case 'LEFT':
+        this.xVelocity = 0;
+        this.isJumping = false;
+        break;
+      case 'RIGHT':
+        this.xVelocity = 0;
+        this.isJumping = false;
+        break;
+    }
+  }
 }
