@@ -40,7 +40,7 @@ export default class Area {
     context.fill();
   }
 
-  isHitDeadlineBy(): boolean {
+  isHitDeadline(): boolean {
     return this.MOVER.bottom >= this.HEIGHT;
   }
 }
