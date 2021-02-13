@@ -1,12 +1,12 @@
 export default class Keyboard {
   private static readonly KEYDOWN_EVENT_TYPE = 'keydown';
-  private static readonly SET_LEFT_KEY = new Set(['Left', 'ArrowLeft']);
-  private static readonly SET_RIGHT_KEY = new Set(['Right', 'ArrowRight']);
-  private static readonly SET_UP_KEY = new Set(['Up', 'ArrowUp']);
+  private static readonly LEFT_KEY_CODE = 'ArrowLeft';
+  private static readonly RIGHT_KEY_CODE = 'ArrowRight';
+  private static readonly Z_KEY_CODE = 'KeyZ';
 
   isPressedLeft = false;
   isPressedRight = false;
-  isPressedUp = false;
+  isPressedZ = false;
 
   constructor() {
     this.keyListener = this.keyListener.bind(this);
@@ -15,19 +15,19 @@ export default class Keyboard {
   }
 
   private keyListener(event: KeyboardEvent) {
-    const { key, type } = event;
+    const { code, type } = event;
     const isPressed = type === Keyboard.KEYDOWN_EVENT_TYPE;
 
-    if (Keyboard.SET_LEFT_KEY.has(key)) {
+    if (Keyboard.LEFT_KEY_CODE === code) {
       this.isPressedLeft = isPressed;
     }
 
-    if (Keyboard.SET_RIGHT_KEY.has(key)) {
+    if (Keyboard.RIGHT_KEY_CODE === code) {
       this.isPressedRight = isPressed;
     }
 
-    if (Keyboard.SET_UP_KEY.has(key)) {
-      this.isPressedUp = isPressed;
+    if (Keyboard.Z_KEY_CODE === code) {
+      this.isPressedZ = isPressed;
     }
   }
 }
