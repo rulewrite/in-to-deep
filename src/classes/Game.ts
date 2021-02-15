@@ -5,6 +5,7 @@ import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
 import Environment from './Environment';
 import Controller from './Controller';
+import OverflowGuide from './OverflowGuide';
 
 export default class Game {
   private readonly HERO = new Hero(60, 30, 30, 30);
@@ -12,6 +13,7 @@ export default class Game {
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly CYCLE_OBSTACLES;
   private readonly CONTROLLER = new Controller(this.HERO);
+  private readonly OVERFLOW_GUIDE = new OverflowGuide(this.HERO);
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
@@ -36,7 +38,7 @@ export default class Game {
     // draw
     this.HERO.draw(context);
     this.CYCLE_OBSTACLES.draw(context);
-    this.AREA.drawOverflowGuide(context);
+    this.OVERFLOW_GUIDE.draw(context);
 
     // debug
     if (Environment.IS_DEVELOPMENT) {

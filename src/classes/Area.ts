@@ -1,8 +1,6 @@
 import Mover from './Mover';
 
 export default class Area {
-  private static readonly OVERFLOW_GUIDE_HEIGHT = 10;
-
   constructor(
     private readonly WIDTH: number,
     private readonly HEIGHT: number,
@@ -24,20 +22,6 @@ export default class Area {
     if (bottom > HEIGHT) {
       this.MOVER.y = HEIGHT - this.MOVER.height;
     }
-  }
-
-  drawOverflowGuide(context: CanvasRenderingContext2D) {
-    if (this.MOVER.bottom >= 0) {
-      return;
-    }
-
-    const { color, center, left, right } = this.MOVER;
-    context.fillStyle = color;
-    context.beginPath();
-    context.moveTo(center, 0);
-    context.lineTo(left, Area.OVERFLOW_GUIDE_HEIGHT);
-    context.lineTo(right, Area.OVERFLOW_GUIDE_HEIGHT);
-    context.fill();
   }
 
   isHitDeadline(): boolean {
