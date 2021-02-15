@@ -3,7 +3,7 @@ import Mover from './Mover';
 import Scroll from './Scroll';
 import Obstacle from './Obstacle';
 
-export default class CyclePlatforms {
+export default class CycleObstacles {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;
 
   private frameNo = 0;
@@ -21,7 +21,7 @@ export default class CyclePlatforms {
     private readonly CANVAS_HEIGHT: number,
     private readonly PASSER_WIDTH: number,
     private readonly SCROLL: Scroll,
-    private readonly GENERATION_INTERVAL = CyclePlatforms.INITIAL_GENERATION_INTERVAL
+    private readonly GENERATION_INTERVAL = CycleObstacles.INITIAL_GENERATION_INTERVAL
   ) {}
 
   update() {
