@@ -50,7 +50,7 @@ export default class Mover extends CanvasComponent {
     this.y += this.yVelocity;
   }
 
-  collision(direction: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
+  collide(direction: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
     switch (direction) {
       case 'TOP':
         this.yVelocity *= -1; // 탄성 1

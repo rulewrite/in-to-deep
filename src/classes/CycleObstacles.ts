@@ -50,14 +50,14 @@ export default class CycleObstacles {
     this.platforms.forEach((platform) => platform.draw(context));
   }
 
-  collision(mover: Mover) {
+  collide(mover: Mover) {
     this.platforms.forEach((platforms) => {
       const collisionDirection = platforms.repel(mover);
       if (!collisionDirection) {
         return;
       }
 
-      mover.collision(collisionDirection);
+      mover.collide(collisionDirection);
     });
   }
 }

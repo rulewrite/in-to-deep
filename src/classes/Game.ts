@@ -31,7 +31,7 @@ export default class Game {
     this.CONTROLLER.interact();
     this.HERO.update();
     this.AREA.block();
-    this.CYCLE_OBSTACLES.collision(this.HERO);
+    this.CYCLE_OBSTACLES.collide(this.HERO);
 
     // draw
     this.HERO.draw(context);
