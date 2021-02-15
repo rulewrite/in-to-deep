@@ -37,7 +37,10 @@ export default class CycleObstacles {
         this.CANVAS_HEIGHT,
         this.PASSER_WIDTH
       );
-      this.platforms = this.platforms.concat([obstacle.LEFT, obstacle.RIGHT]);
+      this.platforms = this.platforms.concat([
+        obstacle.LEFT_PLATFORM,
+        obstacle.RIGHT_PLATFORM,
+      ]);
     }
 
     this.SCROLL.wind(this.platforms);
