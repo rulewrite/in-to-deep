@@ -1,7 +1,7 @@
 import Platform from './Platform';
-import PlatformFactory from './PlatformFactory';
 import Mover from './Mover';
 import Scroll from './Scroll';
+import Obstacle from './Obstacle';
 
 export default class CyclePlatforms {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;
@@ -17,7 +17,9 @@ export default class CyclePlatforms {
   private platforms: Platform[] = [];
 
   constructor(
-    private readonly PLATFORM_FACTORY: PlatformFactory,
+    private readonly CANVAS_WIDTH: number,
+    private readonly CANVAS_HEIGHT: number,
+    private readonly PASSER_WIDTH: number,
     private readonly SCROLL: Scroll,
     private readonly GENERATION_INTERVAL = CyclePlatforms.INITIAL_GENERATION_INTERVAL
   ) {}
@@ -30,9 +32,12 @@ export default class CyclePlatforms {
     });
 
     if (this.isGenerationTime) {
-      this.platforms = this.platforms.concat(
-        this.PLATFORM_FACTORY.generation()
+      const obstacle = new Obstacle(
+        this.CANVAS_WIDTH,
+        this.CANVAS_HEIGHT,
+        this.PASSER_WIDTH
       );
+      this.platforms = this.platforms.concat([obstacle.LEFT, obstacle.RIGHT]);
     }
 
     this.SCROLL.wind(this.platforms);

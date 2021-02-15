@@ -2,7 +2,6 @@ import Gravity from '@classes/Gravity';
 import Hero from '@classes/Hero';
 import Scroll from '@classes/Scroll';
 import CyclePlatforms from '@classes/CyclePlatforms';
-import PlatformFactory from '@classes/PlatformFactory';
 import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
 import Environment from './Environment';
@@ -18,7 +17,9 @@ export default class Game {
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
     this.CYCLE_PLATFORMS = new CyclePlatforms(
-      new PlatformFactory(width, height, this.HERO),
+      width,
+      height,
+      this.HERO.width,
       new Scroll()
     );
   }
