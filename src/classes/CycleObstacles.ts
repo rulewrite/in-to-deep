@@ -14,13 +14,13 @@ export default class CycleObstacles {
     return !((this.frameNo / this.GENERATION_INTERVAL) % 1);
   }
 
+  private readonly SCROLL = new Scroll();
   private platforms: Platform[] = [];
 
   constructor(
     private readonly CANVAS_WIDTH: number,
     private readonly CANVAS_HEIGHT: number,
     private readonly PASSER_WIDTH: number,
-    private readonly SCROLL: Scroll,
     private readonly GENERATION_INTERVAL = CycleObstacles.INITIAL_GENERATION_INTERVAL
   ) {}
 

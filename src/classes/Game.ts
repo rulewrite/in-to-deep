@@ -1,6 +1,5 @@
 import Gravity from '@classes/Gravity';
 import Hero from '@classes/Hero';
-import Scroll from '@classes/Scroll';
 import CycleObstacles from '@classes/CycleObstacles';
 import Debugger from '@classes/Debugger';
 import Area from '@classes/Area';
@@ -16,12 +15,7 @@ export default class Game {
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
-    this.CYCLE_OBSTACLES = new CycleObstacles(
-      width,
-      height,
-      this.HERO.width,
-      new Scroll()
-    );
+    this.CYCLE_OBSTACLES = new CycleObstacles(width, height, this.HERO.width);
   }
 
   isOver(): boolean {
