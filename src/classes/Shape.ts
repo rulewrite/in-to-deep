@@ -1,4 +1,4 @@
-export default abstract class CanvasComponent {
+export default abstract class Shape {
   get left() {
     return this.x;
   }

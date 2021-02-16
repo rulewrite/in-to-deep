@@ -1,4 +1,4 @@
-import CanvasComponent from './CanvasComponent';
+import Shape from './Shape';
 
 enum SideDirections {
   RIGHT = 1,
@@ -7,7 +7,7 @@ enum SideDirections {
 
 type SideDirectionStrings = keyof typeof SideDirections;
 
-export default class Mover extends CanvasComponent {
+export default class Mover extends Shape {
   private static readonly INITIAL_ACCELERATION = 1;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
   private static readonly INITIAL_JUMP_POWER = 4;

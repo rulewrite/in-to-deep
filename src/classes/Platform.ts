@@ -1,7 +1,7 @@
-import CanvasComponent from './CanvasComponent';
+import Shape from './Shape';
 import Mover from './Mover';
 
-export default class Platform extends CanvasComponent {
+export default class Platform extends Shape {
   private static readonly INITIAL_HEIGHT = 20;
   private static readonly INITIAL_COLOR = 'black';
   private static getCollisionDirection(
