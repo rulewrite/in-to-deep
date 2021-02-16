@@ -10,10 +10,10 @@ import Drawable from './Drawable';
 
 export default class Game implements Drawable {
   private readonly HERO = new Hero(60, 30, 30, 30);
-  private readonly AREA;
   private readonly GRAVITY = new Gravity(this.HERO);
-  private readonly CYCLE_OBSTACLES;
   private readonly CONTROLLER = new Controller(this.HERO);
+  private readonly AREA;
+  private readonly CYCLE_OBSTACLES;
   private readonly DRAWABLES: Drawable[];
 
   constructor(width: number, height: number) {
@@ -45,10 +45,10 @@ export default class Game implements Drawable {
     this.CYCLE_OBSTACLES.update();
 
     // update hero
+    this.AREA.block();
     this.GRAVITY.realize();
     this.CONTROLLER.interact();
     this.HERO.update();
-    this.AREA.block();
     this.CYCLE_OBSTACLES.collide();
   }
 
