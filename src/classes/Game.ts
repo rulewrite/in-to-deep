@@ -45,12 +45,13 @@ export default class Game implements Drawable {
     this.CYCLE_OBSTACLES.update();
 
     // update hero
-    this.GRAVITY.realize();
     this.CONTROLLER.interact();
     this.HERO.update();
-    this.CYCLE_OBSTACLES.collide();
 
+    // collision
+    this.GRAVITY.realize();
     this.AREA.block();
+    this.CYCLE_OBSTACLES.collide();
   }
 
   draw(context: CanvasRenderingContext2D) {
