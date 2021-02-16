@@ -81,4 +81,9 @@ export default class Platform extends CanvasComponent {
 
     return collisionDirection;
   }
+
+  draw(context: CanvasRenderingContext2D) {
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
+  }
 }
