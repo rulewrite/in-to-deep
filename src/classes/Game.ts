@@ -20,7 +20,7 @@ export default class Game {
     this.CYCLE_OBSTACLES = new CycleObstacles(width, height, this.HERO.width);
   }
 
-  isOver(): boolean {
+  isOver() {
     return this.AREA.isHitDeadline();
   }
 

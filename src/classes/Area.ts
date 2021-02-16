@@ -24,7 +24,7 @@ export default class Area {
     }
   }
 
-  isHitDeadline(): boolean {
+  isHitDeadline() {
     return this.MOVER.bottom >= this.HEIGHT;
   }
 }
