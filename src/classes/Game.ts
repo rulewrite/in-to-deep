@@ -21,7 +21,7 @@ export default class Game {
   }
 
   isOver() {
-    return this.AREA.isHitDeadline();
+    return this.AREA.isCollideBottom();
   }
 
   update(context: CanvasRenderingContext2D) {
