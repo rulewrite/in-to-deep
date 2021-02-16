@@ -1,8 +1,7 @@
 import Platform from './Platform';
-import Shape from './Shape';
 
-export default class Obstacle extends Shape {
-  private static readonly X = 0;
+export default class Obstacle {
+  private static readonly LEFT_PLATFORM_X = 0;
   private static readonly HEIGHT = 20;
   private static readonly MARGIN_MULTIPLE = 2;
   private static getRandomRangeValue(min: number, max: number) {
@@ -13,8 +12,6 @@ export default class Obstacle extends Shape {
   readonly RIGHT_PLATFORM: Platform;
 
   constructor(width: number, y: number, passerWidth: number) {
-    super(Obstacle.X, y, width, Obstacle.HEIGHT);
-
     const minumumGap = passerWidth * Obstacle.MARGIN_MULTIPLE;
 
     const leftPlatformWidth = Obstacle.getRandomRangeValue(
@@ -22,10 +19,10 @@ export default class Obstacle extends Shape {
       width - minumumGap - passerWidth
     );
     this.LEFT_PLATFORM = new Platform(
-      this.x,
+      Obstacle.LEFT_PLATFORM_X,
       y,
       leftPlatformWidth,
-      this.height
+      Obstacle.HEIGHT
     );
 
     const gap = Obstacle.getRandomRangeValue(
@@ -38,7 +35,7 @@ export default class Obstacle extends Shape {
       rightPlatformX,
       y,
       width - rightPlatformX,
-      this.height
+      Obstacle.HEIGHT
     );
   }
 }
