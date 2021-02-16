@@ -2,7 +2,6 @@ import Shape from './Shape';
 import Mover from './Mover';
 
 export default class Platform extends Shape {
-  private static readonly INITIAL_HEIGHT = 20;
   private static readonly INITIAL_COLOR = 'black';
   private static getCollisionDirection(
     outX: number,
@@ -29,9 +28,10 @@ export default class Platform extends Shape {
     x: number,
     y: number,
     width: number,
+    height: number,
     private color = Platform.INITIAL_COLOR
   ) {
-    super(x, y, width, Platform.INITIAL_HEIGHT);
+    super(x, y, width, height);
   }
 
   repel(mover: Mover) {
