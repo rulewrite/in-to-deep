@@ -1,6 +1,7 @@
+import Drawable from './Drawable';
 import Mover from './Mover';
 
-export default class Hero extends Mover {
+export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 

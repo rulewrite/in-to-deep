@@ -1,6 +1,7 @@
+import Drawable from './Drawable';
 import Hero from './Hero';
 
-export default class OverflowGuide {
+export default class OverflowGuide implements Drawable {
   private static readonly HEIGHT = 10;
   constructor(private readonly HERO: Hero) {}
 

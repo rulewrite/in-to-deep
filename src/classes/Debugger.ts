@@ -1,4 +1,6 @@
-export default class Debugger {
+import Drawable from './Drawable';
+
+export default class Debugger implements Drawable {
   private static cleaning(number: number) {
     return Math.floor(number);
   }

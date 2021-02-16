@@ -6,8 +6,9 @@ import Area from '@classes/Area';
 import Environment from './Environment';
 import Controller from './Controller';
 import OverflowGuide from './OverflowGuide';
+import Drawable from './Drawable';
 
-export default class Game {
+export default class Game implements Drawable {
   private readonly HERO = new Hero(60, 30, 30, 30);
   private readonly AREA;
   private readonly GRAVITY = new Gravity(this.HERO);

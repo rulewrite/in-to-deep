@@ -1,7 +1,8 @@
 import Shape from './Shape';
 import Mover from './Mover';
+import Drawable from './Drawable';
 
-export default class Platform extends Shape {
+export default class Platform extends Shape implements Drawable {
   private static readonly INITIAL_COLOR = 'black';
   private static getCollisionDirection(
     outX: number,
