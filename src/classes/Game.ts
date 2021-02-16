@@ -21,6 +21,10 @@ export default class Game {
   }
 
   isOver() {
+    if (Environment.IS_DEVELOPMENT) {
+      return false;
+    }
+
     return this.AREA.isCollideBottom();
   }
 
