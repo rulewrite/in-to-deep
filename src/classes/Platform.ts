@@ -29,9 +29,9 @@ export default class Platform extends Shape {
     x: number,
     y: number,
     width: number,
-    color = Platform.INITIAL_COLOR
+    private color = Platform.INITIAL_COLOR
   ) {
-    super(x, y, width, Platform.INITIAL_HEIGHT, color);
+    super(x, y, width, Platform.INITIAL_HEIGHT);
   }
 
   repel(mover: Mover) {

@@ -26,9 +26,9 @@ export default class Hero extends Mover {
     y: number,
     width: number,
     height: number,
-    color = Hero.INITIAL_COLOR
+    public color = Hero.INITIAL_COLOR
   ) {
-    super(x, y, width, height, color);
+    super(x, y, width, height);
   }
 
   draw(context: CanvasRenderingContext2D) {

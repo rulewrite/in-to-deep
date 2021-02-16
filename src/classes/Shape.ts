@@ -43,8 +43,7 @@ export default abstract class Shape {
     public x: number,
     public y: number,
     width: number,
-    height: number,
-    public color: string
+    height: number
   ) {
     this.width = width;
     this.height = height;
