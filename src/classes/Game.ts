@@ -24,7 +24,7 @@ export default class Game {
     return this.AREA.isCollideBottom();
   }
 
-  update(context: CanvasRenderingContext2D) {
+  private update() {
     // update object
     this.CYCLE_OBSTACLES.update();
 
@@ -34,8 +34,11 @@ export default class Game {
     this.HERO.update();
     this.AREA.block();
     this.CYCLE_OBSTACLES.collide(this.HERO);
+  }
 
-    // draw
+  draw(context: CanvasRenderingContext2D) {
+    this.update();
+
     this.HERO.draw(context);
     this.CYCLE_OBSTACLES.draw(context);
     this.OVERFLOW_GUIDE.draw(context);
