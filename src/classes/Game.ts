@@ -14,10 +14,13 @@ export default class Game {
   private readonly CYCLE_OBSTACLES;
   private readonly CONTROLLER = new Controller(this.HERO);
   private readonly OVERFLOW_GUIDE = new OverflowGuide(this.HERO);
+  private readonly DEBUGGER;
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
     this.CYCLE_OBSTACLES = new CycleObstacles(width, height, this.HERO.width);
+
+    this.DEBUGGER = new Debugger(this.CYCLE_OBSTACLES, this.AREA, this.HERO);
   }
 
   isOver() {
@@ -49,11 +52,7 @@ export default class Game {
 
     // debug
     if (Environment.IS_DEVELOPMENT) {
-      Debugger.draw(context, {
-        hero: this.HERO,
-        cycleObstacles: this.CYCLE_OBSTACLES,
-        area: this.AREA,
-      });
+      this.DEBUGGER.draw(context);
     }
   }
 }
