@@ -18,7 +18,7 @@ export default class Game implements Drawable {
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
-    this.CYCLE_OBSTACLES = new CycleObstacles(width, height, this.HERO.width);
+    this.CYCLE_OBSTACLES = new CycleObstacles(width, height, this.HERO);
 
     this.DRAWABLES = [
       this.HERO,
@@ -49,7 +49,7 @@ export default class Game implements Drawable {
     this.CONTROLLER.interact();
     this.HERO.update();
     this.AREA.block();
-    this.CYCLE_OBSTACLES.collide(this.HERO);
+    this.CYCLE_OBSTACLES.collide();
   }
 
   draw(context: CanvasRenderingContext2D) {

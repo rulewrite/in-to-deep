@@ -21,7 +21,7 @@ export default class CycleObstacles implements Drawable {
   constructor(
     private readonly CANVAS_WIDTH: number,
     private readonly CANVAS_HEIGHT: number,
-    private readonly PASSER_WIDTH: number,
+    private readonly MOVER: Mover,
     private readonly GENERATION_INTERVAL = CycleObstacles.INITIAL_GENERATION_INTERVAL
   ) {}
 
@@ -36,7 +36,7 @@ export default class CycleObstacles implements Drawable {
       const obstacle = new Obstacle(
         this.CANVAS_WIDTH,
         this.CANVAS_HEIGHT,
-        this.PASSER_WIDTH
+        this.MOVER.width
       );
       this.platforms = this.platforms.concat([
         obstacle.LEFT_PLATFORM,
@@ -51,14 +51,14 @@ export default class CycleObstacles implements Drawable {
     this.platforms.forEach((platform) => platform.draw(context));
   }
 
-  collide(mover: Mover) {
+  collide() {
     this.platforms.forEach((platforms) => {
-      const collisionDirection = platforms.repel(mover);
+      const collisionDirection = platforms.repel(this.MOVER);
       if (!collisionDirection) {
         return;
       }
 
-      mover.collide(collisionDirection);
+      this.MOVER.collide(collisionDirection);
     });
   }
 }
