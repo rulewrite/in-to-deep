@@ -51,7 +51,7 @@ export default class Game {
     if (Environment.IS_DEVELOPMENT) {
       Debugger.draw(context, {
         hero: this.HERO,
-        cyclePlatforms: this.CYCLE_OBSTACLES,
+        cycleObstacles: this.CYCLE_OBSTACLES,
         area: this.AREA,
       });
     }
