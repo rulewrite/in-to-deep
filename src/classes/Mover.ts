@@ -43,7 +43,6 @@ export default class Mover extends Shape {
   }
 
   update() {
-    this.isGrounded = false;
     this.xVelocity *= 0.8; // 마찰력
 
     this.x += this.xVelocity;
