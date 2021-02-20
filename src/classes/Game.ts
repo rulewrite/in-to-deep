@@ -14,17 +14,16 @@ export default class Game implements Drawable {
   private readonly CONTROLLER = new Controller(this.HERO);
   private readonly AREA;
   private readonly CYCLE_OBSTACLES;
-  private readonly DRAWABLES: Drawable[];
+  private readonly DRAWABLES: Drawable[] = [
+    this.HERO,
+    new OverflowGuide(this.HERO),
+  ];
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
     this.CYCLE_OBSTACLES = new CycleObstacles(width, height, this.HERO);
 
-    this.DRAWABLES = [
-      this.HERO,
-      this.CYCLE_OBSTACLES,
-      new OverflowGuide(this.HERO),
-    ];
+    this.DRAWABLES.push(this.CYCLE_OBSTACLES);
     if (Environment.IS_DEVELOPMENT) {
       this.DRAWABLES.push(
         new Debugger(this.CYCLE_OBSTACLES, this.AREA, this.HERO)
