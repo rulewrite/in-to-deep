@@ -1,4 +1,4 @@
-export default abstract class CanvasComponent {
+export default abstract class Shape {
   get left() {
     return this.x;
   }
@@ -43,15 +43,9 @@ export default abstract class CanvasComponent {
     public x: number,
     public y: number,
     width: number,
-    height: number,
-    public color: string
+    height: number
   ) {
     this.width = width;
     this.height = height;
-  }
-
-  draw(context: CanvasRenderingContext2D) {
-    context.fillStyle = this.color;
-    context.fillRect(this.x, this.y, this.width, this.height);
   }
 }

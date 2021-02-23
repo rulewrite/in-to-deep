@@ -1,6 +1,7 @@
+import Drawable from './Drawable';
 import Mover from './Mover';
 
-export default class Hero extends Mover {
+export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 
@@ -26,9 +27,9 @@ export default class Hero extends Mover {
     y: number,
     width: number,
     height: number,
-    color = Hero.INITIAL_COLOR
+    public color = Hero.INITIAL_COLOR
   ) {
-    super(x, y, width, height, color);
+    super(x, y, width, height);
   }
 
   draw(context: CanvasRenderingContext2D) {

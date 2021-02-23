@@ -1,8 +1,8 @@
-import CanvasComponent from './CanvasComponent';
+import Shape from './Shape';
 import Mover from './Mover';
+import Drawable from './Drawable';
 
-export default class Platform extends CanvasComponent {
-  private static readonly INITIAL_HEIGHT = 20;
+export default class Platform extends Shape implements Drawable {
   private static readonly INITIAL_COLOR = 'black';
   private static getCollisionDirection(
     outX: number,
@@ -29,9 +29,10 @@ export default class Platform extends CanvasComponent {
     x: number,
     y: number,
     width: number,
-    color = Platform.INITIAL_COLOR
+    height: number,
+    private color = Platform.INITIAL_COLOR
   ) {
-    super(x, y, width, Platform.INITIAL_HEIGHT, color);
+    super(x, y, width, height);
   }
 
   repel(mover: Mover) {
@@ -80,5 +81,10 @@ export default class Platform extends CanvasComponent {
     }
 
     return collisionDirection;
+  }
+
+  draw(context: CanvasRenderingContext2D) {
+    context.fillStyle = this.color;
+    context.fillRect(this.x, this.y, this.width, this.height);
   }
 }

@@ -1,4 +1,4 @@
-import CanvasComponent from './CanvasComponent';
+import Shape from './Shape';
 
 enum SideDirections {
   RIGHT = 1,
@@ -7,7 +7,7 @@ enum SideDirections {
 
 type SideDirectionStrings = keyof typeof SideDirections;
 
-export default class Mover extends CanvasComponent {
+export default class Mover extends Shape {
   private static readonly INITIAL_ACCELERATION = 1;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
   private static readonly INITIAL_JUMP_POWER = 4;
@@ -43,10 +43,30 @@ export default class Mover extends CanvasComponent {
   }
 
   update() {
-    this.isGrounded = false;
     this.xVelocity *= 0.8; // 마찰력
 
     this.x += this.xVelocity;
     this.y += this.yVelocity;
+  }
+
+  collide(direction: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
+    switch (direction) {
+      case 'TOP':
+        this.yVelocity *= -1; // 탄성 1
+        break;
+      case 'BOTTOM':
+        this.yVelocity = 0;
+        this.isGrounded = true;
+        this.isJumping = false;
+        break;
+      case 'LEFT':
+        this.xVelocity = 0;
+        this.isJumping = false;
+        break;
+      case 'RIGHT':
+        this.xVelocity = 0;
+        this.isJumping = false;
+        break;
+    }
   }
 }

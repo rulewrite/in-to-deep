@@ -7,7 +7,7 @@ export default class Controller {
   constructor(private readonly MOVER: Mover) {}
 
   interact() {
-    const { isPressedRight, isPressedLeft, isPressedUp } = Controller.KEYBOARD;
+    const { isPressedRight, isPressedLeft, isPressedZ } = Controller.KEYBOARD;
 
     if (isPressedRight && !isPressedLeft) {
       this.MOVER.go('RIGHT');
@@ -17,7 +17,7 @@ export default class Controller {
       this.MOVER.go('LEFT');
     }
 
-    if (isPressedUp) {
+    if (isPressedZ) {
       this.MOVER.jump();
     }
   }
