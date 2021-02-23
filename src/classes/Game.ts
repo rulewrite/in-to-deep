@@ -12,12 +12,12 @@ export default class Game implements Drawable {
   private readonly HERO = new Hero(60, 30, 30, 30);
   private readonly GRAVITY = new Gravity(this.HERO);
   private readonly CONTROLLER = new Controller(this.HERO);
-  private readonly AREA;
-  private readonly CYCLE_OBSTACLES;
   private readonly DRAWABLES: Drawable[] = [
     this.HERO,
     new OverflowGuide(this.HERO),
   ];
+  private readonly AREA;
+  private readonly CYCLE_OBSTACLES;
 
   constructor(width: number, height: number) {
     this.AREA = new Area(width, height, this.HERO);
