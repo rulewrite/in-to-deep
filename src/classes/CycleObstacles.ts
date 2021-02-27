@@ -52,8 +52,8 @@ export default class CycleObstacles implements Drawable {
   collide() {
     this.HERO.isGrounded = false;
 
-    this.platforms.forEach((platforms) => {
-      const collisionDirection = platforms.repel(this.HERO);
+    this.platforms.forEach((platform) => {
+      const collisionDirection = platform.repel(this.HERO);
       if (!collisionDirection) {
         return;
       }
