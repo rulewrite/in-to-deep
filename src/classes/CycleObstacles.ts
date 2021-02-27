@@ -1,5 +1,4 @@
 import Platform from './Platform';
-import Scroll from './Scroll';
 import Obstacle from './Obstacle';
 import Drawable from '@interfaces/Drawable';
 import Hero from './Hero';
@@ -15,7 +14,6 @@ export default class CycleObstacles implements Drawable {
     return !((this.frameNo / this.GENERATION_INTERVAL) % 1);
   }
 
-  private readonly SCROLL = new Scroll();
   private platforms: Platform[] = [];
 
   constructor(
@@ -44,7 +42,7 @@ export default class CycleObstacles implements Drawable {
       ]);
     }
 
-    this.SCROLL.wind(this.platforms);
+    this.platforms.forEach((platform) => platform.updateCoordinates());
   }
 
   draw(context: CanvasRenderingContext2D) {

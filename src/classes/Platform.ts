@@ -1,8 +1,7 @@
-import Shape from './Shape';
 import Mover from './Mover';
 import Drawable from '@interfaces/Drawable';
 
-export default class Platform extends Shape implements Drawable {
+export default class Platform extends Mover implements Drawable {
   private static readonly INITIAL_COLOR = 'black';
   private static getCollisionDirection(
     outX: number,
@@ -30,9 +29,11 @@ export default class Platform extends Shape implements Drawable {
     y: number,
     width: number,
     height: number,
+    xVelocity = 0,
+    yVelocity = 0,
     private color = Platform.INITIAL_COLOR
   ) {
-    super(x, y, width, height);
+    super(x, y, width, height, xVelocity, yVelocity);
   }
 
   repel(mover: Mover) {

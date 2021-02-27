@@ -22,7 +22,9 @@ export default class Obstacle {
       Obstacle.LEFT_PLATFORM_X,
       y,
       leftPlatformWidth,
-      Obstacle.HEIGHT
+      Obstacle.HEIGHT,
+      0,
+      -1
     );
 
     const gap = Obstacle.getRandomRangeValue(
@@ -35,7 +37,9 @@ export default class Obstacle {
       rightPlatformX,
       y,
       width - rightPlatformX,
-      Obstacle.HEIGHT
+      Obstacle.HEIGHT,
+      0,
+      -1
     );
   }
 }
