@@ -8,7 +8,7 @@ export default class Platform extends Mover implements Drawable {
     outY: number,
     vectorX: number,
     vectorY: number
-  ) {
+  ): Direction {
     if (outX >= outY) {
       if (vectorY > 0) {
         return 'TOP';

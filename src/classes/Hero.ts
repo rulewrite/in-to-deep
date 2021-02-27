@@ -8,7 +8,7 @@ export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 
-  private direction: 'LEFT' | 'RIGHT' = 'RIGHT';
+  private direction: Direction = 'RIGHT';
   private get vector() {
     if (this.direction === 'RIGHT') {
       return 1;
@@ -50,7 +50,7 @@ export default class Hero extends Mover implements Drawable {
     super(x, y, width, height);
   }
 
-  go(direction: 'LEFT' | 'RIGHT') {
+  go(direction: Direction) {
     this.direction = direction;
     if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
       return;
@@ -68,8 +68,8 @@ export default class Hero extends Mover implements Drawable {
     this.yVelocity = -this.jumpPower;
   }
 
-  collide(collisionDirection: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
-    switch (collisionDirection) {
+  collide(direction: Direction) {
+    switch (direction) {
       case 'TOP':
         this.yVelocity *= -1; // 탄성 1
         break;
