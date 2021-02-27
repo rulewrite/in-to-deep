@@ -1,4 +1,4 @@
-export default abstract class Shape {
+export default class Shape {
   get left() {
     return this.x;
   }
