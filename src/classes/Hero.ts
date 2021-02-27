@@ -6,7 +6,7 @@ enum SideDirections {
   LEFT = -1,
 }
 
-type SideDirectionStrings = keyof typeof SideDirections;
+type SideDirectionKeys = keyof typeof SideDirections;
 
 export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_ACCELERATION = 1;
@@ -15,9 +15,9 @@ export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 
-  private _sideDirection: SideDirections = SideDirections.RIGHT;
-  protected get sideDirection() {
-    return SideDirections[this._sideDirection] as SideDirectionStrings;
+  private sideDirection: SideDirections = SideDirections.RIGHT;
+  protected get sideDirectionKey() {
+    return SideDirections[this.sideDirection] as SideDirectionKeys;
   }
 
   isJumping = false;
@@ -27,20 +27,20 @@ export default class Hero extends Mover implements Drawable {
   private jumpPower = Hero.INITIAL_JUMP_POWER;
 
   private get headX() {
-    return this.sideDirection === 'LEFT' ? this.x : this.right;
+    return this.sideDirectionKey === 'LEFT' ? this.x : this.right;
   }
   private get headY() {
     return this.y + this.halfHeight;
   }
 
   private get bodyX() {
-    return this.sideDirection === 'LEFT'
+    return this.sideDirectionKey === 'LEFT'
       ? this.x + Hero.HEAD_WIDTH
       : this.right - Hero.HEAD_WIDTH;
   }
 
   private get tailX() {
-    return this.sideDirection === 'LEFT' ? this.right : this.x;
+    return this.sideDirectionKey === 'LEFT' ? this.right : this.x;
   }
 
   constructor(
@@ -53,12 +53,12 @@ export default class Hero extends Mover implements Drawable {
     super(x, y, width, height);
   }
 
-  go(sideDirection: SideDirectionStrings) {
-    this._sideDirection = SideDirections[sideDirection];
+  go(sideDirectionKey: SideDirectionKeys) {
+    this.sideDirection = SideDirections[sideDirectionKey];
     if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
       return;
     }
-    this.xVelocity += this._sideDirection * this.acceleration;
+    this.xVelocity += this.sideDirection * this.acceleration;
   }
 
   jump() {
