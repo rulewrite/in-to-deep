@@ -2,7 +2,7 @@ import Platform from './Platform';
 import Mover from './Mover';
 import Scroll from './Scroll';
 import Obstacle from './Obstacle';
-import Drawable from './Drawable';
+import Drawable from '@interfaces/Drawable';
 
 export default class CycleObstacles implements Drawable {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;

@@ -1,4 +1,4 @@
-import Drawable from './Drawable';
+import Drawable from '@interfaces/Drawable';
 import Hero from './Hero';
 
 export default class OverflowGuide implements Drawable {

@@ -1,4 +1,4 @@
-import Drawable from './Drawable';
+import Drawable from '@interfaces/Drawable';
 
 export default class Debugger implements Drawable {
   private static cleaning(number: number) {

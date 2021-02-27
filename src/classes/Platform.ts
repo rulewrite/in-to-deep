@@ -1,6 +1,6 @@
 import Shape from './Shape';
 import Mover from './Mover';
-import Drawable from './Drawable';
+import Drawable from '@interfaces/Drawable';
 
 export default class Platform extends Shape implements Drawable {
   private static readonly INITIAL_COLOR = 'black';

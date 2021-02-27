@@ -1,4 +1,4 @@
-import Drawable from './Drawable';
+import Drawable from '@interfaces/Drawable';
 import Mover from './Mover';
 
 export default class Hero extends Mover implements Drawable {
