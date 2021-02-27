@@ -1,13 +1,6 @@
 import Drawable from '@interfaces/Drawable';
 import Mover from './Mover';
 
-enum SideDirections {
-  RIGHT = 1,
-  LEFT = -1,
-}
-
-type SideDirectionKeys = keyof typeof SideDirections;
-
 export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_ACCELERATION = 1;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
@@ -15,9 +8,13 @@ export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 
-  private sideDirection: SideDirections = SideDirections.RIGHT;
-  protected get sideDirectionKey() {
-    return SideDirections[this.sideDirection] as SideDirectionKeys;
+  private direction: 'LEFT' | 'RIGHT' = 'RIGHT';
+  private get vector() {
+    if (this.direction === 'RIGHT') {
+      return 1;
+    }
+
+    return -1;
   }
 
   isJumping = false;
@@ -27,20 +24,20 @@ export default class Hero extends Mover implements Drawable {
   private jumpPower = Hero.INITIAL_JUMP_POWER;
 
   private get headX() {
-    return this.sideDirectionKey === 'LEFT' ? this.x : this.right;
+    return this.direction === 'LEFT' ? this.x : this.right;
   }
   private get headY() {
     return this.y + this.halfHeight;
   }
 
   private get bodyX() {
-    return this.sideDirectionKey === 'LEFT'
+    return this.direction === 'LEFT'
       ? this.x + Hero.HEAD_WIDTH
       : this.right - Hero.HEAD_WIDTH;
   }
 
   private get tailX() {
-    return this.sideDirectionKey === 'LEFT' ? this.right : this.x;
+    return this.direction === 'LEFT' ? this.right : this.x;
   }
 
   constructor(
@@ -53,12 +50,12 @@ export default class Hero extends Mover implements Drawable {
     super(x, y, width, height);
   }
 
-  go(sideDirectionKey: SideDirectionKeys) {
-    this.sideDirection = SideDirections[sideDirectionKey];
+  go(direction: 'LEFT' | 'RIGHT') {
+    this.direction = direction;
     if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
       return;
     }
-    this.xVelocity += this.sideDirection * this.acceleration;
+    this.xVelocity += this.vector * this.acceleration;
   }
 
   jump() {
@@ -71,8 +68,8 @@ export default class Hero extends Mover implements Drawable {
     this.yVelocity = -this.jumpPower;
   }
 
-  collide(direction: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
-    switch (direction) {
+  collide(collisionDirection: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
+    switch (collisionDirection) {
       case 'TOP':
         this.yVelocity *= -1; // 탄성 1
         break;
