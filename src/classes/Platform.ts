@@ -24,6 +24,10 @@ export default class Platform extends Mover implements Drawable {
     return 'RIGHT';
   }
 
+  get isDestory() {
+    return this.bottom <= 0;
+  }
+
   constructor(
     x: number,
     y: number,

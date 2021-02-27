@@ -25,7 +25,7 @@ export default class Debugger implements Drawable {
     context.fillText(`yVelocity: ${this.TARGET.HERO.yVelocity}`, 10, 60);
 
     // platform
-    this.TARGET.CYCLE_OBSTACLES.platforms.forEach((platform: any) => {
+    this.TARGET.PLATFORMS.forEach((platform: any) => {
       const { x, y } = platform;
 
       const cleanX = Debugger.cleaning(x);
