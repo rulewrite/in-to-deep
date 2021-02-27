@@ -22,6 +22,33 @@ export default class Camera extends Rectangle {
     this.WORLD = new Rectangle(0, 0, worldWidth, worldHeight);
   }
 
+  private block() {
+    const { WORLD } = this;
+    if (this.isWithin(WORLD)) {
+      return;
+    }
+
+    const {
+      left: worldLeft,
+      top: worldTop,
+      right: worldRight,
+      bottom: worldBottom,
+    } = WORLD;
+    const { left, top, right, bottom } = this;
+    if (left < worldLeft) {
+      this.x = worldLeft;
+    }
+    if (top < worldTop) {
+      this.y = worldTop;
+    }
+    if (right > worldRight) {
+      this.x = worldRight - this.width;
+    }
+    if (bottom > worldBottom) {
+      this.y = worldBottom - this.height;
+    }
+  }
+
   follow() {
     const { followed } = this;
     if (!followed) {
@@ -43,5 +70,7 @@ export default class Camera extends Rectangle {
     } else if (followedY - halfHeight < y) {
       this.y = followedY - halfHeight;
     }
+
+    this.block();
   }
 }
