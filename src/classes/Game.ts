@@ -7,6 +7,7 @@ import Environment from './Environment';
 import Controller from './Controller';
 import OverflowGuide from './OverflowGuide';
 import Drawable from '@interfaces/Drawable';
+import Camera from './Camera';
 
 export default class Game implements Drawable {
   private readonly HERO = new Hero(60, 30, 30, 30);
@@ -16,10 +17,18 @@ export default class Game implements Drawable {
     this.HERO,
     new OverflowGuide(this.HERO),
   ];
+  private readonly CAMERA;
   private readonly AREA;
   private readonly CYCLE_OBSTACLES;
 
   constructor(width: number, height: number) {
+    this.CAMERA = new Camera(
+      width - 100,
+      height - 100,
+      width - 50,
+      height - 50,
+      this.HERO
+    );
     this.AREA = new Area(width, height, this.HERO);
     this.CYCLE_OBSTACLES = new CycleObstacles(width, height, this.HERO);
 
@@ -51,6 +60,8 @@ export default class Game implements Drawable {
     this.GRAVITY.realize();
     this.AREA.block();
     this.CYCLE_OBSTACLES.collide();
+
+    this.CAMERA.follow();
   }
 
   draw(context: CanvasRenderingContext2D) {
