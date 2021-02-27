@@ -35,7 +35,12 @@ export default class Game implements Drawable {
     this.DRAWABLES.push(this.CYCLE_OBSTACLES);
     if (Environment.IS_DEVELOPMENT) {
       this.DRAWABLES.push(
-        new Debugger(this.CYCLE_OBSTACLES, this.AREA, this.HERO)
+        new Debugger({
+          CYCLE_OBSTACLES: this.CYCLE_OBSTACLES,
+          AREA: this.AREA,
+          HERO: this.HERO,
+          CAMERA: this.CAMERA,
+        })
       );
     }
   }
