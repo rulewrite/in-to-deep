@@ -1,8 +1,8 @@
 import Platform from './Platform';
-import Mover from './Mover';
 import Scroll from './Scroll';
 import Obstacle from './Obstacle';
 import Drawable from '@interfaces/Drawable';
+import Hero from './Hero';
 
 export default class CycleObstacles implements Drawable {
   private static readonly INITIAL_GENERATION_INTERVAL = 180;
@@ -21,7 +21,7 @@ export default class CycleObstacles implements Drawable {
   constructor(
     private readonly CANVAS_WIDTH: number,
     private readonly CANVAS_HEIGHT: number,
-    private readonly MOVER: Mover,
+    private readonly HERO: Hero,
     private readonly GENERATION_INTERVAL = CycleObstacles.INITIAL_GENERATION_INTERVAL
   ) {}
 
@@ -36,7 +36,7 @@ export default class CycleObstacles implements Drawable {
       const obstacle = new Obstacle(
         this.CANVAS_WIDTH,
         this.CANVAS_HEIGHT,
-        this.MOVER.width
+        this.HERO.width
       );
       this.platforms = this.platforms.concat([
         obstacle.LEFT_PLATFORM,
@@ -52,15 +52,15 @@ export default class CycleObstacles implements Drawable {
   }
 
   collide() {
-    this.MOVER.isGrounded = false;
+    this.HERO.isGrounded = false;
 
     this.platforms.forEach((platforms) => {
-      const collisionDirection = platforms.repel(this.MOVER);
+      const collisionDirection = platforms.repel(this.HERO);
       if (!collisionDirection) {
         return;
       }
 
-      this.MOVER.collide(collisionDirection);
+      this.HERO.collide(collisionDirection);
     });
   }
 }

@@ -1,9 +1,30 @@
 import Drawable from '@interfaces/Drawable';
 import Mover from './Mover';
 
+enum SideDirections {
+  RIGHT = 1,
+  LEFT = -1,
+}
+
+type SideDirectionStrings = keyof typeof SideDirections;
+
 export default class Hero extends Mover implements Drawable {
+  private static readonly INITIAL_ACCELERATION = 1;
+  private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
+  private static readonly INITIAL_JUMP_POWER = 4;
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
+
+  private _sideDirection: SideDirections = SideDirections.RIGHT;
+  protected get sideDirection() {
+    return SideDirections[this._sideDirection] as SideDirectionStrings;
+  }
+
+  isJumping = false;
+  isGrounded = false;
+  private acceleration = Hero.INITIAL_ACCELERATION;
+  private maximumXVelocity = Hero.INITIAL_MAXIMUM_X_VELOCITY;
+  private jumpPower = Hero.INITIAL_JUMP_POWER;
 
   private get headX() {
     return this.sideDirection === 'LEFT' ? this.x : this.right;
@@ -30,6 +51,51 @@ export default class Hero extends Mover implements Drawable {
     public color = Hero.INITIAL_COLOR
   ) {
     super(x, y, width, height);
+  }
+
+  go(sideDirection: SideDirectionStrings) {
+    this._sideDirection = SideDirections[sideDirection];
+    if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
+      return;
+    }
+    this.xVelocity += this._sideDirection * this.acceleration;
+  }
+
+  jump() {
+    if (!this.isGrounded || this.isJumping) {
+      return;
+    }
+
+    this.isJumping = true;
+    this.isGrounded = false;
+    this.yVelocity = -this.jumpPower;
+  }
+
+  collide(direction: 'TOP' | 'LEFT' | 'RIGHT' | 'BOTTOM') {
+    switch (direction) {
+      case 'TOP':
+        this.yVelocity *= -1; // 탄성 1
+        break;
+      case 'BOTTOM':
+        this.yVelocity = 0;
+        this.isGrounded = true;
+        this.isJumping = false;
+        break;
+      case 'LEFT':
+        this.xVelocity = 0;
+        this.isJumping = false;
+        break;
+      case 'RIGHT':
+        this.xVelocity = 0;
+        this.isJumping = false;
+        break;
+    }
+  }
+
+  update() {
+    this.xVelocity *= 0.8; // 마찰력
+
+    this.updateCoordinates();
   }
 
   draw(context: CanvasRenderingContext2D) {

@@ -1,24 +1,24 @@
+import Hero from './Hero';
 import Keyboard from './Keyboard';
-import Mover from './Mover';
 
 export default class Controller {
   private static readonly KEYBOARD = new Keyboard();
 
-  constructor(private readonly MOVER: Mover) {}
+  constructor(private readonly HERO: Hero) {}
 
   interact() {
     const { isPressedRight, isPressedLeft, isPressedZ } = Controller.KEYBOARD;
 
     if (isPressedRight && !isPressedLeft) {
-      this.MOVER.go('RIGHT');
+      this.HERO.go('RIGHT');
     }
 
     if (isPressedLeft && !isPressedRight) {
-      this.MOVER.go('LEFT');
+      this.HERO.go('LEFT');
     }
 
     if (isPressedZ) {
-      this.MOVER.jump();
+      this.HERO.jump();
     }
   }
 }
