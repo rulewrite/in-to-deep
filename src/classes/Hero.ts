@@ -80,9 +80,6 @@ export default class Hero extends Mover implements Drawable {
         this.isJumping = false;
         break;
       case 'LEFT':
-        this.xVelocity = 0;
-        this.isJumping = false;
-        break;
       case 'RIGHT':
         this.xVelocity = 0;
         this.isJumping = false;
