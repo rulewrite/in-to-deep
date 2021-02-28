@@ -52,10 +52,11 @@ export default class Hero extends Mover implements Drawable {
 
   go(direction: Direction) {
     this.direction = direction;
-    if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
-      return;
-    }
     this.xVelocity += this.vector * this.acceleration;
+
+    if (Math.abs(this.xVelocity) > this.maximumXVelocity) {
+      this.xVelocity = this.vector * this.maximumXVelocity;
+    }
   }
 
   jump() {
