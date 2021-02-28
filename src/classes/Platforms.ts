@@ -14,14 +14,7 @@ export default class Platforms extends Array<Platform> implements Drawable {
   collide() {
     this.HERO.isGrounded = false;
 
-    this.forEach((platform) => {
-      const collisionDirection = platform.repel(this.HERO);
-      if (!collisionDirection) {
-        return;
-      }
-
-      this.HERO.collide(collisionDirection);
-    });
+    this.forEach((platform) => platform.repel(this.HERO));
   }
 
   private destory() {

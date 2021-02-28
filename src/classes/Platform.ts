@@ -1,5 +1,6 @@
 import Mover from './Mover';
 import Drawable from '@interfaces/Drawable';
+import Hero from './Hero';
 
 export default class Platform extends Mover implements Drawable {
   private static readonly INITIAL_COLOR = 'black';
@@ -40,19 +41,19 @@ export default class Platform extends Mover implements Drawable {
     super(x, y, width, height, xVelocity, yVelocity);
   }
 
-  repel(mover: Mover) {
+  repel(hero: Hero) {
     const { top, left, halfWidth, halfHeight } = this;
     const {
-      left: moverLeft,
-      top: moverTop,
-      halfWidth: moverHalfWidth,
-      halfHeight: moverHalfHeight,
-    } = mover;
+      left: heroLeft,
+      top: heroTop,
+      halfWidth: heroHalfWidth,
+      halfHeight: heroHalfHeight,
+    } = hero;
 
-    const vectorX = moverLeft + moverHalfWidth - left - halfWidth;
-    const vectorY = moverTop + moverHalfHeight - top - halfHeight;
-    const halfWidths = moverHalfWidth + halfWidth;
-    const halfHeights = moverHalfHeight + halfHeight;
+    const vectorX = heroLeft + heroHalfWidth - left - halfWidth;
+    const vectorY = heroTop + heroHalfHeight - top - halfHeight;
+    const halfWidths = heroHalfWidth + halfWidth;
+    const halfHeights = heroHalfHeight + halfHeight;
 
     const absoluteVectorX = Math.abs(vectorX);
     const absoluteVectorY = Math.abs(vectorY);
@@ -72,20 +73,20 @@ export default class Platform extends Mover implements Drawable {
 
     switch (collisionDirection) {
       case 'TOP':
-        mover.y += outY;
+        hero.y += outY;
         break;
       case 'BOTTOM':
-        mover.y -= outY;
+        hero.y -= outY;
         break;
       case 'LEFT':
-        mover.x += outX;
+        hero.x += outX;
         break;
       case 'RIGHT':
-        mover.x -= outX;
+        hero.x -= outX;
         break;
     }
 
-    return collisionDirection;
+    hero.collide(collisionDirection);
   }
 
   draw(context: CanvasRenderingContext2D) {
