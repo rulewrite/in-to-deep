@@ -69,8 +69,8 @@ export default class Hero extends Mover implements Drawable {
     this.yVelocity = -this.jumpPower;
   }
 
-  collide(direction: Direction) {
-    switch (direction) {
+  collide(collisionDirection: CollisionDirection) {
+    switch (collisionDirection) {
       case 'TOP':
         this.yVelocity *= -1; // 탄성 1
         break;
