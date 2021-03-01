@@ -13,7 +13,7 @@ export default class Debugger implements Drawable {
     context.font = '20px san-serif';
 
     // outline
-    context.fillRect(this.TARGET.AREA.WIDTH, 0, 1, this.TARGET.AREA.HEIGHT);
+    context.fillRect(this.TARGET.SCREEN.WIDTH, 0, 1, this.TARGET.SCREEN.HEIGHT);
 
     // hero
     context.fillText(

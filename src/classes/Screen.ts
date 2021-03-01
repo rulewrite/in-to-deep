@@ -1,6 +1,6 @@
 import Mover from './Mover';
 
-export default class Area {
+export default class Screen {
   constructor(
     private readonly WIDTH: number,
     private readonly HEIGHT: number,

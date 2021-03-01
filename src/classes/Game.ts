@@ -2,7 +2,7 @@ import Gravity from '@classes/Gravity';
 import Hero from '@classes/Hero';
 import CycleObstacles from '@classes/CycleObstacles';
 import Debugger from '@classes/Debugger';
-import Area from '@classes/Area';
+import Screen from '@classes/Screen';
 import Environment from './Environment';
 import Controller from './Controller';
 import OverflowGuide from './OverflowGuide';
@@ -21,7 +21,7 @@ export default class Game implements Drawable {
     new OverflowGuide(this.HERO),
   ];
   private readonly CAMERA;
-  private readonly AREA;
+  private readonly SCREEN;
   private readonly CYCLE_OBSTACLES;
 
   constructor(width: number, height: number) {
@@ -32,7 +32,7 @@ export default class Game implements Drawable {
       height - 50,
       this.HERO
     );
-    this.AREA = new Area(width, height, this.HERO);
+    this.SCREEN = new Screen(width, height, this.HERO);
     this.CYCLE_OBSTACLES = new CycleObstacles(
       width,
       height,
@@ -44,7 +44,7 @@ export default class Game implements Drawable {
       this.DRAWABLES.push(
         new Debugger({
           PLATFORMS: this.PLATFORMS,
-          AREA: this.AREA,
+          SCREEN: this.SCREEN,
           HERO: this.HERO,
           CAMERA: this.CAMERA,
         })
@@ -57,7 +57,7 @@ export default class Game implements Drawable {
       return false;
     }
 
-    return this.AREA.isCollideBottom();
+    return this.SCREEN.isCollideBottom();
   }
 
   private update() {
@@ -71,7 +71,7 @@ export default class Game implements Drawable {
 
     // collision
     this.GRAVITY.realize();
-    this.AREA.block();
+    this.SCREEN.block();
     this.PLATFORMS.collide();
 
     this.CAMERA.follow();
