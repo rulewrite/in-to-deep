@@ -1,12 +1,11 @@
-import Area from './Area';
 import Shape from './Shape';
 
-export default class Camera extends Area {
+export default class Camera extends Shape {
   constructor(
     canvasWidth: number,
     canvasHeight: number,
-    world: Area,
-    private followed?: Shape
+    world: Shape,
+    private followed: Shape
   ) {
     // 적합한 뷰포트 크기 설정
     super(
@@ -18,12 +17,9 @@ export default class Camera extends Area {
   }
 
   follow() {
-    const { followed } = this;
-    if (!followed) {
-      return;
-    }
-
-    const { x: followedX, y: followedY } = followed;
+    const {
+      followed: { x: followedX, y: followedY },
+    } = this;
 
     const { x, width, halfWidth } = this;
     if (followedX - x + halfWidth > width) {
