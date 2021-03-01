@@ -12,9 +12,6 @@ export default class Debugger implements Drawable {
     context.fillStyle = 'red';
     context.font = '20px san-serif';
 
-    // outline
-    context.fillRect(this.TARGET.SCREEN.WIDTH, 0, 1, this.TARGET.SCREEN.HEIGHT);
-
     // hero
     context.fillText(
       `isGrounded: ${this.TARGET.HERO.isGrounded}, isJumping: ${this.TARGET.HERO.isJumping}`,
@@ -46,16 +43,17 @@ export default class Debugger implements Drawable {
       this.TARGET.CAMERA.height
     );
 
+    // world
     context.fillText(
       'world',
-      this.TARGET.CAMERA.WORLD.right,
-      this.TARGET.CAMERA.WORLD.y + 20
+      this.TARGET.WORLD.right,
+      this.TARGET.WORLD.y + 20
     );
     context.strokeRect(
-      this.TARGET.CAMERA.WORLD.x,
-      this.TARGET.CAMERA.WORLD.y,
-      this.TARGET.CAMERA.WORLD.width,
-      this.TARGET.CAMERA.WORLD.height
+      this.TARGET.WORLD.x,
+      this.TARGET.WORLD.y,
+      this.TARGET.WORLD.width,
+      this.TARGET.WORLD.height
     );
   }
 }

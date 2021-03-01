@@ -2,24 +2,19 @@ import Area from './Area';
 import Shape from './Shape';
 
 export default class Camera extends Area {
-  private readonly WORLD;
-
   constructor(
     canvasWidth: number,
     canvasHeight: number,
-    worldWidth: number,
-    worldHeight: number,
+    world: Area,
     private followed?: Shape
   ) {
     // 적합한 뷰포트 크기 설정
     super(
       0,
       0,
-      Math.min(canvasWidth, worldWidth),
-      Math.min(canvasHeight, worldHeight)
+      Math.min(canvasWidth, world.width),
+      Math.min(canvasHeight, world.height)
     );
-
-    this.WORLD = new Area(0, 0, worldWidth, worldHeight);
   }
 
   follow() {
@@ -43,7 +38,5 @@ export default class Camera extends Area {
     } else if (followedY - halfHeight < y) {
       this.y = followedY - halfHeight;
     }
-
-    this.WORLD.block(this);
   }
 }
