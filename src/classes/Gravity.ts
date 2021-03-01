@@ -10,6 +10,5 @@ export default class Gravity {
 
   realize() {
     this.MOVER.yVelocity += this.force;
-    this.MOVER.y += this.MOVER.yVelocity;
   }
 }

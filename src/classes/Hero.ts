@@ -4,7 +4,7 @@ import Mover from './Mover';
 export default class Hero extends Mover implements Drawable {
   private static readonly INITIAL_ACCELERATION = 1;
   private static readonly INITIAL_MAXIMUM_X_VELOCITY = 5;
-  private static readonly INITIAL_JUMP_POWER = 4;
+  private static readonly INITIAL_JUMP_POWER = 6;
   private static readonly INITIAL_COLOR = '#d40000';
   private static readonly HEAD_WIDTH = 10;
 
