@@ -22,7 +22,7 @@ const GameBoard = ({ width, height }: { width: number; height: number }) => {
         draw={draw}
         isBreak={!isRunning}
         width={width + 100}
-        height={height}
+        height={height + 100}
       />
     </>
   );
