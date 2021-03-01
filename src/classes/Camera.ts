@@ -1,7 +1,7 @@
-import Rectangle from './Rectangle';
+import Area from './Area';
 import Shape from './Shape';
 
-export default class Camera extends Rectangle {
+export default class Camera extends Area {
   private readonly WORLD;
 
   constructor(
@@ -19,34 +19,7 @@ export default class Camera extends Rectangle {
       Math.min(canvasHeight, worldHeight)
     );
 
-    this.WORLD = new Rectangle(0, 0, worldWidth, worldHeight);
-  }
-
-  private block() {
-    const { WORLD } = this;
-    if (this.isWithin(WORLD)) {
-      return;
-    }
-
-    const {
-      left: worldLeft,
-      top: worldTop,
-      right: worldRight,
-      bottom: worldBottom,
-    } = WORLD;
-    const { left, top, right, bottom } = this;
-    if (left < worldLeft) {
-      this.x = worldLeft;
-    }
-    if (top < worldTop) {
-      this.y = worldTop;
-    }
-    if (right > worldRight) {
-      this.x = worldRight - this.width;
-    }
-    if (bottom > worldBottom) {
-      this.y = worldBottom - this.height;
-    }
+    this.WORLD = new Area(0, 0, worldWidth, worldHeight);
   }
 
   follow() {
@@ -71,6 +44,6 @@ export default class Camera extends Rectangle {
       this.y = followedY - halfHeight;
     }
 
-    this.block();
+    this.WORLD.block(this);
   }
 }
